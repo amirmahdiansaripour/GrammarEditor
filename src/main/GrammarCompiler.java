@@ -10,7 +10,7 @@ public class GrammarCompiler {
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);
         EnglishGrammarParser parser = new EnglishGrammarParser(tokenStream);
 
-        Text text = parser.englishGrammar().text;
+        Text text = parser.englishGrammar().whole;
 //        NameAnalyzerHandler nameAnalyzerHandler = new NameAnalyzerHandler(program);
 //
 //        nameAnalyzerHandler.analyze();
@@ -20,6 +20,7 @@ public class GrammarCompiler {
 //        ASTTreePrinter astTreePrinter = new ASTTreePrinter();
 //        if(numOfErrors == 0)
 //            program.accept(astTreePrinter);
+        return;
     }
 
 }
