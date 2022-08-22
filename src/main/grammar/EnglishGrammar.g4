@@ -27,8 +27,14 @@ sentence returns [Sentence sentenceReturn]
         $sentenceReturn.addSubject($word.text);
         }
         )+
+        (DOT | EXCLAMATION | QUESTION)
     ;
 
 WORD: [A-Za-z]+;
-
-NEWLINE: '\n' | '\r';
+DOT: '.';
+COLON: ',';
+SEMICOLON: ';';
+SPACE: (' ' | '\t')->skip;
+EXCLAMATION: '!';
+QUESTION: '?';
+NEWLINE: ('\n' | '\r')->skip;
