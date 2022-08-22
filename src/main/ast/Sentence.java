@@ -17,7 +17,7 @@ public class Sentence extends astNode {
         this.subject.add(subject);
     }
     @Override
-    public String toString(){return "";}
+    public String toString(){return "Sentence";}
     @Override
     public <T> T accept(IVisitor<T> visitor){return visitor.visit(this);}
 }

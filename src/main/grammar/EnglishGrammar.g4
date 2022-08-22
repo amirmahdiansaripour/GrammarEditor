@@ -13,28 +13,39 @@ englishGrammar returns [Text whole]
 text returns [Text textReturn]
     :
         {
+        int line = 1;
         $textReturn = new Text();
-        $textReturn.setLine(1);
         }
-        (s = sentence NEWLINE* {$textReturn.addSentence($s.sentenceReturn);})+
+        (s = sentence[line] (NEWLINE {line = line + 1;} | SPACE)+ {$textReturn.addSentence($s.s);})+
     ;
 
-sentence returns [Sentence sentenceReturn]
+sentence [int line] returns [Sentence s]
     :
-        (word = WORD
         {
-        $sentenceReturn = new Sentence();
-        $sentenceReturn.addSubject($word.text);
+        $s = new Sentence();
+        $s.setLine($line);
         }
-        )+
-        (DOT | EXCLAMATION | QUESTION)
+
+        (subject SPACE{$s.addSubject($subject.text);} verb SPACE object SPACE adverb | adverb COMMA SPACE subject verb object) ENDPOINT
+
+
+//        (word = WORD SPACE {$sentenceReturn.addSubject($word.text);})*
+//
+//
+//        endWord = WORD{$sentenceReturn.addSubject($endWord.text);}
     ;
 
+subject: WORD;
+object: WORD;
+verb: WORD;
+adverb: WORD;
+
+ENDPOINT: DOT | EXCLAMATION | QUESTION;
 WORD: [A-Za-z]+;
 DOT: '.';
-COLON: ',';
+COMMA: ',';
 SEMICOLON: ';';
-SPACE: (' ' | '\t')->skip;
+SPACE: (' ' | '\t');
 EXCLAMATION: '!';
 QUESTION: '?';
-NEWLINE: ('\n' | '\r')->skip;
+NEWLINE: ('\n' | '\r');

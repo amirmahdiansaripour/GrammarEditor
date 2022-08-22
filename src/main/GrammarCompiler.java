@@ -4,6 +4,8 @@ import parsers.*;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import main.ast.*;
+import main.visitor.*;
+
 public class GrammarCompiler {
     public void compile(CharStream programName){
         EnglishGrammarLexer lexer = new EnglishGrammarLexer(programName);
@@ -17,7 +19,8 @@ public class GrammarCompiler {
 //
 //        ErrorPrinter errorPrinter = new ErrorPrinter();
 //        int numOfErrors = program.accept(errorPrinter);
-//        ASTTreePrinter astTreePrinter = new ASTTreePrinter();
+        ASTTree astTreePrinter = new ASTTree();
+        text.accept(astTreePrinter);
 //        if(numOfErrors == 0)
 //            program.accept(astTreePrinter);
         return;
