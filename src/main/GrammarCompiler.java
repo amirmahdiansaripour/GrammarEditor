@@ -13,9 +13,13 @@ public class GrammarCompiler {
         EnglishGrammarParser parser = new EnglishGrammarParser(tokenStream);
 
         Text text = parser.englishGrammar().whole;
-
+        Analyzer analyzer = new Analyzer(text);
+        text.accept(analyzer);
+        ErrorPrinter errorPrinter = new ErrorPrinter();
+        int numOfErrors = text.accept(errorPrinter);
         ASTTree astTreePrinter = new ASTTree();
-        text.accept(astTreePrinter);
+        if(numOfErrors == 0)
+            text.accept(astTreePrinter);
         return;
     }
 

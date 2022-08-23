@@ -4,6 +4,8 @@ import main.ast.partOfSpeech.Adverb;
 import main.error.*;
 
 public class Analyzer extends Visitor<Void>{
+    private Text text;
+    public Analyzer(Text t){text = t;}
     @Override
     public Void visit(Text text){
         for(Sentence s : text.getSentences()){
@@ -20,9 +22,9 @@ public class Analyzer extends Visitor<Void>{
         return null;
     }
 
+    @Override
     public Void visit(Adverb adv){
-
-        adv.addError();
+        adv.addError(new GrammarError.WrongAdverb(adv.getLine(), adv.toString() + " isn't an adverb."));
         return null;
     }
 
