@@ -8,7 +8,7 @@ public class ErrorPrinter extends Visitor<Integer>{
     private int printErrors(astNode node){
         ArrayList<GrammarError> errors = node.getErrors();
         for (GrammarError ge : errors)
-            System.out.println(ge.getMessage());
+            System.err.println(ge.getMessage());
         return errors.size();
     }
     @Override

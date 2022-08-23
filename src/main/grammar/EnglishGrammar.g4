@@ -6,7 +6,7 @@ grammar EnglishGrammar;
     import java.util.*;
 }
 
-import PartOfSpeech;
+import PartOfSpeech, Present;
 
 englishGrammar returns [Text whole]
     :
@@ -30,8 +30,7 @@ sentence [int line, int index] returns [Sentence s]
         $s.setIndex($index);
         }
         (
-        subject[$s] SPACE verb[$s] (SPACE object[$s])? (SPACE adverb[$s])?
-        | adverb[$s] COMMA SPACE subject[$s] SPACE verb[$s] SPACE object[$s]
+        present[$s]
         )
         ENDPOINT
 

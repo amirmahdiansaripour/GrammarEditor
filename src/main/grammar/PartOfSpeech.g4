@@ -5,6 +5,7 @@ grammar PartOfSpeech;
     import main.ast.partOfSpeech.*;
     import main.error.*;
     import java.util.*;
+    import java.io.*;
 }
 partOfSpeech [Sentence s]
     :
@@ -27,10 +28,15 @@ adverb [Sentence s] returns [Adverb adv]
     :
     WORD
     {
-    $adv = new Adverb($WORD.text);
-    $adv.setLine($s.getLine());
-    $adv.setIndex($s.getIndex());
-    $s.addAdverb($adv);
+        try{
+            $adv = new Adverb($WORD.text);
+            $adv.setLine($s.getLine());
+            $s.addAdverb($adv);
+        }
+        catch(IOException e){
+            System.err.println("Adverbs' data not Found!");
+            System.exit(0);
+        }
     }
     ;
 

@@ -3,6 +3,8 @@ import main.ast.*;
 import main.ast.partOfSpeech.Adverb;
 import main.error.*;
 
+import java.io.IOException;
+
 public class Analyzer extends Visitor<Void>{
     private Text text;
     public Analyzer(Text t){text = t;}
@@ -24,7 +26,9 @@ public class Analyzer extends Visitor<Void>{
 
     @Override
     public Void visit(Adverb adv){
-        adv.addError(new GrammarError.WrongAdverb(adv.getLine(), adv.toString() + " isn't an adverb."));
+        Boolean result = adv.verify();
+        if (!result)
+            adv.addError(new GrammarError.WrongAdverb(adv.getLine(), adv.toString()));
         return null;
     }
 

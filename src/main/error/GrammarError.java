@@ -12,7 +12,7 @@ public class GrammarError extends Exception{
 
     public static class WrongAdverb extends GrammarError{
         public WrongAdverb(int line_, String message_){
-            super(line_, message_);
+            super(line_, message_ + " isn't an adverb.");
         }
     }
 
