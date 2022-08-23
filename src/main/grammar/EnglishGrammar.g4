@@ -6,6 +6,8 @@ grammar EnglishGrammar;
     import java.util.*;
 }
 
+import PartOfSpeech;
+
 englishGrammar returns [Text whole]
     :
         NEWLINE* t = text {$whole = $t.textReturn;} NEWLINE* EOF
@@ -38,30 +40,3 @@ sentence [int line, int index] returns [Sentence s]
 //
 //        endWord = WORD{$s.addSubject($endWord.text);}
     ;
-
-subject [Sentence sentnce]
-    :
-    WORD {$sentnce.addSubject($WORD.text);}
-    ;
-object [Sentence sentnce]
-    :
-    WORD {$sentnce.addObject($WORD.text);}
-    ;
-verb [Sentence sentnce]
-    :
-     WORD {$sentnce.addVerb($WORD.text);}
-    ;
-adverb [Sentence sentnce]
-    :
-    WORD {$sentnce.addAdverb($WORD.text);}
-    ;
-
-ENDPOINT: (DOT | EXCLAMATION | QUESTION)(NEWLINE)?;
-WORD: [A-Za-z]+;
-DOT: '.';
-COMMA: ',';
-SEMICOLON: ';';
-SPACE: (' ' | '\t');
-EXCLAMATION: '!';
-QUESTION: '?';
-NEWLINE: '\n' | '\r';
