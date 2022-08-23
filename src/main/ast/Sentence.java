@@ -11,9 +11,10 @@ public class Sentence extends astNode {
     private ArrayList<String> object;
     private ArrayList<String> verb;
     private ArrayList<Adverb> adverb;
-
+    private Boolean capital;
 
     public Sentence(){
+        capital = false;
         words = new ArrayList<String>();
         subject = new ArrayList<String>();
         object = new ArrayList<String>();
@@ -31,6 +32,7 @@ public class Sentence extends astNode {
     public ArrayList<String> getObject(){return object;}
     public ArrayList<String> getVerb(){return verb;}
     public ArrayList<Adverb> getAdverb(){return adverb;}
+    public void capitalize(){capital = true;}
     @Override
     public String toString(){return "Sentence";}
     @Override

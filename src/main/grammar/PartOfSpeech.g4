@@ -40,7 +40,8 @@ adverb [Sentence s] returns [Adverb adv]
     }
     ;
 
-ENDPOINT: (DOT | EXCLAMATION | QUESTION)(NEWLINE)?;
+ENDPOINT: (DOT | EXCLAMATION | QUESTION);
+CONJUNCTION: (COMMA | SEMICOLON);
 WORD: [A-Za-z]+;
 DOT: '.';
 COMMA: ',';

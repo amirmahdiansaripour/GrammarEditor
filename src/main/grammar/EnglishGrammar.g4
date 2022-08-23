@@ -10,7 +10,7 @@ import PartOfSpeech, Present;
 
 englishGrammar returns [Text whole]
     :
-        NEWLINE* t = text {$whole = $t.textReturn;} NEWLINE* EOF
+        NEWLINE* t = text {$whole = $t.textReturn;} (ENDPOINT NEWLINE* EOF)
     ;
 text returns [Text textReturn]
     :
@@ -19,23 +19,36 @@ text returns [Text textReturn]
         int senIndex = 1;
         $textReturn = new Text();
         }
-        (s = sentence[line, senIndex] {$textReturn.addSentence($s.s); senIndex++;} (NEWLINE {line++;}| SPACE)+)+
+        (fs = firstSentence[line, senIndex] {$textReturn.addSentence($fs.s); senIndex++;})
+        (s = sentence[line, senIndex] {$textReturn.addSentence($s.s); senIndex++; line = $s.indexRet;})*
     ;
 
-sentence [int line, int index] returns [Sentence s]
+firstSentence[int line, int index] returns [Sentence s]
+    :
+    {
+    $s = new Sentence();
+    $s.setLine($line);
+    $s.setIndex($index);
+    $s.capitalize();
+    }
+    structure[$s]
+    ;
+
+sentence [int line, int index] returns [Sentence s, int indexRet]
     :
         {
         $s = new Sentence();
-        $s.setLine($line);
         $s.setIndex($index);
         }
-        (
-        present[$s]
-        )
-        ENDPOINT
+        (ENDPOINT {$s.capitalize();} | CONJUNCTION)
+        (NEWLINE {$indexRet = $line + 1;}| SPACE {$indexRet = $line;})+
+        {$s.setLine($indexRet);}
+        structure[$s]
+    ;
 
-//        (word = WORD SPACE {$s.addSubject($word.text);})*
-//
-//
-//        endWord = WORD{$s.addSubject($endWord.text);}
+structure [Sentence s]
+    :
+    (
+    present[$s]
+    )
     ;
