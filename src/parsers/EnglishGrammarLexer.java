@@ -1,8 +1,14 @@
-// Generated from C:/Users/amirmahdi/IdeaProjects/NLP/src/main/grammar\EnglishGrammar.g4 by ANTLR 4.9.2
+// Generated from C:/Users/amirmahdi/IdeaProjects/NLP_GrammarEditor/src/main/grammar\EnglishGrammar.g4 by ANTLR 4.9.2
 package parsers;
 
     import main.ast.*;
-    imort main.error.*;
+    import main.error.*;
+    import java.util.*;
+
+
+    import main.ast.*;
+    import main.ast.partOfSpeech.*;
+    import main.error.*;
     import java.util.*;
 
 import org.antlr.v4.runtime.Lexer;
@@ -22,7 +28,8 @@ public class EnglishGrammarLexer extends Lexer {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		IDENTIFIER=1;
+		ENDPOINT=1, WORD=2, DOT=3, COMMA=4, SEMICOLON=5, SPACE=6, EXCLAMATION=7, 
+		QUESTION=8, NEWLINE=9;
 	public static String[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
 	};
@@ -33,19 +40,22 @@ public class EnglishGrammarLexer extends Lexer {
 
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"IDENTIFIER"
+			"ENDPOINT", "WORD", "DOT", "COMMA", "SEMICOLON", "SPACE", "EXCLAMATION", 
+			"QUESTION", "NEWLINE"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
+			null, null, null, "'.'", "','", "';'", null, "'!'", "'?'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "IDENTIFIER"
+			null, "ENDPOINT", "WORD", "DOT", "COMMA", "SEMICOLON", "SPACE", "EXCLAMATION", 
+			"QUESTION", "NEWLINE"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -107,10 +117,20 @@ public class EnglishGrammarLexer extends Lexer {
 	public ATN getATN() { return _ATN; }
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\3\n\b\1\4\2\t\2\3"+
-		"\2\6\2\7\n\2\r\2\16\2\b\2\2\3\3\3\3\2\3\3\2\62;\2\n\2\3\3\2\2\2\3\6\3"+
-		"\2\2\2\5\7\t\2\2\2\6\5\3\2\2\2\7\b\3\2\2\2\b\6\3\2\2\2\b\t\3\2\2\2\t\4"+
-		"\3\2\2\2\4\2\b\2";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\13\60\b\1\4\2\t\2"+
+		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\3\2\3"+
+		"\2\3\2\5\2\31\n\2\3\2\5\2\34\n\2\3\3\6\3\37\n\3\r\3\16\3 \3\4\3\4\3\5"+
+		"\3\5\3\6\3\6\3\7\3\7\3\b\3\b\3\t\3\t\3\n\3\n\2\2\13\3\3\5\4\7\5\t\6\13"+
+		"\7\r\b\17\t\21\n\23\13\3\2\5\4\2C\\c|\4\2\13\13\"\"\4\2\f\f\17\17\2\63"+
+		"\2\3\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t\3\2\2\2\2\13\3\2\2\2\2\r\3\2"+
+		"\2\2\2\17\3\2\2\2\2\21\3\2\2\2\2\23\3\2\2\2\3\30\3\2\2\2\5\36\3\2\2\2"+
+		"\7\"\3\2\2\2\t$\3\2\2\2\13&\3\2\2\2\r(\3\2\2\2\17*\3\2\2\2\21,\3\2\2\2"+
+		"\23.\3\2\2\2\25\31\5\7\4\2\26\31\5\17\b\2\27\31\5\21\t\2\30\25\3\2\2\2"+
+		"\30\26\3\2\2\2\30\27\3\2\2\2\31\33\3\2\2\2\32\34\5\23\n\2\33\32\3\2\2"+
+		"\2\33\34\3\2\2\2\34\4\3\2\2\2\35\37\t\2\2\2\36\35\3\2\2\2\37 \3\2\2\2"+
+		" \36\3\2\2\2 !\3\2\2\2!\6\3\2\2\2\"#\7\60\2\2#\b\3\2\2\2$%\7.\2\2%\n\3"+
+		"\2\2\2&\'\7=\2\2\'\f\3\2\2\2()\t\3\2\2)\16\3\2\2\2*+\7#\2\2+\20\3\2\2"+
+		"\2,-\7A\2\2-\22\3\2\2\2./\t\4\2\2/\24\3\2\2\2\6\2\30\33 \2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
