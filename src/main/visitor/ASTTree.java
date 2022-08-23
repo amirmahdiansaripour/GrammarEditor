@@ -1,9 +1,6 @@
 package main.visitor;
 import main.ast.*;
 public class ASTTree extends Visitor<Void>{
-    public void messagePrinter(int line, String message){
-        System.out.println("Line " + line + ": " + message);
-    }
     @Override
     public Void visit(Text text){
 //        messagePrinter(text.getLine(), text.toString());
@@ -13,7 +10,10 @@ public class ASTTree extends Visitor<Void>{
     }
     @Override
     public Void visit(Sentence sentence){
-        messagePrinter(sentence.getLine(), sentence.toString());
+        System.out.println(sentence.toString() + " " + sentence.getIndex() + " at line " + sentence.getLine());
+        for(String partOfSpeech : sentence.getWords())
+            System.out.println(partOfSpeech);
+        System.out.print("\n");
         return null;
     }
 }

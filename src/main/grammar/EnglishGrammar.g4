@@ -14,33 +14,49 @@ text returns [Text textReturn]
     :
         {
         int line = 1;
+        int senIndex = 1;
         $textReturn = new Text();
         }
-        (s = sentence[line] (NEWLINE {line = line + 1;} | SPACE)+ {$textReturn.addSentence($s.s);})+
+        (s = sentence[line, senIndex] {$textReturn.addSentence($s.s); senIndex++;} (NEWLINE {line++;}| SPACE)+)+
     ;
 
-sentence [int line] returns [Sentence s]
+sentence [int line, int index] returns [Sentence s]
     :
         {
         $s = new Sentence();
         $s.setLine($line);
+        $s.setIndex($index);
         }
+        (
+        subject[$s] SPACE verb[$s] (SPACE object[$s])? (SPACE adverb[$s])?
+        | adverb[$s] COMMA SPACE subject[$s] SPACE verb[$s] SPACE object[$s]
+        )
+        ENDPOINT
 
-        (subject SPACE{$s.addSubject($subject.text);} verb SPACE object SPACE adverb | adverb COMMA SPACE subject verb object) ENDPOINT
-
-
-//        (word = WORD SPACE {$sentenceReturn.addSubject($word.text);})*
+//        (word = WORD SPACE {$s.addSubject($word.text);})*
 //
 //
-//        endWord = WORD{$sentenceReturn.addSubject($endWord.text);}
+//        endWord = WORD{$s.addSubject($endWord.text);}
     ;
 
-subject: WORD;
-object: WORD;
-verb: WORD;
-adverb: WORD;
+subject [Sentence sentnce]
+    :
+    WORD {$sentnce.addSubject($WORD.text);}
+    ;
+object [Sentence sentnce]
+    :
+    WORD {$sentnce.addObject($WORD.text);}
+    ;
+verb [Sentence sentnce]
+    :
+     WORD {$sentnce.addVerb($WORD.text);}
+    ;
+adverb [Sentence sentnce]
+    :
+    WORD {$sentnce.addAdverb($WORD.text);}
+    ;
 
-ENDPOINT: DOT | EXCLAMATION | QUESTION;
+ENDPOINT: (DOT | EXCLAMATION | QUESTION)(NEWLINE)?;
 WORD: [A-Za-z]+;
 DOT: '.';
 COMMA: ',';
@@ -48,4 +64,4 @@ SEMICOLON: ';';
 SPACE: (' ' | '\t');
 EXCLAMATION: '!';
 QUESTION: '?';
-NEWLINE: ('\n' | '\r');
+NEWLINE: '\n' | '\r';
