@@ -20,7 +20,7 @@ public class Sentence extends astNode {
         adverb = new ArrayList<String>();
     }
     public void setIndex(int index){this.index = index;}
-    public String getIndex(){return String.valueOf(this.index);}
+    public int getIndex(){return this.index;}
     public void addSubject(String subject){words.add("Subject: " + subject); this.subject.add(subject);}
     public void addObject(String object){words.add("Object: " + object); this.object.add(object);}
     public void addVerb(String verb){words.add("Verb: " + verb); this.verb.add(verb);}
