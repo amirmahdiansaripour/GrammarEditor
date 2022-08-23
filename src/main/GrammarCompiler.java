@@ -13,16 +13,9 @@ public class GrammarCompiler {
         EnglishGrammarParser parser = new EnglishGrammarParser(tokenStream);
 
         Text text = parser.englishGrammar().whole;
-//        NameAnalyzerHandler nameAnalyzerHandler = new NameAnalyzerHandler(program);
-//
-//        nameAnalyzerHandler.analyze();
-//
-//        ErrorPrinter errorPrinter = new ErrorPrinter();
-//        int numOfErrors = program.accept(errorPrinter);
+
         ASTTree astTreePrinter = new ASTTree();
         text.accept(astTreePrinter);
-//        if(numOfErrors == 0)
-//            program.accept(astTreePrinter);
         return;
     }
 

@@ -3,7 +3,6 @@ import main.ast.*;
 public class ASTTree extends Visitor<Void>{
     @Override
     public Void visit(Text text){
-//        messagePrinter(text.getLine(), text.toString());
         for(Sentence senc : text.getSentences())
             senc.accept(this);
         return  null;

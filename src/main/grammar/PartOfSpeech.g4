@@ -30,7 +30,7 @@ adverb [Sentence s] returns [Adverb adv]
     $adv = new Adverb($WORD.text);
     $adv.setLine($s.getLine());
     $adv.setIndex($s.getIndex());
-    $s.addAdverb($WORD.text);
+    $s.addAdverb($adv);
     }
     ;
 

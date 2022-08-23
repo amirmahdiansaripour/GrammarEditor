@@ -12,6 +12,6 @@ public class Adverb extends Sentence{
     }
     @Override
     public String toString() {
-        return "";
+        return text;
     }
 }

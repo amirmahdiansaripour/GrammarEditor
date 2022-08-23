@@ -690,7 +690,7 @@ public class EnglishGrammarParser extends Parser {
 			    ((AdverbContext)_localctx).adv =  new Adverb((((AdverbContext)_localctx).WORD!=null?((AdverbContext)_localctx).WORD.getText():null));
 			    _localctx.adv.setLine(_localctx.s.getLine());
 			    _localctx.adv.setIndex(_localctx.s.getIndex());
-			    _localctx.s.addAdverb((((AdverbContext)_localctx).WORD!=null?((AdverbContext)_localctx).WORD.getText():null));
+			    _localctx.s.addAdverb(_localctx.adv);
 			    
 			}
 		}
