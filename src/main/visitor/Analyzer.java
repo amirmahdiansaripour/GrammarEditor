@@ -40,9 +40,7 @@ public class Analyzer extends Visitor<Void>{
 
 //    @Override
 //    public Void visit(Word wor){
-//        GrammarError result = wor.verify();
-//        if(result != null)
-//            wor.addError(result);
+//        wor.verify();
 //        return null;
 //    }
 }

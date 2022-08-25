@@ -16,10 +16,9 @@ public class GrammarCompiler {
         Analyzer analyzer = new Analyzer(text);
         text.accept(analyzer);
         ErrorPrinter errorPrinter = new ErrorPrinter();
-        int numOfErrors = text.accept(errorPrinter);
+        text.accept(errorPrinter);
         ASTTree astTreePrinter = new ASTTree();
-        if(numOfErrors == 0)
-            text.accept(astTreePrinter);
+        text.accept(astTreePrinter);
         return;
     }
 

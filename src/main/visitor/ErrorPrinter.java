@@ -5,41 +5,41 @@ import main.ast.partOfSpeech.Verb;
 import main.error.*;
 import java.util.*;
 
-public class ErrorPrinter extends Visitor<Integer>{
-    private int printErrors(astNode node){
+public class ErrorPrinter extends Visitor<Void>{
+    private void printErrors(astNode node){
         ArrayList<GrammarError> errors = node.getErrors();
         for (GrammarError ge : errors)
             System.err.println(ge.getMessage());
-        return errors.size();
     }
     @Override
-    public Integer visit(Text text) {
-        int numOfErrors = printErrors(text);
+    public Void visit(Text text) {
+        printErrors(text);
         for (Sentence s : text.getSentences())
-            numOfErrors += s.accept(this);
-        return numOfErrors;
+            s.accept(this);
+        return null;
     }
     @Override
-    public Integer visit(Sentence s){
-        int numOfErrors = printErrors(s);
+    public Void visit(Sentence s){
+        printErrors(s);
         for(Verb ver: s.getVerb())
-            numOfErrors += ver.accept(this);
+            ver.accept(this);
         for(Adverb adv: s.getAdverb())
-            numOfErrors += adv.accept(this);
-        return numOfErrors;
+            adv.accept(this);
+        return null;
     }
     @Override
-    public Integer visit(Adverb adv){
-        return printErrors(adv);
+    public Void visit(Adverb adv){
+         printErrors(adv);
+         return null;
     }
     @Override
-    public Integer visit(Verb ver){
-        return printErrors(ver);
+    public Void visit(Verb ver){
+        printErrors(ver);
+        return null;
     }
     @Override
-    public Integer visit(Word wor){
-        return printErrors(wor);
+    public Void visit(Word wor){
+        printErrors(wor);
+        return null;
     }
-
-
 }
