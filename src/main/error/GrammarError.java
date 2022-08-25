@@ -12,9 +12,9 @@ public class GrammarError extends Exception{
     }
     public String getMessage(){return "Line " + line + ": " + message;}
 
-    public static class WrongAdverb extends GrammarError{
-        public WrongAdverb(int line_, String message_){
-            super(line_, message_ + " isn't an adverb.");
+    public static class WrongWord extends GrammarError{
+        public WrongWord(int line_, String message_){
+            super(line_, message_);
         }
     }
 

@@ -1,6 +1,7 @@
 package main.visitor;
 import main.ast.*;
 import main.ast.partOfSpeech.Adverb;
+import main.ast.partOfSpeech.Verb;
 import main.error.*;
 import java.util.*;
 
@@ -21,6 +22,8 @@ public class ErrorPrinter extends Visitor<Integer>{
     @Override
     public Integer visit(Sentence s){
         int numOfErrors = printErrors(s);
+        for(Verb ver: s.getVerb())
+            numOfErrors += ver.accept(this);
         for(Adverb adv: s.getAdverb())
             numOfErrors += adv.accept(this);
         return numOfErrors;
@@ -28,6 +31,10 @@ public class ErrorPrinter extends Visitor<Integer>{
     @Override
     public Integer visit(Adverb adv){
         return printErrors(adv);
+    }
+    @Override
+    public Integer visit(Verb ver){
+        return printErrors(ver);
     }
     @Override
     public Integer visit(Word wor){

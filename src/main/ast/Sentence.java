@@ -12,7 +12,7 @@ public class Sentence extends astNode {
     private ArrayList<ArrayList<String>> words;
     private ArrayList<String> subject;
     private ArrayList<String> object;
-    private ArrayList<String> verb;
+    private ArrayList<Verb> verb;
     private ArrayList<Adverb> adverb;
     private Boolean capital;
 
@@ -21,7 +21,7 @@ public class Sentence extends astNode {
         words = new ArrayList<ArrayList<String>>();
         subject = new ArrayList<String>();
         object = new ArrayList<String>();
-        verb = new ArrayList<String>();
+        verb = new ArrayList<Verb>();
         adverb = new ArrayList<Adverb>();
     }
     public void setIndex(int index){this.index = index;}
@@ -34,8 +34,8 @@ public class Sentence extends astNode {
         words.add(new ArrayList<String>(){{add("Object: "); add(object);}});
         this.object.add(object);
     }
-    public void addVerb(String verb){
-        words.add(new ArrayList<String>(){{add("Verb: "); add(verb);}});
+    public void addVerb(Verb verb){
+        words.add(new ArrayList<String>(){{add("Verb: "); add(verb.toString());}});
         this.verb.add(verb);
     }
     public void addAdverb(Adverb adverb){
@@ -45,7 +45,7 @@ public class Sentence extends astNode {
     public ArrayList<ArrayList<String>> getWords(){return words;}
     public ArrayList<String> getSubject(){return subject;}
     public ArrayList<String> getObject(){return object;}
-    public ArrayList<String> getVerb(){return verb;}
+    public ArrayList<Verb> getVerb(){return verb;}
     public ArrayList<Adverb> getAdverb(){return adverb;}
     public Boolean isCapital(){return capital;}
     public void capitalize(){capital = true;}

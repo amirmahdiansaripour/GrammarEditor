@@ -7,14 +7,10 @@ import java.util.Locale;
 import main.error.*;
 
 public class Adverb extends Word{
+    protected static ArrayList<String> adverbDataset;
     public Adverb(String t, Boolean capital_) throws IOException{
         super(t, capital_);
-        File file = new File("src\\dataset\\adverbs.txt");
-        BufferedReader stream = new BufferedReader(new FileReader(file));
-        String line;
-        while ((line = stream.readLine()) != null)
-            dataset.add(line);
-        stream.close();
+        adverbDataset = makeDataSet("src\\dataset\\adverbs.txt", adverbDataset);
     }
     @Override
     public <T> T accept(IVisitor<T> visitor) {
@@ -22,13 +18,6 @@ public class Adverb extends Word{
     }
     @Override
     public GrammarError verify(){
-        GrammarError capError = checkCapital();
-        if(capError != null){
-            return capError;
-        }
-        if(!dataset.contains(text.toLowerCase(Locale.ROOT))){
-            return new GrammarError.WrongAdverb(line, text);
-        }
-        return null;
+        return generalVerify(adverbDataset, " isn't an adverb.");
     }
 }

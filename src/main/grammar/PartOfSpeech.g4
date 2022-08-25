@@ -19,10 +19,23 @@ object [Sentence sentnce]
     :
     WORD {$sentnce.addObject($WORD.text);}
     ;
-verb [Sentence sentnce]
+
+verb [Sentence s] returns [Verb ver]
     :
-     WORD {$sentnce.addVerb($WORD.text);}
+     WORD
+     {
+        try{
+            $ver = new Verb($WORD.text);
+            $ver.setLine($s.getLine());
+            $s.addVerb($ver);
+        }
+        catch(IOException e){
+            System.err.println("Verbs' data not Found!");
+            System.exit(0);
+        }
+     }
     ;
+
 adverb [Sentence s, Boolean capital] returns [Adverb adv]
     :
     WORD
