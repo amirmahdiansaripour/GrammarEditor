@@ -23,6 +23,6 @@ public abstract class astNode {
         line = line_;
     }
     public abstract String toString();
-    public abstract GrammarError verify();
+    public abstract void verify();
     public abstract <T> T accept(IVisitor<T> visitor);
 }

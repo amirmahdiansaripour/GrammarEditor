@@ -28,25 +28,21 @@ public class Analyzer extends Visitor<Void>{
 
     @Override
     public Void visit(Adverb adv){
-        GrammarError result = adv.verify();
-        if(result != null)
-            adv.addError(result);
+        adv.verify();
         return null;
     }
 
     @Override
     public Void visit(Verb ver){
-        GrammarError result= ver.verify();
-        if(result != null)
-            ver.addError(result);
+        ver.verify();
         return null;
     }
 
-    @Override
-    public Void visit(Word wor){
-        GrammarError result = wor.verify();
-        if(result != null)
-            wor.addError(result);
-        return null;
-    }
+//    @Override
+//    public Void visit(Word wor){
+//        GrammarError result = wor.verify();
+//        if(result != null)
+//            wor.addError(result);
+//        return null;
+//    }
 }

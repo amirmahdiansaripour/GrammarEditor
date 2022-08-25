@@ -22,7 +22,7 @@ public class Verb extends Word {
         return visitor.visit(this);
     }
     @Override
-    public GrammarError verify(){
-        return generalVerify(verbDataset, " isn't a verb.");
+    public void verify(){
+        generalVerify(verbDataset, " isn't a verb.");
     }
 }

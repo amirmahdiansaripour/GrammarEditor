@@ -17,7 +17,7 @@ public class Adverb extends Word{
         return visitor.visit(this);
     }
     @Override
-    public GrammarError verify(){
-        return generalVerify(adverbDataset, " isn't an adverb.");
+    public void verify(){
+        generalVerify(adverbDataset, " isn't an adverb.");
     }
 }

@@ -54,13 +54,13 @@ public class Sentence extends astNode {
     @Override
     public <T> T accept(IVisitor<T> visitor){return visitor.visit(this);}
     @Override
-    public GrammarError verify(){
+    public void verify(){
 //        String firstWord = words.get(0).get(0);
 //        if(capital){
 //            if(Character.isLowerCase(firstWord.charAt(0))){
 //                return null;
 //            }
 //        }
-        return null;
+        return;
     }
 }

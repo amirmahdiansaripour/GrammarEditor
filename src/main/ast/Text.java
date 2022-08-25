@@ -18,5 +18,5 @@ public class Text extends astNode{
         return "Text";
     }
     @Override
-    public GrammarError verify() {return null;}
+    public void verify() {return;}
 }
