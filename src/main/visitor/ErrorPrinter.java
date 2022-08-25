@@ -29,5 +29,10 @@ public class ErrorPrinter extends Visitor<Integer>{
     public Integer visit(Adverb adv){
         return printErrors(adv);
     }
+    @Override
+    public Integer visit(Word wor){
+        return printErrors(wor);
+    }
+
 
 }

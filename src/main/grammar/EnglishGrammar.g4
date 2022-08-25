@@ -10,7 +10,7 @@ import PartOfSpeech, Present;
 
 englishGrammar returns [Text whole]
     :
-        NEWLINE* t = text {$whole = $t.textReturn;} (ENDPOINT NEWLINE* EOF)
+        NEWLINE* t = text {$whole = $t.textReturn;} (endpoint NEWLINE* EOF)
     ;
 text returns [Text textReturn]
     :
@@ -40,7 +40,7 @@ sentence [int line, int index] returns [Sentence s, int indexRet]
         $s = new Sentence();
         $s.setIndex($index);
         }
-        (ENDPOINT {$s.capitalize();} | CONJUNCTION)
+        (endpoint {$s.capitalize();} | conjunction)
         (NEWLINE {$indexRet = $line + 1;}| SPACE {$indexRet = $line;})+
         {$s.setLine($indexRet);}
         structure[$s]

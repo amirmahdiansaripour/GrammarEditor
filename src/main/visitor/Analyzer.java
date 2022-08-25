@@ -2,7 +2,6 @@ package main.visitor;
 import main.ast.*;
 import main.ast.partOfSpeech.Adverb;
 import main.error.*;
-
 import java.io.IOException;
 
 public class Analyzer extends Visitor<Void>{
@@ -18,6 +17,7 @@ public class Analyzer extends Visitor<Void>{
 
     @Override
     public Void visit(Sentence s){
+
         for(Adverb adv : s.getAdverb()){
             adv.accept(this);
         }
@@ -26,10 +26,17 @@ public class Analyzer extends Visitor<Void>{
 
     @Override
     public Void visit(Adverb adv){
-        Boolean result = adv.verify();
-        if (!result)
-            adv.addError(new GrammarError.WrongAdverb(adv.getLine(), adv.toString()));
+        GrammarError result = adv.verify();
+        if(result != null)
+            adv.addError(result);
         return null;
     }
 
+    @Override
+    public Void visit(Word wor){
+        GrammarError result = wor.verify();
+        if(result != null)
+            wor.addError(result);
+        return null;
+    }
 }

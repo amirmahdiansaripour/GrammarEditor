@@ -1,5 +1,7 @@
 package main.error;
 
+import main.ast.Word;
+
 public class GrammarError extends Exception{
     protected int line;
     protected String message;
@@ -16,5 +18,17 @@ public class GrammarError extends Exception{
         }
     }
 
+    public static class WordShouldBeCapital extends GrammarError{
+        public WordShouldBeCapital(int line_, String message_){
+            super(line_, message_ + " should be capital letter.");
+        }
+    }
+
+
+    public static class WordShouldBeLittle extends GrammarError{
+        public WordShouldBeLittle(int line_, String message_){
+            super(line_, message_ + " should be in little case.");
+        }
+    }
 
 }

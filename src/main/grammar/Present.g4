@@ -8,6 +8,6 @@ import PartOfSpeech;
 
 present [Sentence s]
     :
-        subject[$s] SPACE verb[$s] (SPACE object[$s])? (SPACE adverb[$s])?
-        | adverb[$s] COMMA SPACE subject[$s] SPACE verb[$s] SPACE object[$s]
+        (subject[$s] SPACE verb[$s] (SPACE object[$s])? (SPACE adverb[$s, false])?
+        | adverb[$s, true] COMMA SPACE subject[$s] SPACE verb[$s] SPACE object[$s])
     ;

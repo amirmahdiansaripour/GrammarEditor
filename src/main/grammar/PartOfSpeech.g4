@@ -1,5 +1,4 @@
 grammar PartOfSpeech;
-
 @header{
     import main.ast.*;
     import main.ast.partOfSpeech.*;
@@ -7,9 +6,9 @@ grammar PartOfSpeech;
     import java.util.*;
     import java.io.*;
 }
-partOfSpeech [Sentence s]
+partOfSpeech [Sentence s, Boolean cap]
     :
-    subject[s] | object[s] | verb[s] | adverb[s]
+    subject[s] | object[s] | verb[s] | adverb[s, cap]
     ;
 
 subject [Sentence sentnce]
@@ -24,12 +23,12 @@ verb [Sentence sentnce]
     :
      WORD {$sentnce.addVerb($WORD.text);}
     ;
-adverb [Sentence s] returns [Adverb adv]
+adverb [Sentence s, Boolean capital] returns [Adverb adv]
     :
     WORD
     {
         try{
-            $adv = new Adverb($WORD.text);
+            $adv = new Adverb($WORD.text, capital);
             $adv.setLine($s.getLine());
             $s.addAdverb($adv);
         }
@@ -39,9 +38,9 @@ adverb [Sentence s] returns [Adverb adv]
         }
     }
     ;
+endpoint: (DOT | EXCLAMATION | QUESTION);
+conjunction: (COMMA | SEMICOLON);
 
-ENDPOINT: (DOT | EXCLAMATION | QUESTION);
-CONJUNCTION: (COMMA | SEMICOLON);
 WORD: [A-Za-z]+;
 DOT: '.';
 COMMA: ',';

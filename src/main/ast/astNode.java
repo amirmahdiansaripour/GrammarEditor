@@ -5,12 +5,10 @@ import main.error.*;
 import java.util.ArrayList;
 
 public abstract class astNode {
-    private int line;
-    private ArrayList<GrammarError> errors = new ArrayList<GrammarError>();
+    protected int line;
+    protected ArrayList<GrammarError> errors = new ArrayList<GrammarError>();
     public ArrayList<GrammarError> getErrors(){
-        ArrayList<GrammarError> temp = errors;
-        errors = new ArrayList<GrammarError>();
-        return temp;
+        return errors;
     }
     public void addError(GrammarError error){
         errors.add(error);
@@ -25,6 +23,6 @@ public abstract class astNode {
         line = line_;
     }
     public abstract String toString();
-
+    public abstract GrammarError verify();
     public abstract <T> T accept(IVisitor<T> visitor);
 }

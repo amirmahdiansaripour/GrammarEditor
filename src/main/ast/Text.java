@@ -1,6 +1,8 @@
 package main.ast;
 
 import java.util.ArrayList;
+
+import main.error.GrammarError;
 import main.visitor.*;
 
 public class Text extends astNode{
@@ -15,4 +17,6 @@ public class Text extends astNode{
     public String toString() {
         return "Text";
     }
+    @Override
+    public GrammarError verify() {return null;}
 }
