@@ -8,16 +8,38 @@ grammar PartOfSpeech;
 }
 partOfSpeech [Sentence s, Boolean cap]
     :
-    subject[s, cap] | object[s] | verb[s] | adverb[s, cap]
+    subject[s, cap] | object[s, cap] | verb[s] | adverb[s, cap]
     ;
 
-subject [Sentence sentnce, Boolean cap] returns [Subject sub]
+subject [Sentence s, Boolean cap] returns [Subject sub]
     :
-    WORD {$sentnce.addSubject($WORD.text);}
+    WORD
+    {
+        try{
+            $sub = new Subject($WORD.text, cap);
+            $sub.setLine($s.getLine());
+            $s.addSubject($sub);
+        }
+        catch(IOException e){
+            System.err.println("Nouns' data not Found!");
+            System.exit(0);
+        }
+    }
     ;
-object [Sentence sentnce]
+
+object [Sentence s, Boolean cap] returns [OBject obj]
     :
-    WORD {$sentnce.addObject($WORD.text);}
+    WORD {
+        try{
+            $obj = new OBject($WORD.text, cap);
+            $obj.setLine($s.getLine());
+            $s.addObject($obj);
+        }
+        catch(IOException e){
+            System.err.println("Nouns' data not Found!");
+            System.exit(0);
+        }
+    }
     ;
 
 verb [Sentence s] returns [Verb ver]

@@ -13,6 +13,12 @@ public class ASTTree extends Visitor<Void>{
     }
     @Override
     public Void visit(Sentence sentence){
+        for(Subject sub : sentence.getSubject())
+            if(sub.hasError())
+                return null;
+        for(OBject obj : sentence.getObject())
+            if(obj.hasError())
+                return null;
         for(Verb ver : sentence.getVerb())
             if(ver.hasError())
                 return null;

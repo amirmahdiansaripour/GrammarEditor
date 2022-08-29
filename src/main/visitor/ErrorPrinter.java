@@ -21,6 +21,10 @@ public class ErrorPrinter extends Visitor<Void>{
     @Override
     public Void visit(Sentence s){
         printErrors(s);
+        for(Word sub: s.getSubject())
+            sub.accept(this);
+        for(Word obj: s.getObject())
+            obj.accept(this);
         for(Word ver: s.getVerb())
             ver.accept(this);
         for(Word adv: s.getAdverb())

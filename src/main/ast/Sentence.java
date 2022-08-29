@@ -10,8 +10,8 @@ import java.util.*;
 public class Sentence extends astNode {
     private int index;
     private ArrayList<ArrayList<String>> words;
-    private ArrayList<String> subject;
-    private ArrayList<String> object;
+    private ArrayList<Subject> subject;
+    private ArrayList<OBject> object;
     private ArrayList<Verb> verb;
     private ArrayList<Adverb> adverb;
     private Boolean capital;
@@ -19,19 +19,19 @@ public class Sentence extends astNode {
     public Sentence(){
         capital = false;
         words = new ArrayList<ArrayList<String>>();
-        subject = new ArrayList<String>();
-        object = new ArrayList<String>();
+        subject = new ArrayList<Subject>();
+        object = new ArrayList<OBject>();
         verb = new ArrayList<Verb>();
         adverb = new ArrayList<Adverb>();
     }
     public void setIndex(int index){this.index = index;}
     public int getIndex(){return this.index;}
-    public void addSubject(String subject){
-        words.add(new ArrayList<String>(){{add("Subject: "); add(subject);}});
+    public void addSubject(Subject subject){
+        words.add(new ArrayList<String>(){{add("Subject: "); add(subject.toString());}});
         this.subject.add(subject);
     }
-    public void addObject(String object){
-        words.add(new ArrayList<String>(){{add("Object: "); add(object);}});
+    public void addObject(OBject object){
+        words.add(new ArrayList<String>(){{add("Object: "); add(object.toString());}});
         this.object.add(object);
     }
     public void addVerb(Verb verb){
@@ -43,8 +43,8 @@ public class Sentence extends astNode {
         this.adverb.add(adverb);
     }
     public ArrayList<ArrayList<String>> getWords(){return words;}
-    public ArrayList<String> getSubject(){return subject;}
-    public ArrayList<String> getObject(){return object;}
+    public ArrayList<Subject> getSubject(){return subject;}
+    public ArrayList<OBject> getObject(){return object;}
     public ArrayList<Verb> getVerb(){return verb;}
     public ArrayList<Adverb> getAdverb(){return adverb;}
     public Boolean isCapital(){return capital;}

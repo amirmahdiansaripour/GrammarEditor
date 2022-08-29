@@ -3,11 +3,12 @@ package main.ast.partOfSpeech;
 import main.ast.Word;
 import main.visitor.IVisitor;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Subject extends Word {
     protected static ArrayList<String> nounDataset;
-    public Subject(String t, Boolean cap){
+    public Subject(String t, Boolean cap) throws IOException {
         super(t, cap);
 //        nounDataset = makeDataSet("", nounDataset);
     }
