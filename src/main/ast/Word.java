@@ -45,8 +45,7 @@ public class Word extends astNode{
             errors.add(new GrammarError.WordShouldBeLittle(line, text));
     }
 
-    public void generalVerify(ArrayList<String> dataSet, String errorPartOfSpeech){
-        checkCapital();
+    public void checkValidWord(ArrayList<String> dataSet, String errorPartOfSpeech){
         if(!dataSet.contains(text.toLowerCase(Locale.ROOT))){
             errors.add(new GrammarError.WrongWord(line, text + errorPartOfSpeech));
         }

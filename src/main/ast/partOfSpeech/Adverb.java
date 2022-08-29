@@ -18,6 +18,7 @@ public class Adverb extends Word{
     }
     @Override
     public void verify(){
-        generalVerify(adverbDataset, " isn't an adverb.");
+        checkCapital();
+        checkValidWord(adverbDataset, " isn't an adverb.");
     }
 }

@@ -21,22 +21,22 @@ public class ErrorPrinter extends Visitor<Void>{
     @Override
     public Void visit(Sentence s){
         printErrors(s);
-        for(Verb ver: s.getVerb())
+        for(Word ver: s.getVerb())
             ver.accept(this);
-        for(Adverb adv: s.getAdverb())
+        for(Word adv: s.getAdverb())
             adv.accept(this);
         return null;
     }
-    @Override
-    public Void visit(Adverb adv){
-         printErrors(adv);
-         return null;
-    }
-    @Override
-    public Void visit(Verb ver){
-        printErrors(ver);
-        return null;
-    }
+//    @Override
+//    public Void visit(Adverb adv){
+//         printErrors(adv);
+//         return null;
+//    }
+//    @Override
+//    public Void visit(Verb ver){
+//        printErrors(ver);
+//        return null;
+//    }
     @Override
     public Void visit(Word wor){
         printErrors(wor);

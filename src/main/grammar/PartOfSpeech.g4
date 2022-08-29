@@ -8,10 +8,10 @@ grammar PartOfSpeech;
 }
 partOfSpeech [Sentence s, Boolean cap]
     :
-    subject[s] | object[s] | verb[s] | adverb[s, cap]
+    subject[s, cap] | object[s] | verb[s] | adverb[s, cap]
     ;
 
-subject [Sentence sentnce]
+subject [Sentence sentnce, Boolean cap] returns [Subject sub]
     :
     WORD {$sentnce.addSubject($WORD.text);}
     ;

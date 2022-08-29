@@ -23,6 +23,7 @@ public class Verb extends Word {
     }
     @Override
     public void verify(){
-        generalVerify(verbDataset, " isn't a verb.");
+        checkCapital();
+        checkValidWord(verbDataset, " isn't a verb.");
     }
 }
