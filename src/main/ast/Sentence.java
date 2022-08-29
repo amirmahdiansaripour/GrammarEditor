@@ -15,7 +15,7 @@ public class Sentence extends astNode {
     private ArrayList<Verb> verb;
     private ArrayList<Adverb> adverb;
     private Boolean capital;
-
+    private String singOrPru;
     public Sentence(){
         capital = false;
         words = new ArrayList<ArrayList<String>>();
@@ -23,6 +23,9 @@ public class Sentence extends astNode {
         object = new ArrayList<OBject>();
         verb = new ArrayList<Verb>();
         adverb = new ArrayList<Adverb>();
+    }
+    public void setSingOrPru(String singOrPru_){
+        singOrPru = singOrPru_;
     }
     public void setIndex(int index){this.index = index;}
     public int getIndex(){return this.index;}
