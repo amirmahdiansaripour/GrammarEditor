@@ -44,10 +44,23 @@ object [Sentence s, Boolean cap] returns [OBject obj]
 
 verb [Sentence s] returns [Verb ver]
     :
-     WORD
+    {
+     String verbText = "";
+     String root = "";
+    }
+     (TOBE SPACE WORD {
+      int len = $WORD.text.length();
+          if(len > 3 && $WORD.text.substring(len - 3).equals("ing")){
+              verbText = $TOBE.text + " " + $WORD.text;
+              root = $WORD.text.substring(0, len - 3);
+          }
+      }
+     |
+      WORD {verbText = $WORD.text; root = $WORD.text;}
+     )
      {
         try{
-            $ver = new Verb($WORD.text);
+            $ver = new Verb(verbText, root);
             $ver.setLine($s.getLine());
             $s.addVerb($ver);
         }
@@ -73,9 +86,11 @@ adverb [Sentence s, Boolean capital] returns [Adverb adv]
         }
     }
     ;
+
 endpoint: (DOT | EXCLAMATION | QUESTION);
 conjunction: (COMMA | SEMICOLON);
 
+TOBE: ('am' | 'is' | 'are' | 'was' | 'were');
 WORD: [A-Za-z]+;
 DOT: '.';
 COMMA: ',';

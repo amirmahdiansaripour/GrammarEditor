@@ -27,10 +27,6 @@ public class Word extends astNode{
         stream.close();
         return dataSet;
     }
-
-    public void captalize(){
-        capital = true;
-    }
     @Override
     public String toString(){return text;}
     @Override
@@ -45,9 +41,9 @@ public class Word extends astNode{
             errors.add(new GrammarError.WordShouldBeLittle(line, text));
     }
 
-    public void checkValidWord(ArrayList<String> dataSet, String errorPartOfSpeech){
-        if(!dataSet.contains(text.toLowerCase(Locale.ROOT))){
-            errors.add(new GrammarError.WrongWord(line, text + errorPartOfSpeech));
+    public void checkValidWord(String word, ArrayList<String> dataSet, String errorPartOfSpeech){
+        if(!dataSet.contains(word.toLowerCase(Locale.ROOT))){
+            errors.add(new GrammarError.WrongWord(line, word + errorPartOfSpeech));
         }
     }
 

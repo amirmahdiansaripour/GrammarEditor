@@ -13,9 +13,11 @@ import java.util.Locale;
 
 public class Verb extends Word {
     protected static ArrayList<String> verbDataset;
-    public Verb(String t) throws IOException {
+    private String root;
+    public Verb(String t, String root_) throws IOException {
         super(t, false); // verbs are never capitalized
         verbDataset = makeDataSet("src\\dataset\\verbs.txt", verbDataset);
+        root = root_;
     }
     @Override
     public <T> T accept(IVisitor<T> visitor) {
@@ -24,6 +26,6 @@ public class Verb extends Word {
     @Override
     public void verify(){
         checkCapital();
-        checkValidWord(verbDataset, " isn't a verb.");
+        checkValidWord(root, verbDataset, " isn't a verb.");
     }
 }
