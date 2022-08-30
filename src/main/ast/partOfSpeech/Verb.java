@@ -101,8 +101,8 @@ public class Verb extends Word {
     }
     public Verb(String t, String root_, int line_) throws IOException {
         super(t, false, line_); // verbs are never capitalized
-        presentDataset = makeDataSet("src\\dataset\\presentTense.txt", presentDataset);
-        pastDataset = makeDataSet("src\\dataset\\irregularPast.txt", pastDataset);
+        presentDataset = makeDataSet("src\\dataset\\verbs\\simplePresentVerbs.txt", presentDataset);
+        pastDataset = makeDataSet("src\\dataset\\verbs\\irregularPastVerbs.txt", pastDataset);
         root = root_;
         setSense();
 //        System.out.println(text + " " + tense);
@@ -116,7 +116,7 @@ public class Verb extends Word {
         checkCapital();
         if(tense == null){
             tense = "wrong";
-            errors.add(new GrammarError.WrongWord(line, root + " isn't a verb."));
+            errors.add(new GrammarError.WrongWord(line, root + " isn't correct."));
         }
     }
 }

@@ -7,13 +7,13 @@ import java.util.Locale;
 import main.error.*;
 
 public class Adverb extends Word{
-    protected static ArrayList<String> adverbDataset, pastTimeAdverbs, simplePresentAdverbs;
+    protected static ArrayList<String> adverbDataset, pastTimeAdverbs, adverbsOfFrequency;
     public String tense;
     public Adverb(String t, Boolean capital_, int line_) throws IOException{
         super(t, capital_, line_);
-        adverbDataset = makeDataSet("src\\dataset\\adverbs.txt", adverbDataset);
-        pastTimeAdverbs = makeDataSet("src\\dataset\\pastTimeAdverbs.txt", pastTimeAdverbs);
-        simplePresentAdverbs = makeDataSet("src\\dataset\\simplePresentTenseAdverbs.txt", simplePresentAdverbs);
+        adverbDataset = makeDataSet("src\\dataset\\adverbs\\adverbs.txt", adverbDataset);
+        pastTimeAdverbs = makeDataSet("src\\dataset\\adverbs\\pastTimeAdverbs.txt", pastTimeAdverbs);
+        adverbsOfFrequency = makeDataSet("src\\dataset\\adverbs\\adverbsOfFrequency.txt", adverbsOfFrequency);
         setTense();
     }
     public void setTense(){
@@ -33,11 +33,11 @@ public class Adverb extends Word{
         }
         else if(pastTimeAdverbs.contains(text.toLowerCase())){
             tense = "past";
-            if(simplePresentAdverbs.contains(text.toLowerCase())){
+            if(adverbsOfFrequency.contains(text.toLowerCase())){
                 tense = "both";
             }
         }
-        else if(simplePresentAdverbs.contains(text.toLowerCase())){
+        else if(adverbsOfFrequency.contains(text.toLowerCase())){
             tense = "simple present";
         }
     }
