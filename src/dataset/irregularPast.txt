@@ -53,6 +53,7 @@ cost
 crept
 crowed
 cut
+put
 dealt
 dug
 did

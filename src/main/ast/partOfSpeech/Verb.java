@@ -39,20 +39,30 @@ public class Verb extends Word {
             auxiliary = "were";
         }
     }
+    public void simpleVerbs(){
+        if(presentDataset.contains(text.toLowerCase(Locale.ROOT))){     // simple present
+            tense = "simple present";
+            if(pastDataset.contains(text.toLowerCase(Locale.ROOT))){
+                tense = "both"; // for verbs such as cost, put, etc.
+            }
+        }
+        else if(pastDataset.contains(text.toLowerCase(Locale.ROOT))){   // irregular simple past
+            tense = "past";
+        }
+        else if(text.substring(text.length() - 2).equals("ed") &&   // regular simple past
+                (presentDataset.contains(text.substring(0, text.length() - 2).toLowerCase()) ||
+                presentDataset.contains(text.substring(0, text.length() - 1).toLowerCase()))){
+            tense = "past";
+        }
+    }
     public void setSense(){
         int indexOfAuxiliary = text.indexOf(" ");
         if(indexOfAuxiliary != -1) {
             String aux = text.substring(0, indexOfAuxiliary);
             nonSimpleVerbs(aux);
         }
-        else if(presentDataset.contains(root.toLowerCase(Locale.ROOT))){
-          tense = "present";
-          if(pastDataset.contains(root.toLowerCase(Locale.ROOT))){
-              tense = "both"; // for verbs such as cost, put, etc.
-          }
-        }
-        else if(pastDataset.contains(root.toLowerCase(Locale.ROOT))){
-            tense = "past";
+        else{
+            simpleVerbs();
         }
     }
     public Verb(String t, String root_) throws IOException {
@@ -61,6 +71,7 @@ public class Verb extends Word {
         pastDataset = makeDataSet("src\\dataset\\irregularPast.txt", pastDataset);
         root = root_;
         setSense();
+//        System.out.println("Verb tense " + tense);
     }
     @Override
     public <T> T accept(IVisitor<T> visitor) {
@@ -69,6 +80,8 @@ public class Verb extends Word {
     @Override
     public void verify(){
         checkCapital();
-        checkValidWord(root, presentDataset, " isn't a verb.");
+        if(tense == null){
+            errors.add(new GrammarError.WrongWord(line, root + " isn't a verb."));
+        }
     }
 }

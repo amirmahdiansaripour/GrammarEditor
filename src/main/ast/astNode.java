@@ -10,9 +10,6 @@ public abstract class astNode {
     public ArrayList<GrammarError> getErrors(){
         return errors;
     }
-    public void addError(GrammarError error){
-        errors.add(error);
-    }
     public boolean hasError(){
         return !errors.isEmpty();
     }

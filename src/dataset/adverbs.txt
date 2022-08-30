@@ -495,6 +495,7 @@ weekly
 indefinitely
 patiently
 thankfully
+quickly
 understandably
 statistically
 vastly

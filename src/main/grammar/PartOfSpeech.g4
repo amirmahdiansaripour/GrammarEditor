@@ -73,10 +73,11 @@ verb [Sentence s] returns [Verb ver]
 
 adverb [Sentence s, Boolean capital] returns [Adverb adv]
     :
-    WORD
+    {String adverb = "";}
+    (ADV SPACE {adverb += ($ADV.text + " ");})? WORD {adverb += $WORD.text;}
     {
         try{
-            $adv = new Adverb($WORD.text, capital);
+            $adv = new Adverb(adverb, capital);
             $adv.setLine($s.getLine());
             $s.addAdverb($adv);
         }
@@ -90,6 +91,7 @@ adverb [Sentence s, Boolean capital] returns [Adverb adv]
 endpoint: (DOT | EXCLAMATION | QUESTION);
 conjunction: (COMMA | SEMICOLON);
 
+ADV: ('every' | 'next' | 'last' | 'very' | 'Every' | 'Next' | 'Last' | 'Very');
 TOBE: ('am' | 'is' | 'are' | 'was' | 'were');
 WORD: [A-Za-z]+;
 DOT: '.';
