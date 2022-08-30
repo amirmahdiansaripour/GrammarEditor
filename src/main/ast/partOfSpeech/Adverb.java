@@ -23,7 +23,7 @@ public class Adverb extends Word{
             if(prefix.equals("last")){tense = "past";}
             else if(prefix.equals("every")){tense = "simple present";}
             else if(prefix.equals("next")){tense = "present";}
-            else if(prefix.equals("very")){
+            else if(prefix.equals("very") || prefix.equals("this")){
                 tense = "general";
                 String root = text.substring(spaceIndex + 1).toLowerCase();
                 if(!adverbDataset.contains(root.toLowerCase())){

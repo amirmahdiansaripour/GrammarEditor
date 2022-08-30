@@ -3,39 +3,42 @@ package main.ast.partOfSpeech;
 import main.ast.Word;
 import main.error.GrammarError;
 import main.visitor.IVisitor;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class Verb extends Word {
     protected static ArrayList<String> presentDataset, pastDataset, pastExceptions, simplePresentExceptions,
-            continuousExceptions;
+            wrongs;
 
-    private String root, tense, auxiliary;
+    private String root, auxiliary;
+    public String tense;
     public Verb(String t, String root_, int line_) throws IOException {
         super(t, false, line_); // verbs are never capitalized
         presentDataset = makeDataSet("src\\dataset\\verbs\\simplePresentVerbs.txt", presentDataset);
         pastDataset = makeDataSet("src\\dataset\\verbs\\irregularPastVerbs.txt", pastDataset);
         pastExceptions = makeDataSet("src\\dataset\\verbs\\pastExceptions.txt", pastExceptions);
         simplePresentExceptions = makeDataSet("src\\dataset\\verbs\\simplePresentExceptions.txt", simplePresentExceptions);
-        continuousExceptions = makeDataSet("src\\dataset\\verbs\\continuousExceptions.txt", continuousExceptions);
+        wrongs = makeDataSet("src\\dataset\\verbs\\wrongs.txt", wrongs);
         root = root_;
         setSense();
 //        System.out.println(text + " " + tense);
     }
-    public void nonSimpleVerbs(String aux){
+    public void nonSimpleVerbs(int index){
+        String aux = text.substring(0, index);
+        String remained = text.substring(index + 1);
         if (aux.equals("am") || aux.equals("is") || aux.equals("are")) {
-            tense = "present";
-            auxiliary = aux;
-
+            if(wrongs.contains(remained.toLowerCase())){
+                errors.add(new GrammarError.IsntCorrect(line, remained));
+                tense = "wrong";
+            }
+            else tense = "present";
         }
         else if (aux.equals("was") || aux.equals("were")) {
-            tense = "past";
-            auxiliary = aux;
+            if(wrongs.contains(remained.toLowerCase())){
+                errors.add(new GrammarError.IsntCorrect(line, remained));
+                tense = "wrong";
+            }
+            else tense = "past";
         }
     }
     public Boolean regularPresentOrPast(String suffix, int offset){
@@ -57,15 +60,9 @@ public class Verb extends Word {
         return false;
     }
 
-    public void simpleVerbs(){
-        if(pastExceptions.contains(text.toLowerCase())){
-            tense = "past";
-        }
-        else if(simplePresentExceptions.contains(text.toLowerCase())){
-            tense = "simple present";
-        }
-        else if(regularPresentOrPast("s", 1)){  // receives, agrees
-            if(change()){
+    public void addSuffixToMakeTense(){
+        if(regularPresentOrPast("s", 1)){  // receives, agrees
+            if(change() || wrongs.contains(text.toLowerCase())){
 //                System.out.println(text + "s" );
                 errors.add(new GrammarError.IsntCorrect(line, text));
                 tense = "wrong";
@@ -73,12 +70,29 @@ public class Verb extends Word {
             else tense = "simple present";
         }
         else if(regularPresentOrPast("es", 2)){
-            if(!change()){
+            if(!change() || wrongs.contains(text.toLowerCase())){
 //                System.out.println(text + "es" );
                 errors.add(new GrammarError.IsntCorrect(line, text));
                 tense = "wrong";
             }
             else tense = "simple present";
+        }
+        else if(regularPresentOrPast("ed", 1)){ // received, agreed
+//            System.out.println(text + "ed" );
+            if(wrongs.contains(text.toLowerCase())){
+                errors.add(new GrammarError.IsntCorrect(line, text));
+                tense = "wrong";
+            }
+            else tense = "past";
+        }
+    }
+
+    public void simpleVerbs(){
+        if(pastExceptions.contains(text.toLowerCase())){
+            tense = "past";
+        }
+        else if(simplePresentExceptions.contains(text.toLowerCase())){
+            tense = "simple present";
         }
         else if(presentDataset.contains(text.toLowerCase())){     // simple present
             tense = "simple present";
@@ -89,16 +103,13 @@ public class Verb extends Word {
         else if(pastDataset.contains(text.toLowerCase())){   // irregular simple past
             tense = "past";
         }
-        else if(regularPresentOrPast("ed", 1)){ // received, agreed
-//            System.out.println(text + "ed" );
-            tense = "past";
-        }
+        else addSuffixToMakeTense();
     }
+
     public void setSense(){
         int indexOfAuxiliary = text.indexOf(" ");
         if(indexOfAuxiliary != -1) {
-            String aux = text.substring(0, indexOfAuxiliary);
-            nonSimpleVerbs(aux);
+            nonSimpleVerbs(indexOfAuxiliary);
         }
         else{
             simpleVerbs();
