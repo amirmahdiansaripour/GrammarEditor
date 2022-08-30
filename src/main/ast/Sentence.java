@@ -59,6 +59,7 @@ public class Sentence extends astNode {
     @Override
     public void verify(){
         for(Verb ver : verb){
+            if(ver.tense != null && ver.tense.equals("wrong")) continue;
 //            System.out.println(ver.toString() + " " + ver.tense);
             for(Adverb adv : adverb){
 //                System.out.println(adv.toString() + " " + adv.tense);

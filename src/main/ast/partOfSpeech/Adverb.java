@@ -49,7 +49,7 @@ public class Adverb extends Word{
     public void verify(){
         checkCapital();
         if(tense == null){
-            if(!adverbDataset.contains(text.toLowerCase(Locale.ROOT))){
+            if(!adverbDataset.contains(text.toLowerCase())){
 //                checkValidWord(text, adverbDataset, " isn't an adverb.");
                 errors.add(new GrammarError.WrongWord(line, text + " isn't an adverb."));
             }

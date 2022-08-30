@@ -40,16 +40,19 @@ public class Verb extends Word {
         }
     }
     public Boolean regularPresentOrPast(String suffix, int offset){
+//        System.out.println(text + ";; " + text.substring(text.length() - suffix.length()));
         if(text.substring(text.length() - suffix.length()).equals(suffix) &&
-        (presentDataset.contains(text.substring(0, text.length() - suffix.length()).toLowerCase())) ||
-        (presentDataset.contains(text.substring(0, text.length() - offset).toLowerCase()))){return true;}
+        (presentDataset.contains(text.substring(0, text.length() - suffix.length()).toLowerCase()) ||
+        presentDataset.contains(text.substring(0, text.length() - offset).toLowerCase()))){return true;}
         else {return false;}
     }
 
     public Boolean change(){
         String lastTwo = text.substring(text.length() - 3, text.length() - 1);
         String last = text.substring(text.length() - 2, text.length() - 1);
-        if(lastTwo == "sh" || lastTwo == "ch" || lastTwo == "ss" || last == "x"){
+//        System.out.println(text + " " + lastTwo);
+//        System.out.println(text + " " + last);
+        if(lastTwo.equals("sh") || lastTwo.equals("ch") || lastTwo.equals("ss") || last.equals("x")){
             return true;
         }
         return false;
@@ -58,6 +61,7 @@ public class Verb extends Word {
     public void simpleVerbs(){
         if(regularPresentOrPast("s", 1)){  // receives, agrees
             if(change()){
+//                System.out.println(text + "s" );
                 errors.add(new GrammarError.IsntCorrect(line, text));
                 tense = "wrong";
             }
@@ -65,21 +69,23 @@ public class Verb extends Word {
         }
         else if(regularPresentOrPast("es", 2)){
             if(!change()){
+//                System.out.println(text + "es" );
                 errors.add(new GrammarError.IsntCorrect(line, text));
                 tense = "wrong";
             }
             else tense = "simple present";
         }
-        else if(presentDataset.contains(text.toLowerCase(Locale.ROOT))){     // simple present
+        else if(presentDataset.contains(text.toLowerCase())){     // simple present
             tense = "simple present";
-            if(pastDataset.contains(text.toLowerCase(Locale.ROOT))){
+            if(pastDataset.contains(text.toLowerCase())){
                 tense = "both"; // for verbs such as cost, put, etc.
             }
         }
-        else if(pastDataset.contains(text.toLowerCase(Locale.ROOT))){   // irregular simple past
+        else if(pastDataset.contains(text.toLowerCase())){   // irregular simple past
             tense = "past";
         }
         else if(regularPresentOrPast("ed", 1)){ // received, agreed
+//            System.out.println(text + "ed" );
             tense = "past";
         }
     }
@@ -99,7 +105,7 @@ public class Verb extends Word {
         pastDataset = makeDataSet("src\\dataset\\irregularPast.txt", pastDataset);
         root = root_;
         setSense();
-//        System.out.println("Verb tense " + tense);
+//        System.out.println(text + " " + tense);
     }
     @Override
     public <T> T accept(IVisitor<T> visitor) {
@@ -109,6 +115,7 @@ public class Verb extends Word {
     public void verify(){
         checkCapital();
         if(tense == null){
+            tense = "wrong";
             errors.add(new GrammarError.WrongWord(line, root + " isn't a verb."));
         }
     }

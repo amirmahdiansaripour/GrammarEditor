@@ -46,7 +46,7 @@ public class Word extends astNode{
     }
 
     public void checkValidWord(String word, ArrayList<String> dataSet, String errorPartOfSpeech){
-        if(!dataSet.contains(word.toLowerCase(Locale.ROOT))){
+        if(!dataSet.contains(word.toLowerCase())){
             errors.add(new GrammarError.WrongWord(line, word + errorPartOfSpeech));
         }
     }

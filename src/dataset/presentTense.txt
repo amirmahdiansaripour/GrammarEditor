@@ -216,6 +216,7 @@ cost
 parent
 seek
 advance
+wash
 clip
 compact
 align
