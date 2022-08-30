@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class Subject extends Word {
     protected static ArrayList<String> nounDataset;
-    public Subject(String t, Boolean cap) throws IOException {
-        super(t, cap);
+    public Subject(String t, Boolean cap, int line_) throws IOException {
+        super(t, cap, line_);
 //        nounDataset = makeDataSet("", nounDataset);
     }
     @Override

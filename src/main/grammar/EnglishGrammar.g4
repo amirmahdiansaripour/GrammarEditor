@@ -26,8 +26,7 @@ text returns [Text textReturn]
 firstSentence[int line, int index] returns [Sentence s]
     :
     {
-    $s = new Sentence();
-    $s.setLine($line);
+    $s = new Sentence($line);
     $s.setIndex($index);
     $s.capitalize();
     }
@@ -37,12 +36,12 @@ firstSentence[int line, int index] returns [Sentence s]
 sentence [int line, int index] returns [Sentence s, int indexRet]
     :
         {
-        $s = new Sentence();
+        $s = new Sentence($line);
         $s.setIndex($index);
         }
         (endpoint {$s.capitalize();} | conjunction)
         (NEWLINE {$indexRet = $line + 1;}| SPACE {$indexRet = $line;})+
-        {$s.setLine($indexRet);}
+        {$s.changeLine($indexRet);}
         structure[$s]
     ;
 

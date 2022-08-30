@@ -16,13 +16,14 @@ public class Sentence extends astNode {
     private ArrayList<Adverb> adverb;
     private Boolean capital;
     private String singOrPru;
-    public Sentence(){
+    public Sentence(int line_){
         capital = false;
         words = new ArrayList<ArrayList<String>>();
         subject = new ArrayList<Subject>();
         object = new ArrayList<OBject>();
         verb = new ArrayList<Verb>();
         adverb = new ArrayList<Adverb>();
+        line = line_;
     }
     public void setSingOrPru(String singOrPru_){
         singOrPru = singOrPru_;
@@ -61,7 +62,7 @@ public class Sentence extends astNode {
 //            System.out.println(ver.toString() + " " + ver.tense);
             for(Adverb adv : adverb){
 //                System.out.println(adv.toString() + " " + adv.tense);
-                if(adv.tense == null || adv.tense.equals("general")) continue;
+                if(adv.tense == null || adv.tense.equals("general") || adv.tense.equals("both")) continue;
                 if(!adv.tense.equals(ver.tense)){
                     errors.add(new GrammarError.TenseConflict(line, ver.toString() + " and " + adv.toString()));
                 }

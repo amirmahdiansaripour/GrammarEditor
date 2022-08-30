@@ -1,0 +1,4 @@
+never
+often
+usually
+seldom

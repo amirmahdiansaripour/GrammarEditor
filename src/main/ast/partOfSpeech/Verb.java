@@ -39,8 +39,38 @@ public class Verb extends Word {
             auxiliary = "were";
         }
     }
+    public Boolean regularPresentOrPast(String suffix, int offset){
+        if(text.substring(text.length() - suffix.length()).equals(suffix) &&
+        (presentDataset.contains(text.substring(0, text.length() - suffix.length()).toLowerCase())) ||
+        (presentDataset.contains(text.substring(0, text.length() - offset).toLowerCase()))){return true;}
+        else {return false;}
+    }
+
+    public Boolean change(){
+        String lastTwo = text.substring(text.length() - 3, text.length() - 1);
+        String last = text.substring(text.length() - 2, text.length() - 1);
+        if(lastTwo == "sh" || lastTwo == "ch" || lastTwo == "ss" || last == "x"){
+            return true;
+        }
+        return false;
+    }
+
     public void simpleVerbs(){
-        if(presentDataset.contains(text.toLowerCase(Locale.ROOT))){     // simple present
+        if(regularPresentOrPast("s", 1)){  // receives, agrees
+            if(change()){
+                errors.add(new GrammarError.IsntCorrect(line, text));
+                tense = "wrong";
+            }
+            else tense = "simple present";
+        }
+        else if(regularPresentOrPast("es", 2)){
+            if(!change()){
+                errors.add(new GrammarError.IsntCorrect(line, text));
+                tense = "wrong";
+            }
+            else tense = "simple present";
+        }
+        else if(presentDataset.contains(text.toLowerCase(Locale.ROOT))){     // simple present
             tense = "simple present";
             if(pastDataset.contains(text.toLowerCase(Locale.ROOT))){
                 tense = "both"; // for verbs such as cost, put, etc.
@@ -49,9 +79,7 @@ public class Verb extends Word {
         else if(pastDataset.contains(text.toLowerCase(Locale.ROOT))){   // irregular simple past
             tense = "past";
         }
-        else if(text.substring(text.length() - 2).equals("ed") &&   // regular simple past
-                (presentDataset.contains(text.substring(0, text.length() - 2).toLowerCase()) ||
-                presentDataset.contains(text.substring(0, text.length() - 1).toLowerCase()))){
+        else if(regularPresentOrPast("ed", 1)){ // received, agreed
             tense = "past";
         }
     }
@@ -65,8 +93,8 @@ public class Verb extends Word {
             simpleVerbs();
         }
     }
-    public Verb(String t, String root_) throws IOException {
-        super(t, false); // verbs are never capitalized
+    public Verb(String t, String root_, int line_) throws IOException {
+        super(t, false, line_); // verbs are never capitalized
         presentDataset = makeDataSet("src\\dataset\\presentTense.txt", presentDataset);
         pastDataset = makeDataSet("src\\dataset\\irregularPast.txt", pastDataset);
         root = root_;

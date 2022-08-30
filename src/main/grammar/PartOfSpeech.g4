@@ -16,8 +16,7 @@ subject [Sentence s, Boolean cap] returns [Subject sub]
     WORD
     {
         try{
-            $sub = new Subject($WORD.text, cap);
-            $sub.setLine($s.getLine());
+            $sub = new Subject($WORD.text, cap, $s.getLine());
             $s.addSubject($sub);
         }
         catch(IOException e){
@@ -31,8 +30,7 @@ object [Sentence s, Boolean cap] returns [OBject obj]
     :
     WORD {
         try{
-            $obj = new OBject($WORD.text, cap);
-            $obj.setLine($s.getLine());
+            $obj = new OBject($WORD.text, cap, $s.getLine());
             $s.addObject($obj);
         }
         catch(IOException e){
@@ -60,8 +58,7 @@ verb [Sentence s] returns [Verb ver]
      )
      {
         try{
-            $ver = new Verb(verbText, root);
-            $ver.setLine($s.getLine());
+            $ver = new Verb(verbText, root, $s.getLine());
             $s.addVerb($ver);
         }
         catch(IOException e){
@@ -77,8 +74,7 @@ adverb [Sentence s, Boolean capital] returns [Adverb adv]
     (ADV SPACE {adverb += ($ADV.text + " ");})? WORD {adverb += $WORD.text;}
     {
         try{
-            $adv = new Adverb(adverb, capital);
-            $adv.setLine($s.getLine());
+            $adv = new Adverb(adverb, capital, $s.getLine());
             $s.addAdverb($adv);
         }
         catch(IOException e){
