@@ -212,7 +212,7 @@ signal
 hash
 digest
 strip
-co
+cost
 parent
 seek
 advance
@@ -220,7 +220,7 @@ clip
 compact
 align
 construct
-x
+arrive
 rotate
 stack
 comment

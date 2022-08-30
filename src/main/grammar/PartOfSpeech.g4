@@ -8,24 +8,59 @@ grammar PartOfSpeech;
 }
 partOfSpeech [Sentence s, Boolean cap]
     :
-    subject[s] | object[s] | verb[s] | adverb[s, cap]
+    subject[s, cap] | object[s, cap] | verb[s] | adverb[s, cap]
     ;
 
-subject [Sentence sentnce]
+subject [Sentence s, Boolean cap] returns [Subject sub]
     :
-    WORD {$sentnce.addSubject($WORD.text);}
+    WORD
+    {
+        try{
+            $sub = new Subject($WORD.text, cap);
+            $sub.setLine($s.getLine());
+            $s.addSubject($sub);
+        }
+        catch(IOException e){
+            System.err.println("Nouns' data not Found!");
+            System.exit(0);
+        }
+    }
     ;
-object [Sentence sentnce]
+
+object [Sentence s, Boolean cap] returns [OBject obj]
     :
-    WORD {$sentnce.addObject($WORD.text);}
+    WORD {
+        try{
+            $obj = new OBject($WORD.text, cap);
+            $obj.setLine($s.getLine());
+            $s.addObject($obj);
+        }
+        catch(IOException e){
+            System.err.println("Nouns' data not Found!");
+            System.exit(0);
+        }
+    }
     ;
 
 verb [Sentence s] returns [Verb ver]
     :
-     WORD
+    {
+     String verbText = "";
+     String root = "";
+    }
+     (TOBE SPACE WORD {
+      int len = $WORD.text.length();
+          if(len > 3 && $WORD.text.substring(len - 3).equals("ing")){
+              verbText = $TOBE.text + " " + $WORD.text;
+              root = $WORD.text.substring(0, len - 3);
+          }
+      }
+     |
+      WORD {verbText = $WORD.text; root = $WORD.text;}
+     )
      {
         try{
-            $ver = new Verb($WORD.text);
+            $ver = new Verb(verbText, root);
             $ver.setLine($s.getLine());
             $s.addVerb($ver);
         }
@@ -38,10 +73,11 @@ verb [Sentence s] returns [Verb ver]
 
 adverb [Sentence s, Boolean capital] returns [Adverb adv]
     :
-    WORD
+    {String adverb = "";}
+    (ADV SPACE {adverb += ($ADV.text + " ");})? WORD {adverb += $WORD.text;}
     {
         try{
-            $adv = new Adverb($WORD.text, capital);
+            $adv = new Adverb(adverb, capital);
             $adv.setLine($s.getLine());
             $s.addAdverb($adv);
         }
@@ -51,9 +87,12 @@ adverb [Sentence s, Boolean capital] returns [Adverb adv]
         }
     }
     ;
+
 endpoint: (DOT | EXCLAMATION | QUESTION);
 conjunction: (COMMA | SEMICOLON);
 
+ADV: ('every' | 'next' | 'last' | 'very' | 'Every' | 'Next' | 'Last' | 'Very');
+TOBE: ('am' | 'is' | 'are' | 'was' | 'were');
 WORD: [A-Za-z]+;
 DOT: '.';
 COMMA: ',';

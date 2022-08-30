@@ -10,6 +10,12 @@ package parsers;
     import main.ast.partOfSpeech.*;
     import main.error.*;
     import java.util.*;
+    import java.io.*;
+
+
+    import main.ast.*;
+    import main.error.*;
+    import java.util.*;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -34,11 +40,23 @@ public interface EnglishGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitText(EnglishGrammarParser.TextContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link EnglishGrammarParser#firstSentence}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFirstSentence(EnglishGrammarParser.FirstSentenceContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link EnglishGrammarParser#sentence}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitSentence(EnglishGrammarParser.SentenceContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link EnglishGrammarParser#structure}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStructure(EnglishGrammarParser.StructureContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link EnglishGrammarParser#partOfSpeech}.
 	 * @param ctx the parse tree
@@ -69,4 +87,22 @@ public interface EnglishGrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAdverb(EnglishGrammarParser.AdverbContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link EnglishGrammarParser#endpoint}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEndpoint(EnglishGrammarParser.EndpointContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link EnglishGrammarParser#conjunction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConjunction(EnglishGrammarParser.ConjunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link EnglishGrammarParser#present}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPresent(EnglishGrammarParser.PresentContext ctx);
 }

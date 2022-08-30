@@ -10,28 +10,31 @@ import java.util.*;
 public class Sentence extends astNode {
     private int index;
     private ArrayList<ArrayList<String>> words;
-    private ArrayList<String> subject;
-    private ArrayList<String> object;
+    private ArrayList<Subject> subject;
+    private ArrayList<OBject> object;
     private ArrayList<Verb> verb;
     private ArrayList<Adverb> adverb;
     private Boolean capital;
-
+    private String singOrPru;
     public Sentence(){
         capital = false;
         words = new ArrayList<ArrayList<String>>();
-        subject = new ArrayList<String>();
-        object = new ArrayList<String>();
+        subject = new ArrayList<Subject>();
+        object = new ArrayList<OBject>();
         verb = new ArrayList<Verb>();
         adverb = new ArrayList<Adverb>();
     }
+    public void setSingOrPru(String singOrPru_){
+        singOrPru = singOrPru_;
+    }
     public void setIndex(int index){this.index = index;}
     public int getIndex(){return this.index;}
-    public void addSubject(String subject){
-        words.add(new ArrayList<String>(){{add("Subject: "); add(subject);}});
+    public void addSubject(Subject subject){
+        words.add(new ArrayList<String>(){{add("Subject: "); add(subject.toString());}});
         this.subject.add(subject);
     }
-    public void addObject(String object){
-        words.add(new ArrayList<String>(){{add("Object: "); add(object);}});
+    public void addObject(OBject object){
+        words.add(new ArrayList<String>(){{add("Object: "); add(object.toString());}});
         this.object.add(object);
     }
     public void addVerb(Verb verb){
@@ -43,11 +46,10 @@ public class Sentence extends astNode {
         this.adverb.add(adverb);
     }
     public ArrayList<ArrayList<String>> getWords(){return words;}
-    public ArrayList<String> getSubject(){return subject;}
-    public ArrayList<String> getObject(){return object;}
+    public ArrayList<Subject> getSubject(){return subject;}
+    public ArrayList<OBject> getObject(){return object;}
     public ArrayList<Verb> getVerb(){return verb;}
     public ArrayList<Adverb> getAdverb(){return adverb;}
-    public Boolean isCapital(){return capital;}
     public void capitalize(){capital = true;}
     @Override
     public String toString(){return "Sentence";}
@@ -55,12 +57,16 @@ public class Sentence extends astNode {
     public <T> T accept(IVisitor<T> visitor){return visitor.visit(this);}
     @Override
     public void verify(){
-//        String firstWord = words.get(0).get(0);
-//        if(capital){
-//            if(Character.isLowerCase(firstWord.charAt(0))){
-//                return null;
-//            }
-//        }
+        for(Verb ver : verb){
+//            System.out.println(ver.toString() + " " + ver.tense);
+            for(Adverb adv : adverb){
+//                System.out.println(adv.toString() + " " + adv.tense);
+                if(adv.tense == null || adv.tense.equals("general")) continue;
+                if(!adv.tense.equals(ver.tense)){
+                    errors.add(new GrammarError.TenseConflict(line, ver.toString() + " and " + adv.toString()));
+                }
+            }
+        }
         return;
     }
 }

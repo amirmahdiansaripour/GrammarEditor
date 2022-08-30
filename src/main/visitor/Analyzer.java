@@ -17,32 +17,37 @@ public class Analyzer extends Visitor<Void>{
 
     @Override
     public Void visit(Sentence s){
-        for(Verb ver : s.getVerb()){
+        for(Word sub : s.getSubject()){
+            sub.accept(this);
+        }
+        for(Word obj : s.getObject()){
+            obj.accept(this);
+        }
+        for(Word ver : s.getVerb()){
             ver.accept(this);
         }
-        for(Adverb adv : s.getAdverb()){
+        for(Word adv : s.getAdverb()){
             adv.accept(this);
         }
-        return null;
-    }
-
-    @Override
-    public Void visit(Adverb adv){
-        adv.verify();
-        return null;
-    }
-
-    @Override
-    public Void visit(Verb ver){
-        ver.verify();
+        s.verify();
         return null;
     }
 
 //    @Override
-//    public Void visit(Word wor){
-//        GrammarError result = wor.verify();
-//        if(result != null)
-//            wor.addError(result);
+//    public Void visit(Adverb adv){
+//        adv.verify();
 //        return null;
 //    }
+//
+//    @Override
+//    public Void visit(Verb ver){
+//        ver.verify();
+//        return null;
+//    }
+
+    @Override
+    public Void visit(Word wor){
+        wor.verify();
+        return null;
+    }
 }

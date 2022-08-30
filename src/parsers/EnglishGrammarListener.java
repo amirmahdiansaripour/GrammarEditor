@@ -10,6 +10,12 @@ package parsers;
     import main.ast.partOfSpeech.*;
     import main.error.*;
     import java.util.*;
+    import java.io.*;
+
+
+    import main.ast.*;
+    import main.error.*;
+    import java.util.*;
 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -39,6 +45,16 @@ public interface EnglishGrammarListener extends ParseTreeListener {
 	 */
 	void exitText(EnglishGrammarParser.TextContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link EnglishGrammarParser#firstSentence}.
+	 * @param ctx the parse tree
+	 */
+	void enterFirstSentence(EnglishGrammarParser.FirstSentenceContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link EnglishGrammarParser#firstSentence}.
+	 * @param ctx the parse tree
+	 */
+	void exitFirstSentence(EnglishGrammarParser.FirstSentenceContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link EnglishGrammarParser#sentence}.
 	 * @param ctx the parse tree
 	 */
@@ -48,6 +64,16 @@ public interface EnglishGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSentence(EnglishGrammarParser.SentenceContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link EnglishGrammarParser#structure}.
+	 * @param ctx the parse tree
+	 */
+	void enterStructure(EnglishGrammarParser.StructureContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link EnglishGrammarParser#structure}.
+	 * @param ctx the parse tree
+	 */
+	void exitStructure(EnglishGrammarParser.StructureContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link EnglishGrammarParser#partOfSpeech}.
 	 * @param ctx the parse tree
@@ -98,4 +124,34 @@ public interface EnglishGrammarListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAdverb(EnglishGrammarParser.AdverbContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link EnglishGrammarParser#endpoint}.
+	 * @param ctx the parse tree
+	 */
+	void enterEndpoint(EnglishGrammarParser.EndpointContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link EnglishGrammarParser#endpoint}.
+	 * @param ctx the parse tree
+	 */
+	void exitEndpoint(EnglishGrammarParser.EndpointContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link EnglishGrammarParser#conjunction}.
+	 * @param ctx the parse tree
+	 */
+	void enterConjunction(EnglishGrammarParser.ConjunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link EnglishGrammarParser#conjunction}.
+	 * @param ctx the parse tree
+	 */
+	void exitConjunction(EnglishGrammarParser.ConjunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link EnglishGrammarParser#present}.
+	 * @param ctx the parse tree
+	 */
+	void enterPresent(EnglishGrammarParser.PresentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link EnglishGrammarParser#present}.
+	 * @param ctx the parse tree
+	 */
+	void exitPresent(EnglishGrammarParser.PresentContext ctx);
 }

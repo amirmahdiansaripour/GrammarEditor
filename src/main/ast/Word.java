@@ -22,14 +22,13 @@ public class Word extends astNode{
         File file = new File(address);
         BufferedReader stream = new BufferedReader(new FileReader(file));
         String line;
-        while ((line = stream.readLine()) != null)
+        while ((line = stream.readLine()) != null) {
             dataSet.add(line);
+//            if(address.equals("src\\dataset\\pastTimeAdverbs.txt"))
+//                System.out.println(line);
+        }
         stream.close();
         return dataSet;
-    }
-
-    public void captalize(){
-        capital = true;
     }
     @Override
     public String toString(){return text;}
@@ -45,10 +44,9 @@ public class Word extends astNode{
             errors.add(new GrammarError.WordShouldBeLittle(line, text));
     }
 
-    public void generalVerify(ArrayList<String> dataSet, String errorPartOfSpeech){
-        checkCapital();
-        if(!dataSet.contains(text.toLowerCase(Locale.ROOT))){
-            errors.add(new GrammarError.WrongWord(line, text + errorPartOfSpeech));
+    public void checkValidWord(String word, ArrayList<String> dataSet, String errorPartOfSpeech){
+        if(!dataSet.contains(word.toLowerCase(Locale.ROOT))){
+            errors.add(new GrammarError.WrongWord(line, word + errorPartOfSpeech));
         }
     }
 

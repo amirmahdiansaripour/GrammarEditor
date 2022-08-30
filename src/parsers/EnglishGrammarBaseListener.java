@@ -10,6 +10,12 @@ package parsers;
     import main.ast.partOfSpeech.*;
     import main.error.*;
     import java.util.*;
+    import java.io.*;
+
+
+    import main.ast.*;
+    import main.error.*;
+    import java.util.*;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -51,6 +57,18 @@ public class EnglishGrammarBaseListener implements EnglishGrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFirstSentence(EnglishGrammarParser.FirstSentenceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFirstSentence(EnglishGrammarParser.FirstSentenceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterSentence(EnglishGrammarParser.SentenceContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -58,6 +76,18 @@ public class EnglishGrammarBaseListener implements EnglishGrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSentence(EnglishGrammarParser.SentenceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStructure(EnglishGrammarParser.StructureContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStructure(EnglishGrammarParser.StructureContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -118,6 +148,42 @@ public class EnglishGrammarBaseListener implements EnglishGrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAdverb(EnglishGrammarParser.AdverbContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEndpoint(EnglishGrammarParser.EndpointContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEndpoint(EnglishGrammarParser.EndpointContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConjunction(EnglishGrammarParser.ConjunctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConjunction(EnglishGrammarParser.ConjunctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPresent(EnglishGrammarParser.PresentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPresent(EnglishGrammarParser.PresentContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

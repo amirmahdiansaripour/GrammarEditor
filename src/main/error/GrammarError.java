@@ -24,11 +24,13 @@ public class GrammarError extends Exception{
         }
     }
 
-
     public static class WordShouldBeLittle extends GrammarError{
         public WordShouldBeLittle(int line_, String message_){
             super(line_, message_ + " should be in little case.");
         }
     }
 
+    public static class TenseConflict extends GrammarError{
+        public TenseConflict(int line_, String message_){super(line_, "Tenses of " + message_ + " don't correspond.");}
+    }
 }
