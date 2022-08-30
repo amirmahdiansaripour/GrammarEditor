@@ -15,7 +15,7 @@ public class Verb extends Word {
     protected static ArrayList<String> presentDataset;
     protected static ArrayList<String> pastDataset;
     private String root;
-    private String tense;
+    public String tense;
     private String auxiliary;
     public void nonSimpleVerbs(String aux){
         if (aux.equals("am")) {

@@ -50,7 +50,6 @@ public class Sentence extends astNode {
     public ArrayList<OBject> getObject(){return object;}
     public ArrayList<Verb> getVerb(){return verb;}
     public ArrayList<Adverb> getAdverb(){return adverb;}
-    public Boolean isCapital(){return capital;}
     public void capitalize(){capital = true;}
     @Override
     public String toString(){return "Sentence";}
@@ -58,12 +57,16 @@ public class Sentence extends astNode {
     public <T> T accept(IVisitor<T> visitor){return visitor.visit(this);}
     @Override
     public void verify(){
-//        String firstWord = words.get(0).get(0);
-//        if(capital){
-//            if(Character.isLowerCase(firstWord.charAt(0))){
-//                return null;
-//            }
-//        }
+        for(Verb ver : verb){
+//            System.out.println(ver.toString() + " " + ver.tense);
+            for(Adverb adv : adverb){
+//                System.out.println(adv.toString() + " " + adv.tense);
+                if(adv.tense == null || adv.tense.equals("general")) continue;
+                if(!adv.tense.equals(ver.tense)){
+                    errors.add(new GrammarError.TenseConflict(line, ver.toString() + " and " + adv.toString()));
+                }
+            }
+        }
         return;
     }
 }

@@ -7,6 +7,15 @@ import java.util.Locale;
 import main.error.*;
 
 public class Adverb extends Word{
+    protected static ArrayList<String> adverbDataset;
+    protected static ArrayList<String> pastTimeAdverbs;
+    public String tense;
+    public Adverb(String t, Boolean capital_) throws IOException{
+        super(t, capital_);
+        adverbDataset = makeDataSet("src\\dataset\\adverbs.txt", adverbDataset);
+        pastTimeAdverbs = makeDataSet("src\\dataset\\pastTimeAdverbs.txt", pastTimeAdverbs);
+        setTense();
+    }
     public void setTense(){
         int spaceIndex = text.indexOf(" ");
         if(spaceIndex != -1){
@@ -23,24 +32,18 @@ public class Adverb extends Word{
             }
         }
     }
-    protected static ArrayList<String> adverbDataset;
-    private String tense;
-    public Adverb(String t, Boolean capital_) throws IOException{
-        super(t, capital_);
-        adverbDataset = makeDataSet("src\\dataset\\adverbs.txt", adverbDataset);
-        setTense();
-//        System.out.println("ADV tense: " + tense);
-    }
     @Override
     public <T> T accept(IVisitor<T> visitor) {
         return visitor.visit(this);
     }
     @Override
     public void verify(){
+        if(pastTimeAdverbs.contains(text.toLowerCase())){ tense = "past";}
         checkCapital();
         if(tense == null){
             if(!adverbDataset.contains(text.toLowerCase(Locale.ROOT))){
-                checkValidWord(text, adverbDataset, " isn't an adverb.");
+//                checkValidWord(text, adverbDataset, " isn't an adverb.");
+                errors.add(new GrammarError.WrongWord(line, text + " isn't an adverb."));
             }
         }
     }

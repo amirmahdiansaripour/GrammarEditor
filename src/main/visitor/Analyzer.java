@@ -29,6 +29,7 @@ public class Analyzer extends Visitor<Void>{
         for(Word adv : s.getAdverb()){
             adv.accept(this);
         }
+        s.verify();
         return null;
     }
 
