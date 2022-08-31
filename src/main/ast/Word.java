@@ -12,10 +12,12 @@ import java.util.Locale;
 public class Word extends astNode{
     protected String text;
     protected Boolean capital;
+    protected String partOfSpeech;
     public Word(String t, Boolean capital_, int line_){
         text = t;
         capital = capital_;
         line = line_;
+        partOfSpeech = "";
     }
 
     protected ArrayList<String> makeDataSet(String address, ArrayList<String> dataSet) throws IOException {

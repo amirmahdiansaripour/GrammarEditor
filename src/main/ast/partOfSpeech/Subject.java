@@ -10,6 +10,7 @@ public class Subject extends Word {
     protected static ArrayList<String> nounDataset;
     public Subject(String t, Boolean cap, int line_) throws IOException {
         super(t, cap, line_);
+        partOfSpeech = "subject";
 //        nounDataset = makeDataSet("", nounDataset);
     }
     @Override

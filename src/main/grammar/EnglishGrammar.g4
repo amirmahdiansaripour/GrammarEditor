@@ -6,7 +6,7 @@ grammar EnglishGrammar;
     import java.util.*;
 }
 
-import PartOfSpeech, Present;
+import PartOfSpeech, Present, Lexer;
 
 englishGrammar returns [Text whole]
     :

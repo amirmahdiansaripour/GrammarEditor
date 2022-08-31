@@ -14,6 +14,7 @@ public class Adverb extends Word{
         adverbDataset = makeDataSet("src\\dataset\\adverbs\\adverbs.txt", adverbDataset);
         pastTimeAdverbs = makeDataSet("src\\dataset\\adverbs\\pastTimeAdverbs.txt", pastTimeAdverbs);
         adverbsOfFrequency = makeDataSet("src\\dataset\\adverbs\\adverbsOfFrequency.txt", adverbsOfFrequency);
+        partOfSpeech = "adverb";
         setTense();
     }
     public void setTense(){
@@ -21,7 +22,7 @@ public class Adverb extends Word{
         if(spaceIndex != -1){
             String prefix = text.substring(0, spaceIndex).toLowerCase();
             if(prefix.equals("last")){tense = "past";}
-            else if(prefix.equals("every")){tense = "simple present";}
+            else if(prefix.equals("every") || prefix.equals("each")){tense = "simple present";}
             else if(prefix.equals("next")){tense = "present";}
             else if(prefix.equals("very") || prefix.equals("this")){
                 tense = "general";

@@ -6,9 +6,11 @@ grammar PartOfSpeech;
     import java.util.*;
     import java.io.*;
 }
-partOfSpeech [Sentence s, Boolean cap]
+import Lexer;
+
+partOfSpeech [Sentence s, Boolean cap, String role]
     :
-    subject[s, cap] | object[s, cap] | verb[s] | adverb[s, cap]
+    subject[s, cap] | object[s, cap, role] | verb[s] | adverb[s, cap]
     ;
 
 subject [Sentence s, Boolean cap] returns [Subject sub]
@@ -27,13 +29,12 @@ subject [Sentence s, Boolean cap] returns [Subject sub]
     }
     ;
 
-object [Sentence s, Boolean cap] returns [OBject obj]
+object [Sentence s, Boolean cap, String objecct] returns [OBject obj]
     :
-    {String object = "";}
-    (PREPOSITION SPACE {object += ($PREPOSITION.text + " ");})? (IDENTIFIER{object += ($IDENTIFIER.text + " ");} SPACE)? WORD {object += $WORD.text;}
+    (IDENTIFIER{objecct += ($IDENTIFIER.text + " ");} SPACE)? WORD {objecct += $WORD.text;}
     {
         try{
-            $obj = new OBject(object, cap, $s.getLine());
+            $obj = new OBject(objecct, cap, $s.getLine());
             $s.addObject($obj);
         }
         catch(IOException e){
@@ -66,7 +67,8 @@ verb [Sentence s] returns [Verb ver]
 adverb [Sentence s, Boolean capital] returns [Adverb adv]
     :
     {String adverb = "";}
-    (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})? (ADV SPACE {adverb += ($ADV.text + " ");})? WORD {adverb += $WORD.text;}
+    (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})? (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})?
+    (ADV SPACE {adverb += ($ADV.text + " ");})? WORD {adverb += $WORD.text;}
     {
         try{
             $adv = new Adverb(adverb, capital, $s.getLine());
@@ -81,16 +83,3 @@ adverb [Sentence s, Boolean capital] returns [Adverb adv]
 
 endpoint: (DOT | EXCLAMATION | QUESTION);
 conjunction: (COMMA | SEMICOLON);
-
-PREPOSITION: ('in' | 'at' | 'on' | 'next to' | 'to' | 'into' | 'by');
-IDENTIFIER: ('a' | 'the' | 'A' | 'The');
-ADV: ('every' | 'next' | 'last' | 'very' | 'Every' | 'Next' | 'Last' | 'Very' | 'each' | 'Each');
-TOBE: ('am' | 'is' | 'are' | 'was' | 'were');
-WORD: [A-Za-z]+;
-DOT: '.';
-COMMA: ',';
-SEMICOLON: ';';
-SPACE: (' ' | '\t');
-EXCLAMATION: '!';
-QUESTION: '?';
-NEWLINE: '\n' | '\r';

@@ -20,6 +20,7 @@ public class Verb extends Word {
         simplePresentExceptions = makeDataSet("src\\dataset\\verbs\\simplePresentExceptions.txt", simplePresentExceptions);
         wrongs = makeDataSet("src\\dataset\\verbs\\wrongs.txt", wrongs);
         setSense();
+        partOfSpeech = "verb";
 //        System.out.println(text + " " + tense);
     }
     public void nonSimpleVerbs(int index){
@@ -49,7 +50,7 @@ public class Verb extends Word {
         else {return false;}
     }
 
-    public Boolean change(){
+    public Boolean literalChange(){
         String lastTwo = text.substring(text.length() - 3, text.length() - 1);
         String last = text.substring(text.length() - 2, text.length() - 1);
 //        System.out.println(text + " " + lastTwo);
@@ -62,7 +63,7 @@ public class Verb extends Word {
 
     public void addSuffixToMakeTense(){
         if(regularPresentOrPast("s", 1)){  // receives, agrees
-            if(change() || wrongs.contains(text.toLowerCase())){
+            if(literalChange() || wrongs.contains(text.toLowerCase())){
 //                System.out.println(text + "s" );
                 errors.add(new GrammarError.IsntCorrect(line, text));
                 tense = "wrong";
@@ -70,7 +71,7 @@ public class Verb extends Word {
             else tense = "simple present";
         }
         else if(regularPresentOrPast("es", 2)){
-            if(!change() || wrongs.contains(text.toLowerCase())){
+            if(!literalChange() || wrongs.contains(text.toLowerCase())){
 //                System.out.println(text + "es" );
                 errors.add(new GrammarError.IsntCorrect(line, text));
                 tense = "wrong";
