@@ -12,20 +12,20 @@ public class Verb extends Word {
 
     private String root, auxiliary;
     public String tense;
-    public Verb(String t, String root_, int line_) throws IOException {
+    public Verb(String t, int line_) throws IOException {
         super(t, false, line_); // verbs are never capitalized
         presentDataset = makeDataSet("src\\dataset\\verbs\\simplePresentVerbs.txt", presentDataset);
         pastDataset = makeDataSet("src\\dataset\\verbs\\irregularPastVerbs.txt", pastDataset);
         pastExceptions = makeDataSet("src\\dataset\\verbs\\pastExceptions.txt", pastExceptions);
         simplePresentExceptions = makeDataSet("src\\dataset\\verbs\\simplePresentExceptions.txt", simplePresentExceptions);
         wrongs = makeDataSet("src\\dataset\\verbs\\wrongs.txt", wrongs);
-        root = root_;
         setSense();
 //        System.out.println(text + " " + tense);
     }
     public void nonSimpleVerbs(int index){
         String aux = text.substring(0, index);
         String remained = text.substring(index + 1);
+        root = remained;
         if (aux.equals("am") || aux.equals("is") || aux.equals("are")) {
             if(wrongs.contains(remained.toLowerCase())){
                 errors.add(new GrammarError.IsntCorrect(line, remained));
@@ -112,6 +112,7 @@ public class Verb extends Word {
             nonSimpleVerbs(indexOfAuxiliary);
         }
         else{
+            root = text;
             simpleVerbs();
         }
     }
@@ -124,7 +125,7 @@ public class Verb extends Word {
         checkCapital();
         if(tense == null){
             tense = "wrong";
-            errors.add(new GrammarError.WrongWord(line, root + " isn't correct."));
+            errors.add(new GrammarError.WrongWord(line, text + " isn't correct."));
         }
     }
 }

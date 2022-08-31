@@ -13,10 +13,11 @@ partOfSpeech [Sentence s, Boolean cap]
 
 subject [Sentence s, Boolean cap] returns [Subject sub]
     :
-    WORD
+    {String subject = "";}
+    (IDENTIFIER{subject += ($IDENTIFIER.text + " ");} SPACE)? WORD {subject += $WORD.text;}
     {
         try{
-            $sub = new Subject($WORD.text, cap, $s.getLine());
+            $sub = new Subject(subject, cap, $s.getLine());
             $s.addSubject($sub);
         }
         catch(IOException e){
@@ -28,9 +29,11 @@ subject [Sentence s, Boolean cap] returns [Subject sub]
 
 object [Sentence s, Boolean cap] returns [OBject obj]
     :
-    WORD {
+    {String object = "";}
+    (PREPOSITION SPACE {object += ($PREPOSITION.text + " ");})? (IDENTIFIER{object += ($IDENTIFIER.text + " ");} SPACE)? WORD {object += $WORD.text;}
+    {
         try{
-            $obj = new OBject($WORD.text, cap, $s.getLine());
+            $obj = new OBject(object, cap, $s.getLine());
             $s.addObject($obj);
         }
         catch(IOException e){
@@ -42,36 +45,28 @@ object [Sentence s, Boolean cap] returns [OBject obj]
 
 verb [Sentence s] returns [Verb ver]
     :
-    {
-     String verbText = "";
-     String root = "";
-    }
-     (TOBE SPACE WORD {
-      int len = $WORD.text.length();
-          if(len > 3 && $WORD.text.substring(len - 3).equals("ing")){
-              verbText = $TOBE.text + " " + $WORD.text;
-              root = $WORD.text.substring(0, len - 3);
-          }
-      }
+    {String verbText = "";}
+    (
+     TOBE SPACE WORD {verbText = $TOBE.text + " " + $WORD.text;}
      |
-      WORD {verbText = $WORD.text; root = $WORD.text;}
-     )
-     {
-        try{
-            $ver = new Verb(verbText, root, $s.getLine());
-            $s.addVerb($ver);
+     WORD {verbText = $WORD.text;}
+    )
+    {
+     try{
+        $ver = new Verb(verbText, $s.getLine());
+        $s.addVerb($ver);
         }
-        catch(IOException e){
-            System.err.println("Verbs' data not Found!");
-            System.exit(0);
+    catch(IOException e){
+        System.err.println("Verbs' data not Found!");
+        System.exit(0);
         }
-     }
+    }
     ;
 
 adverb [Sentence s, Boolean capital] returns [Adverb adv]
     :
     {String adverb = "";}
-    (ADV SPACE {adverb += ($ADV.text + " ");})? WORD {adverb += $WORD.text;}
+    (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})? (ADV SPACE {adverb += ($ADV.text + " ");})? WORD {adverb += $WORD.text;}
     {
         try{
             $adv = new Adverb(adverb, capital, $s.getLine());
@@ -87,7 +82,9 @@ adverb [Sentence s, Boolean capital] returns [Adverb adv]
 endpoint: (DOT | EXCLAMATION | QUESTION);
 conjunction: (COMMA | SEMICOLON);
 
-ADV: ('every' | 'next' | 'last' | 'very' | 'Every' | 'Next' | 'Last' | 'Very');
+PREPOSITION: ('in' | 'at' | 'on' | 'next to' | 'to' | 'into' | 'by');
+IDENTIFIER: ('a' | 'the' | 'A' | 'The');
+ADV: ('every' | 'next' | 'last' | 'very' | 'Every' | 'Next' | 'Last' | 'Very' | 'each' | 'Each');
 TOBE: ('am' | 'is' | 'are' | 'was' | 'were');
 WORD: [A-Za-z]+;
 DOT: '.';

@@ -45,12 +45,6 @@ public class Word extends astNode{
             errors.add(new GrammarError.WordShouldBeLittle(line, text));
     }
 
-    public void checkValidWord(String word, ArrayList<String> dataSet, String errorPartOfSpeech){
-        if(!dataSet.contains(word.toLowerCase())){
-            errors.add(new GrammarError.WrongWord(line, word + errorPartOfSpeech));
-        }
-    }
-
     @Override
     public <T> T accept(IVisitor<T> visitor){return visitor.visit(this);}
 
