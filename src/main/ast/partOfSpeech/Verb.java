@@ -26,6 +26,7 @@ public class Verb extends Word {
     public void nonSimpleVerbs(int index){
         String aux = text.substring(0, index);
         String remained = text.substring(index + 1);
+//        System.out.println("aux " + aux);
         root = remained;
         if (aux.equals("am") || aux.equals("is") || aux.equals("are")) {
             if(wrongs.contains(remained.toLowerCase())){
@@ -40,6 +41,14 @@ public class Verb extends Word {
                 tense = "wrong";
             }
             else tense = "past";
+        }
+        else if(aux.equals("will") || aux.equals("should") || aux.equals("may") || aux.equals("must") ||
+                aux.equals("would") || aux.equals("could") || aux.equals("can")){
+            if(!presentDataset.contains(remained)){
+                errors.add(new GrammarError.IsntCorrect(line, text));
+                tense = "wrong";
+            }
+            else tense = "present";
         }
     }
     public Boolean regularPresentOrPast(String suffix, int offset){
@@ -108,7 +117,7 @@ public class Verb extends Word {
     }
 
     public void setSense(){
-        int indexOfAuxiliary = text.indexOf(" ");
+        int indexOfAuxiliary = text.lastIndexOf(' ');
         if(indexOfAuxiliary != -1) {
             nonSimpleVerbs(indexOfAuxiliary);
         }

@@ -50,6 +50,8 @@ verb [Sentence s] returns [Verb ver]
     (
      TOBE SPACE WORD {verbText = $TOBE.text + " " + $WORD.text;}
      |
+     MODAL SPACE WORD {verbText = $MODAL.text + " " + $WORD.text;}
+     |
      WORD {verbText = $WORD.text;}
     )
     {
@@ -68,7 +70,7 @@ adverb [Sentence s, Boolean capital] returns [Adverb adv]
     :
     {String adverb = "";}
     (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})? (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})?
-    (ADV SPACE {adverb += ($ADV.text + " ");})? WORD {adverb += $WORD.text;}
+    (ADV {adverb += ($ADV.text + " ");})
     {
         try{
             $adv = new Adverb(adverb, capital, $s.getLine());

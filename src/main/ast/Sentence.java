@@ -64,6 +64,8 @@ public class Sentence extends astNode {
             for(Adverb adv : adverb){
 //                System.out.println(adv.toString() + " " + adv.tense);
                 if(adv.tense == null || adv.tense.equals("general") || adv.tense.equals("both")) continue;
+                if((ver.tense.equals("present") && adv.tense.equals("simple present")) ||
+                    ver.tense.equals("simple present") && adv.tense.equals("present")) continue;
                 if(!adv.tense.equals(ver.tense)){
                     errors.add(new GrammarError.TenseConflict(line, ver.toString() + " and " + adv.toString()));
                 }
