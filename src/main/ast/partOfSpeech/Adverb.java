@@ -7,19 +7,32 @@ import java.util.Locale;
 import main.error.*;
 
 public class Adverb extends Word{
-    protected static ArrayList<String> adverbDataset, pastTimeAdverbs, adverbsOfFrequency;
+    protected static ArrayList<String> adverbDataset, pastTimeAdverbs, adverbsOfFrequency, futureAdverbs;
     public String tense;
     public Adverb(String t, Boolean capital_, int line_) throws IOException{
         super(t, capital_, line_);
         adverbDataset = makeDataSet("src\\dataset\\adverbs\\adverbs.txt", adverbDataset);
         pastTimeAdverbs = makeDataSet("src\\dataset\\adverbs\\pastTimeAdverbs.txt", pastTimeAdverbs);
         adverbsOfFrequency = makeDataSet("src\\dataset\\adverbs\\adverbsOfFrequency.txt", adverbsOfFrequency);
-        partOfSpeech = "adverb";
+        futureAdverbs = makeDataSet("src\\dataset\\adverbs\\futureAdverbs.txt", futureAdverbs);
         setTense();
     }
     public void setTense(){
-        int spaceIndex = text.indexOf(" ");
-        if(spaceIndex != -1){
+        int spaceIndex = text.indexOf(' ');
+//        System.out.println("index " + spaceIndex);
+        if(pastTimeAdverbs.contains(text.toLowerCase())){
+            tense = "past";
+            if(adverbsOfFrequency.contains(text.toLowerCase())){
+                tense = "both";
+            }
+        }
+        else if(adverbsOfFrequency.contains(text.toLowerCase())){
+            tense = "simple present";
+        }
+        else if(futureAdverbs.contains(text.toLowerCase())){
+            tense = "present";
+        }
+        else if(spaceIndex != -1){
             String prefix = text.substring(0, spaceIndex).toLowerCase();
             if(prefix.equals("last")){tense = "past";}
             else if(prefix.equals("every") || prefix.equals("each")){tense = "simple present";}
@@ -31,15 +44,6 @@ public class Adverb extends Word{
                     errors.add(new GrammarError.WrongWord(line, root + " isn't correct."));
                 }
             }
-        }
-        else if(pastTimeAdverbs.contains(text.toLowerCase())){
-            tense = "past";
-            if(adverbsOfFrequency.contains(text.toLowerCase())){
-                tense = "both";
-            }
-        }
-        else if(adverbsOfFrequency.contains(text.toLowerCase())){
-            tense = "simple present";
         }
     }
     @Override

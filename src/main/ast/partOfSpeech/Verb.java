@@ -5,22 +5,24 @@ import main.error.GrammarError;
 import main.visitor.IVisitor;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Verb extends Word {
     protected static ArrayList<String> presentDataset, pastDataset, pastExceptions, simplePresentExceptions,
             wrongs;
-
+    protected static ArrayList<String> modals;
     private String root, auxiliary;
     public String tense;
     public Verb(String t, int line_) throws IOException {
         super(t, false, line_); // verbs are never capitalized
+
         presentDataset = makeDataSet("src\\dataset\\verbs\\simplePresentVerbs.txt", presentDataset);
         pastDataset = makeDataSet("src\\dataset\\verbs\\irregularPastVerbs.txt", pastDataset);
         pastExceptions = makeDataSet("src\\dataset\\verbs\\pastExceptions.txt", pastExceptions);
         simplePresentExceptions = makeDataSet("src\\dataset\\verbs\\simplePresentExceptions.txt", simplePresentExceptions);
         wrongs = makeDataSet("src\\dataset\\verbs\\wrongs.txt", wrongs);
+        modals = new ArrayList<String>(Arrays.asList("will", "should", "must", "could", "would", "can", "may"));
         setSense();
-        partOfSpeech = "verb";
 //        System.out.println(text + " " + tense);
     }
     public void nonSimpleVerbs(int index){
@@ -42,8 +44,7 @@ public class Verb extends Word {
             }
             else tense = "past";
         }
-        else if(aux.equals("will") || aux.equals("should") || aux.equals("may") || aux.equals("must") ||
-                aux.equals("would") || aux.equals("could") || aux.equals("can")){
+        else if(modals.contains(aux.toLowerCase())){
             if(!presentDataset.contains(remained)){
                 errors.add(new GrammarError.IsntCorrect(line, text));
                 tense = "wrong";

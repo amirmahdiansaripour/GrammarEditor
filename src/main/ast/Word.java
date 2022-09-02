@@ -12,12 +12,10 @@ import java.util.Locale;
 public class Word extends astNode{
     protected String text;
     protected Boolean capital;
-    protected String partOfSpeech;
     public Word(String t, Boolean capital_, int line_){
         text = t;
         capital = capital_;
         line = line_;
-        partOfSpeech = "";
     }
 
     protected ArrayList<String> makeDataSet(String address, ArrayList<String> dataSet) throws IOException {
@@ -27,7 +25,7 @@ public class Word extends astNode{
         String line;
         while ((line = stream.readLine()) != null) {
             dataSet.add(line);
-//            if(address.equals("src\\dataset\\pastTimeAdverbs.txt"))
+//            if(address.equals("src\\dataset\\adverbs\\futureAdverbs.txt"))
 //                System.out.println(line);
         }
         stream.close();

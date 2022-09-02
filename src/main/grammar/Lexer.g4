@@ -1,7 +1,8 @@
 lexer grammar Lexer;
 
 PREPOSITION: ('in' | 'In' | 'at' | 'At' | 'on' | 'On' | 'next to' | 'Next to'
-| 'to' | 'To' | 'into' | 'Into' | 'by' | 'By' | 'this' | 'This' | 'that' | 'That' | 'with' | 'With');
+| 'to' | 'To' | 'into' | 'Into' | 'by' | 'By' | 'this' | 'This' | 'that' | 'That' | 'with' | 'With' | 'since'
+| 'Since' | 'for' | 'For');
 
 IDENTIFIER: ('a' | 'the' | 'A' | 'an' | 'An' | 'The' | 'some' | 'Some' | 'Most' | 'most' | 'Few' | 'few' | 'A few' | 'a few' |
 'little' | 'Little' | 'A little' | 'a little' | 'More' | 'more');
@@ -9,12 +10,15 @@ IDENTIFIER: ('a' | 'the' | 'A' | 'an' | 'An' | 'The' | 'some' | 'Some' | 'Most' 
 DAYS: 'Sunday' | 'Saturday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday';
 
 ADV:
-('every' | 'next' | 'last' | 'Every' | 'Next' | 'Last' | 'each' | 'Each') SPACE ('day' | 'night' |'morning' |
-'evening' | DAYS)
-| 'on' SPACE DAYS
-| 'tomorrow'| 'very' | 'Very';
+('tomorrow'| 'Tomorrow'  | 'yesterday' | 'Yesterday' | 'very' | 'Very') |
+('on' SPACE DAYS) |
+(('every' | 'next' | 'last' | 'Every' | 'Next' | 'Last' | 'each' | 'Each') SPACE ('day' | 'night' |'morning' |
+'evening' | DAYS))
+| 'in the ' ('future' | 'past') | 'in future'
+;
 
 TOBE: ('am' | 'is' | 'are' | 'was' | 'were');
+PERFECT: ('have' | 'Have' | 'Has' | 'has' | 'had' | 'Had');
 MODAL: ('will' | 'would' | 'should' | 'must' | 'may' | 'can' | 'could');
 
 WORD: [A-Za-z]+;
