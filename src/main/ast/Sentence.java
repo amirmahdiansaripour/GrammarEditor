@@ -75,6 +75,18 @@ public class Sentence extends astNode {
                 }
             }
         }
+//        for(Verb ver : verb){
+//            if(ver.tense.contains("present perfect")){
+//                int counter = 0;
+//                for(Adverb adv : adverb){
+//                    if(adv.tense.contains("present perfect"))
+//                        counter++;
+//                }
+//                if(counter >= 2){
+//                    errors.add(new )
+//                }
+//            }
+//        }
         return;
     }
 }

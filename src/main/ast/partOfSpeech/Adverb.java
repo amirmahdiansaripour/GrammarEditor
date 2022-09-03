@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import main.error.*;
 
 public class Adverb extends Word{
-    protected static ArrayList<String> adverbDataset, pastTimeAdverbs, adverbsOfFrequency, futureAdverbs;
+    protected static ArrayList<String> adverbDataset, pastTimeAdverbs, adverbsOfFrequency, futureAdverbs
+    , perfectAdverbs;
     public ArrayList<String> tense;
     public Adverb(String t, Boolean capital_, int line_) throws IOException{
         super(t, capital_, line_);
@@ -15,6 +16,7 @@ public class Adverb extends Word{
         pastTimeAdverbs = makeDataSet("src\\dataset\\adverbs\\pastTimeAdverbs.txt", pastTimeAdverbs);
         adverbsOfFrequency = makeDataSet("src\\dataset\\adverbs\\adverbsOfFrequency.txt", adverbsOfFrequency);
         futureAdverbs = makeDataSet("src\\dataset\\adverbs\\futureAdverbs.txt", futureAdverbs);
+        perfectAdverbs = makeDataSet("src\\dataset\\adverbs\\presentPerfectAdverbs.txt", perfectAdverbs);
         setTense();
     }
     public void setTense(){
@@ -29,10 +31,16 @@ public class Adverb extends Word{
         if(futureAdverbs.contains(text.toLowerCase())){
             tense.add("future");
         }
+        if(perfectAdverbs.contains(text.toLowerCase())){
+            tense.add("present perfect");
+            tense.add("past perfect");
+        }
+
         else if(spaceIndex != -1){
             String prefix = text.substring(0, spaceIndex).toLowerCase();
             if(prefix.equals("last")){tense.add("past");}
-            else if(prefix.equals("every") || prefix.equals("each")){
+            else if(prefix.equals("every") || prefix.equals("each") || text.equals("in the morning") ||
+            text.equals("in the evening") || text.equals("at night")){
                 tense.add("simple present");
                 tense.add("past");
                 tense.add("future");
@@ -45,6 +53,10 @@ public class Adverb extends Word{
                 if(!adverbDataset.contains(root.toLowerCase())){
                     errors.add(new GrammarError.WrongWord(line, root + " isn't correct."));
                 }
+            }
+            if(perfectAdverbs.contains(prefix.toLowerCase())){
+                tense.add("present perfect");
+                tense.add("past perfect");
             }
         }
     }
