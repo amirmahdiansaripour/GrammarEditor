@@ -8,24 +8,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Verb extends Word {
-    protected static ArrayList<String> presentDataset, pastDataset, pastExceptions, simplePresentExceptions,
-            wrongs;
-    protected static ArrayList<String> modals, literalChanges, presentPerfect;
+    protected static ArrayList<String> presentDataset = makeDataSet("src\\dataset\\verbs\\simplePresentVerbs.txt");
+    protected static ArrayList<String> pastDataset = makeDataSet("src\\dataset\\verbs\\irregularPastVerbs.txt");
+    protected static ArrayList<String> pastExceptions = makeDataSet("src\\dataset\\verbs\\pastExceptions.txt");
+    protected static ArrayList<String> simplePresentExceptions = makeDataSet("src\\dataset\\verbs\\simplePresentExceptions.txt");
+    protected static ArrayList<String> wrongs = makeDataSet("src\\dataset\\verbs\\wrongs.txt");
+    protected static ArrayList<String> modals = new ArrayList<>(Arrays.asList("will", "should", "must", "could", "would", "can", "may"));
+    protected static ArrayList<String> literalChanges = new ArrayList<>(Arrays.asList("ss", "sh", "ch", "x"));
+    protected static ArrayList<String> presentPerfect = new ArrayList<>(Arrays.asList("has", "have"));
     private String root, auxiliary;
-    public ArrayList<String> tense;
-    public Verb(String t, int line_) throws IOException {
+    public ArrayList<String> tense, count;
+    public Verb(String t, int line_) {
         super(t, false, line_); // verbs are never capitalized
         tense = new ArrayList<String>();
-        presentDataset = makeDataSet("src\\dataset\\verbs\\simplePresentVerbs.txt", presentDataset);
-        pastDataset = makeDataSet("src\\dataset\\verbs\\irregularPastVerbs.txt", pastDataset);
-        pastExceptions = makeDataSet("src\\dataset\\verbs\\pastExceptions.txt", pastExceptions);
-        simplePresentExceptions = makeDataSet("src\\dataset\\verbs\\simplePresentExceptions.txt", simplePresentExceptions);
-        wrongs = makeDataSet("src\\dataset\\verbs\\wrongs.txt", wrongs);
-        modals = new ArrayList<>(Arrays.asList("will", "should", "must", "could", "would", "can", "may"));
-        literalChanges = new ArrayList<>(Arrays.asList("ss", "sh", "ch", "x"));
-        presentPerfect = new ArrayList<>(Arrays.asList("has", "have"));
+        count = new ArrayList<String>();
         setSense();
-//        System.out.println(text + " " + tense);
     }
     public void nonSimpleVerbs(int index){
         String aux = text.substring(0, index);
@@ -58,7 +55,6 @@ public class Verb extends Word {
             }
         }
         else if(presentPerfect.contains(aux.toLowerCase())){
-//            System.out.println("fidfsdifdfi");
             if(regularPresentOrPast("ed", 1, remained)){ // received, agreed
 
                 if(wrongs.contains(text.toLowerCase())){

@@ -4,7 +4,7 @@ import main.GrammarCompiler;
 import main.error.*;
 import java.util.ArrayList;
 
-public abstract class astNode {
+public abstract class astNode{
     protected int line;
     protected ArrayList<GrammarError> errors = new ArrayList<GrammarError>();
     public ArrayList<GrammarError> getErrors(){

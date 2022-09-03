@@ -18,14 +18,8 @@ subject [Sentence s, Boolean cap] returns [Subject sub]
     {String subject = "";}
     (IDENTIFIER{subject += ($IDENTIFIER.text + " ");} SPACE)? WORD {subject += $WORD.text;}
     {
-        try{
-            $sub = new Subject(subject, cap, $s.getLine());
-            $s.addSubject($sub);
-        }
-        catch(IOException e){
-            System.err.println("Nouns' data not Found!");
-            System.exit(0);
-        }
+        $sub = new Subject(subject, cap, $s.getLine());
+        $s.addSubject($sub);
     }
     ;
 
@@ -33,14 +27,8 @@ object [Sentence s, Boolean cap, String objecct] returns [OBject obj]
     :
     (IDENTIFIER{objecct += ($IDENTIFIER.text + " ");} SPACE)? WORD {objecct += $WORD.text;}
     {
-        try{
-            $obj = new OBject(objecct, cap, $s.getLine());
-            $s.addObject($obj);
-        }
-        catch(IOException e){
-            System.err.println("Nouns' data not Found!");
-            System.exit(0);
-        }
+        $obj = new OBject(objecct, cap, $s.getLine());
+        $s.addObject($obj);
     }
     ;
 
@@ -57,14 +45,8 @@ verb [Sentence s] returns [Verb ver]
      WORD {verbText = $WORD.text;}
     )
     {
-     try{
         $ver = new Verb(verbText, $s.getLine());
         $s.addVerb($ver);
-        }
-    catch(IOException e){
-        System.err.println("Verbs' data not Found!");
-        System.exit(0);
-        }
     }
     ;
 
@@ -74,14 +56,8 @@ adverb [Sentence s, Boolean capital] returns [Adverb adv]
     (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})? (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})?
     (ADV {adverb += $ADV.text;})
     {
-        try{
-            $adv = new Adverb(adverb, capital, $s.getLine());
-            $s.addAdverb($adv);
-        }
-        catch(IOException e){
-            System.err.println("Adverbs' data not Found!");
-            System.exit(0);
-        }
+        $adv = new Adverb(adverb, capital, $s.getLine());
+        $s.addAdverb($adv);
     }
     ;
 

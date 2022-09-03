@@ -6,17 +6,16 @@ import java.util.ArrayList;
 import main.error.*;
 
 public class Adverb extends Word{
-    protected static ArrayList<String> adverbDataset, pastTimeAdverbs, adverbsOfFrequency, futureAdverbs
-    , perfectAdverbs;
+    protected static ArrayList<String> adverbDataset = makeDataSet("src\\dataset\\adverbs\\adverbs.txt");
+    protected static ArrayList<String> pastTimeAdverbs = makeDataSet("src\\dataset\\adverbs\\pastTimeAdverbs.txt");
+    protected static ArrayList<String> adverbsOfFrequency = makeDataSet("src\\dataset\\adverbs\\adverbsOfFrequency.txt");
+    protected static ArrayList<String> futureAdverbs = makeDataSet("src\\dataset\\adverbs\\futureAdverbs.txt");
+    protected static ArrayList<String> perfectAdverbs = makeDataSet("src\\dataset\\adverbs\\presentPerfectAdverbs.txt");
+
     public ArrayList<String> tense;
-    public Adverb(String t, Boolean capital_, int line_) throws IOException{
+    public Adverb(String t, Boolean capital_, int line_){
         super(t, capital_, line_);
         tense = new ArrayList<String>();
-        adverbDataset = makeDataSet("src\\dataset\\adverbs\\adverbs.txt", adverbDataset);
-        pastTimeAdverbs = makeDataSet("src\\dataset\\adverbs\\pastTimeAdverbs.txt", pastTimeAdverbs);
-        adverbsOfFrequency = makeDataSet("src\\dataset\\adverbs\\adverbsOfFrequency.txt", adverbsOfFrequency);
-        futureAdverbs = makeDataSet("src\\dataset\\adverbs\\futureAdverbs.txt", futureAdverbs);
-        perfectAdverbs = makeDataSet("src\\dataset\\adverbs\\presentPerfectAdverbs.txt", perfectAdverbs);
         setTense();
     }
     public void setTense(){

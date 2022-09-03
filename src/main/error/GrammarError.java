@@ -37,5 +37,8 @@ public class GrammarError extends Exception{
     public static class IsntCorrect extends GrammarError{
         public IsntCorrect(int line_, String message_){super(line_, message_ + " isn't correct");}
     }
+    public static class Redundant extends GrammarError{
+        public Redundant(int line_, String message_){super(line_, message_ + " is redundant");}
+    }
 
 }

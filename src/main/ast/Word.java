@@ -17,18 +17,25 @@ public class Word extends astNode{
         line = line_;
     }
 
-    protected ArrayList<String> makeDataSet(String address, ArrayList<String> dataSet) throws IOException {
-        dataSet = new ArrayList<String>();
-        File file = new File(address);
-        BufferedReader stream = new BufferedReader(new FileReader(file));
-        String line;
-        while ((line = stream.readLine()) != null) {
-            dataSet.add(line);
+    protected static ArrayList<String> makeDataSet(String address){
+        try {
+            ArrayList<String> dataSet = new ArrayList<String>();
+            File file = new File(address);
+            BufferedReader stream = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = stream.readLine()) != null) {
+                dataSet.add(line);
 //            if(address.equals("src\\dataset\\adverbs\\futureAdverbs.txt"))
 //                System.out.println(line);
+            }
+            stream.close();
+            return dataSet;
         }
-        stream.close();
-        return dataSet;
+        catch(IOException err){
+            System.err.println(address + " not Found!");
+            System.exit(0);
+            return null;
+        }
     }
     @Override
     public String toString(){return text;}
