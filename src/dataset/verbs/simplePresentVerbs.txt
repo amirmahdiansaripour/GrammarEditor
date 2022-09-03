@@ -103,6 +103,7 @@ lock
 normalize
 can
 double
+watch
 wait
 release
 bind

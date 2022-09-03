@@ -75,8 +75,8 @@ public class Verb extends Word {
     }
 
     public Boolean literalChange(){
-        String lastTwo = text.substring(text.length() - 3, text.length() - 1);
-        String last = text.substring(text.length() - 2, text.length() - 1);
+        String lastTwo = text.substring(text.length() - 4, text.length() - 2);
+        String last = text.substring(text.length() - 3, text.length() - 2);
 //        System.out.println(text + " " + lastTwo);
 //        System.out.println(text + " " + last);
         if(literalChanges.contains(lastTwo) || literalChanges.contains(last)){
@@ -129,7 +129,8 @@ public class Verb extends Word {
     }
 
     public void setSense(){
-        int indexOfAuxiliary = text.lastIndexOf(' ');
+        int indexOfAuxiliary = text.lastIndexOf(' ');   // Why last index? Because of auxiliaries
+                                                            // such as: have been , will be, etc.
         if(indexOfAuxiliary != -1) {
             nonSimpleVerbs(indexOfAuxiliary);
         }

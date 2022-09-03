@@ -18,9 +18,8 @@ public class Adverb extends Word{
         tense = new ArrayList<String>();
         setTense();
     }
-    public void setTense(){
-        int spaceIndex = text.indexOf(' ');
-//        System.out.println("index " + spaceIndex);
+
+    public void setTenseBasedOnDataSet(){
         if(pastTimeAdverbs.contains(text.toLowerCase())){
             tense.add("past");
         }
@@ -30,35 +29,52 @@ public class Adverb extends Word{
         if(futureAdverbs.contains(text.toLowerCase())){
             tense.add("future");
         }
-        if(perfectAdverbs.contains(text.toLowerCase())){
+        if(perfectAdverbs.contains(text.toLowerCase())) {
             tense.add("present perfect");
             tense.add("past perfect");
         }
+    }
 
-        else if(spaceIndex != -1){
+    public void setTenseBasedOnPrefix(){
+        int spaceIndex = text.indexOf(' ');
+//        System.out.println("index " + spaceIndex);
+
+        if (spaceIndex != -1) {
             String prefix = text.substring(0, spaceIndex).toLowerCase();
-            if(prefix.equals("last")){tense.add("past");}
-            else if(prefix.equals("every") || prefix.equals("each") || text.equals("in the morning") ||
-            text.equals("in the evening") || text.equals("at night")){
+            if (prefix.equals("last")) {
+                tense.add("past");
+            }
+            else if (prefix.equals("every") || prefix.equals("each") || text.equals("in the morning") ||
+                    text.equals("in the evening") || text.equals("at night")) {
                 tense.add("simple present");
                 tense.add("past");
                 tense.add("future");
                 tense.add("present");
             }
-            else if(prefix.equals("next")){tense.add("future");}
-            else if(prefix.equals("very") || prefix.equals("this")){
+            else if (prefix.equals("next")) {
+                tense.add("future");
+            }
+            else if (prefix.equals("very") || prefix.equals("this")) {
                 tense.add("general");
                 String root = text.substring(spaceIndex + 1).toLowerCase();
-                if(!adverbDataset.contains(root.toLowerCase())){
+                if (!adverbDataset.contains(root.toLowerCase())) {
                     errors.add(new GrammarError.WrongWord(line, root + " isn't correct."));
                 }
             }
-            if(perfectAdverbs.contains(prefix.toLowerCase())){
+            if (perfectAdverbs.contains(prefix.toLowerCase())) {
                 tense.add("present perfect");
                 tense.add("past perfect");
             }
         }
     }
+
+    public void setTense(){
+        setTenseBasedOnDataSet();
+        if(tense.isEmpty()) {
+            setTenseBasedOnPrefix();
+        }
+    }
+
     @Override
     public <T> T accept(IVisitor<T> visitor) {
         return visitor.visit(this);
