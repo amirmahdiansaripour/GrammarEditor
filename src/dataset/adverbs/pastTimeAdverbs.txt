@@ -1,6 +1,7 @@
 yesterday
 never
 usually
+sometimes
 lately
 today
 soon

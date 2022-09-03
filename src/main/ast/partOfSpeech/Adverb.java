@@ -3,14 +3,14 @@ import main.ast.*;
 import main.visitor.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Locale;
 import main.error.*;
 
 public class Adverb extends Word{
     protected static ArrayList<String> adverbDataset, pastTimeAdverbs, adverbsOfFrequency, futureAdverbs;
-    public String tense;
+    public ArrayList<String> tense;
     public Adverb(String t, Boolean capital_, int line_) throws IOException{
         super(t, capital_, line_);
+        tense = new ArrayList<String>();
         adverbDataset = makeDataSet("src\\dataset\\adverbs\\adverbs.txt", adverbDataset);
         pastTimeAdverbs = makeDataSet("src\\dataset\\adverbs\\pastTimeAdverbs.txt", pastTimeAdverbs);
         adverbsOfFrequency = makeDataSet("src\\dataset\\adverbs\\adverbsOfFrequency.txt", adverbsOfFrequency);
@@ -21,24 +21,26 @@ public class Adverb extends Word{
         int spaceIndex = text.indexOf(' ');
 //        System.out.println("index " + spaceIndex);
         if(pastTimeAdverbs.contains(text.toLowerCase())){
-            tense = "past";
-            if(adverbsOfFrequency.contains(text.toLowerCase())){
-                tense = "both";
-            }
+            tense.add("past");
         }
-        else if(adverbsOfFrequency.contains(text.toLowerCase())){
-            tense = "simple present";
+        if(adverbsOfFrequency.contains(text.toLowerCase())){
+            tense.add("simple present");
         }
-        else if(futureAdverbs.contains(text.toLowerCase())){
-            tense = "present";
+        if(futureAdverbs.contains(text.toLowerCase())){
+            tense.add("future");
         }
         else if(spaceIndex != -1){
             String prefix = text.substring(0, spaceIndex).toLowerCase();
-            if(prefix.equals("last")){tense = "past";}
-            else if(prefix.equals("every") || prefix.equals("each")){tense = "simple present";}
-            else if(prefix.equals("next")){tense = "present";}
+            if(prefix.equals("last")){tense.add("past");}
+            else if(prefix.equals("every") || prefix.equals("each")){
+                tense.add("simple present");
+                tense.add("past");
+                tense.add("future");
+                tense.add("present");
+            }
+            else if(prefix.equals("next")){tense.add("future");}
             else if(prefix.equals("very") || prefix.equals("this")){
-                tense = "general";
+                tense.add("general");
                 String root = text.substring(spaceIndex + 1).toLowerCase();
                 if(!adverbDataset.contains(root.toLowerCase())){
                     errors.add(new GrammarError.WrongWord(line, root + " isn't correct."));

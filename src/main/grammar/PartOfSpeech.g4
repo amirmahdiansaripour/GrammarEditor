@@ -52,7 +52,7 @@ verb [Sentence s] returns [Verb ver]
      |
      MODAL SPACE WORD {verbText = $MODAL.text + " " + $WORD.text;}
      |
-     PERFECT SPACE WORD {verbText = $PERFECT.text + " " + $WORD.text;}
+     PERFECT (SPACE adverb[s, false])? SPACE WORD {verbText = $PERFECT.text + " " + $WORD.text;}
      |
      WORD {verbText = $WORD.text;}
     )

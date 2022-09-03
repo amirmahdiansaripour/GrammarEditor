@@ -1,8 +1,7 @@
 lexer grammar Lexer;
 
 PREPOSITION: ('in' | 'In' | 'at' | 'At' | 'on' | 'On' | 'next to' | 'Next to'
-| 'to' | 'To' | 'into' | 'Into' | 'by' | 'By' | 'this' | 'This' | 'that' | 'That' | 'with' | 'With' | 'since'
-| 'Since' | 'for' | 'For');
+| 'to' | 'To' | 'into' | 'Into' | 'by' | 'By' | 'this' | 'This' | 'that' | 'That' | 'with' | 'With' | 'since' | 'Since');
 
 IDENTIFIER: ('a' | 'the' | 'A' | 'an' | 'An' | 'The' | 'some' | 'Some' | 'Most' | 'most' | 'Few' | 'few' | 'A few' | 'a few' |
 'little' | 'Little' | 'A little' | 'a little' | 'More' | 'more');
@@ -10,11 +9,12 @@ IDENTIFIER: ('a' | 'the' | 'A' | 'an' | 'An' | 'The' | 'some' | 'Some' | 'Most' 
 DAYS: 'Sunday' | 'Saturday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday';
 
 ADV:
-('tomorrow'| 'Tomorrow'  | 'yesterday' | 'Yesterday' | 'very' | 'Very') |
+('tomorrow'| 'Tomorrow'  | 'yesterday' | 'Yesterday' | 'very' | 'Very') | 'today' |
 ('on' SPACE DAYS) |
 (('every' | 'next' | 'last' | 'Every' | 'Next' | 'Last' | 'each' | 'Each') SPACE ('day' | 'night' |'morning' |
 'evening' | DAYS))
-| 'in the ' ('future' | 'past') | 'in future'
+| 'in the ' ('future' | 'past') | 'in future' |
+'just' | 'Recently' | 'recently' | 'lately' | 'Lately' | 'since' | 'Since'
 ;
 
 TOBE: ('am' | 'is' | 'are' | 'was' | 'were');

@@ -52,6 +52,12 @@ public class Sentence extends astNode {
     public ArrayList<Verb> getVerb(){return verb;}
     public ArrayList<Adverb> getAdverb(){return adverb;}
     public void capitalize(){capital = true;}
+    public Boolean checkAdvVerbTense(Adverb adv, Verb verb){
+        for(String advTense : adv.tense)
+            if(verb.tense.contains(advTense))
+                return true;
+        return false;
+    }
     @Override
     public String toString(){return "Sentence";}
     @Override
@@ -59,14 +65,12 @@ public class Sentence extends astNode {
     @Override
     public void verify(){
         for(Verb ver : verb){
-            if(ver.tense != null && ver.tense.equals("wrong")) continue;
+            if(ver.tense.isEmpty() || ver.tense.contains("wrong")) continue;
 //            System.out.println(ver.toString() + " " + ver.tense);
             for(Adverb adv : adverb){
 //                System.out.println(adv.toString() + " " + adv.tense);
-                if(adv.tense == null || adv.tense.equals("general") || adv.tense.equals("both")) continue;
-                if((ver.tense.equals("present") && adv.tense.equals("simple present")) ||
-                    ver.tense.equals("simple present") && adv.tense.equals("present")) continue;
-                if(!adv.tense.equals(ver.tense)){
+                if(adv.tense.isEmpty() || adv.tense.contains("general")) continue;
+                if(!checkAdvVerbTense(adv, ver)){
                     errors.add(new GrammarError.TenseConflict(line, ver.toString() + " and " + adv.toString()));
                 }
             }
