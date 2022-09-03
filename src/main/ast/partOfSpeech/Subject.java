@@ -14,27 +14,23 @@ public class Subject extends Word {
             "people", "the blind", "the poor", "the rich"));
     protected static ArrayList<String> singularExceptions = new ArrayList<String>(Arrays.asList("mumps",
             "measles", "physics", "mathematics", "news", "information", "evidence", "equipment"));
-//    private ArrayList<String> count;
-    private String count;
+
+    public String count;
     public Subject(String t, Boolean cap, int line_){
         super(t, cap, line_);
-//        count = new ArrayList<String>();
         setCount(text);
-        System.out.println(text + ";;count;;" + count);
+//        System.out.println(text + ";;count;;" + count);
     }
 
     public void setCountBasedOnPronouns(String sub){
         if(sub.equals("he") || sub.equals("she") || sub.equals("it") || singularExceptions.contains(sub)){
             count = "third singular";
-//            count.add("has"); count.add("was"); count.add("is"); count.add("does");
         }
         else if(sub.equals("i")){
             count = "first singular";
-//            count.add("have"); count.add("was"); count.add("am"); count.add("do");
         }
         else if(sub.equals("you") || sub.equals("we") || sub.equals("they") || pluralExceptions.contains(sub)){
             count = "plural";
-//            count.add("have"); count.add("were"); count.add("are"); count.add("do");
         }
     }
 
@@ -112,7 +108,6 @@ public class Subject extends Word {
     @Override
     public void verify(){
         checkCapital();
-//        checkValidWord(adverbDataset, " isn't an adverb.");
     }
 
 }

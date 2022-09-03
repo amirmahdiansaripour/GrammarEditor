@@ -20,7 +20,7 @@ present [Sentence s]
         SPACE object[$s, false, ""] SPACE object[$s, false, ""]  |  // I'll send him a letter
         SPACE object[$s, false, ""]    // I'll send a letter
         )?
-         (SPACE adverb[$s, false])?
+         (SPACE adverb[$s, false])*
 //        | adverb[$s, true] COMMA SPACE subject[$s, false] SPACE verb[$s] (SPACE object[$s, false])?
 //        (SPACE object[$s, false])? (SPACE adverb[$s, false])?
         )

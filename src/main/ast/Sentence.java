@@ -52,29 +52,14 @@ public class Sentence extends astNode {
     public ArrayList<Verb> getVerb(){return verb;}
     public ArrayList<Adverb> getAdverb(){return adverb;}
     public void capitalize(){capital = true;}
-    public Boolean checkAdvVerbTense(Adverb adv, Verb verb){
-        for(String advTense : adv.tense)
-            if(verb.tense.contains(advTense))
+
+    public Boolean checkCorrespondence(ArrayList<String> first, ArrayList<String> second){
+        for(String subCount : first)
+            if(second.contains(subCount))
                 return true;
         return false;
     }
-    @Override
-    public String toString(){return "Sentence";}
-    @Override
-    public <T> T accept(IVisitor<T> visitor){return visitor.visit(this);}
-    @Override
-    public void verify(){
-        for(Verb ver : verb){
-//            System.out.println(ver.toString() + " " + ver.tense);
-            if(ver.tense.isEmpty() || ver.tense.contains("wrong")) continue;
-            for(Adverb adv : adverb){
-//                System.out.println(adv.toString() + " " + adv.tense);
-                if(adv.tense.isEmpty() || adv.tense.contains("general")) continue;
-                if(!checkAdvVerbTense(adv, ver)){
-                    errors.add(new GrammarError.TenseConflict(line, ver.toString() + " and " + adv.toString()));
-                }
-            }
-        }
+    public void usingTwoAdverbsOfTime(){
         for(Verb ver : verb){
             if(ver.tense.contains("present perfect") || ver.tense.contains("past perfect")){
                 int counter = 0;
@@ -87,6 +72,42 @@ public class Sentence extends astNode {
                 }
             }
         }
+    }
+    public void checkTense(){
+        for(Verb ver : verb){
+//            System.out.println(ver.toString() + " " + ver.tense);
+            if(ver.tense.isEmpty() || ver.tense.contains("wrong")) continue;
+            for(Adverb adv : adverb){
+//                System.out.println(adv.toString() + " " + adv.tense);
+                if(adv.tense.isEmpty() || adv.tense.contains("general")) continue;
+                if(!checkCorrespondence(adv.tense, ver.tense)){
+                    errors.add(new GrammarError.TenseConflict(line, ver.toString() + " and " + adv.toString()));
+                }
+            }
+        }
+    }
+    public void checkCount(){
+        for(Verb ver: verb){
+//            System.out.println(ver.toString() + ";;count;;" + ver.count);
+            if(ver.count.isEmpty() || ver.count.contains("wrong")) continue;
+            for(Subject sub: subject){
+//                System.out.println(sub.toString() + ";;count;;" + sub.count);
+                if(sub.count == null || sub.count.equals("wrong")) continue;
+                if(!checkCorrespondence(new ArrayList<>(Arrays.asList(sub.count)), ver.count)){
+                    errors.add(new GrammarError.CountConflict(line, sub.toString() + " and " + ver.toString()));
+                }
+            }
+        }
+    }
+    @Override
+    public String toString(){return "Sentence";}
+    @Override
+    public <T> T accept(IVisitor<T> visitor){return visitor.visit(this);}
+    @Override
+    public void verify(){
+        checkTense();
+        checkCount();
+        usingTwoAdverbsOfTime();
         return;
     }
 }

@@ -16,7 +16,7 @@ ADV:
 ('on' SPACE DAYS) |
 (('every' | 'next' | 'last' | 'Every' | 'Next' | 'Last' | 'each' | 'Each') SPACE ('day' | 'night' |'morning' |
 'evening' | DAYS)) |
-('in the' | 'In the') SPACE ('evening' | 'morning') | 'at night'
+('in the' | 'In the') SPACE ('evening' | 'morning') | 'at' SPACE ('park' | 'university' | 'school')
 | 'in the ' ('future' | 'past') | 'in future' |
 'just' | 'Recently' | 'recently' | 'lately' | 'Lately' | (('since' | 'Since') SPACE NUMBER);
 

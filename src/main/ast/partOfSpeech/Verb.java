@@ -22,7 +22,7 @@ public class Verb extends Word {
         super(t, false, line_); // verbs are never capitalized
         tense = new ArrayList<String>();
         count = new ArrayList<String>();
-        setSense();
+        setTense();
     }
     public void nonSimpleVerbs(int index){
         String aux = text.substring(0, index);
@@ -30,6 +30,9 @@ public class Verb extends Word {
 //        System.out.println("aux " + aux);
         root = remained;
         if (aux.equals("am") || aux.equals("is") || aux.equals("are")) {
+            if(aux.equals("am")) count.add("first singular");
+            else if(aux.equals("is")) count.add("third singular");
+            else if(aux.equals("are")) count.add("plural");
             if(wrongs.contains(remained.toLowerCase())){
                 errors.add(new GrammarError.IsntCorrect(line, remained));
                 tense.add("wrong");
@@ -39,6 +42,8 @@ public class Verb extends Word {
             }
         }
         else if (aux.equals("was") || aux.equals("were")) {
+            if(aux.equals("was")) {count.add("first singular"); count.add("third singular");}
+            else if(aux.equals("were")) count.add("plural");
             if(wrongs.contains(remained.toLowerCase())){
                 errors.add(new GrammarError.IsntCorrect(line, remained));
                 tense.add("wrong");
@@ -46,6 +51,7 @@ public class Verb extends Word {
             else tense.add("past");
         }
         else if(modals.contains(aux.toLowerCase())){
+            count.add("first singular"); count.add("third singular"); count.add("plural");
             if(!presentDataset.contains(remained)){
                 errors.add(new GrammarError.IsntCorrect(line, text));
                 tense.add("wrong");
@@ -55,8 +61,9 @@ public class Verb extends Word {
             }
         }
         else if(presentPerfect.contains(aux.toLowerCase())){
+            if(aux.toLowerCase().equals("has")) count.add("third singular");
+            else if(aux.toLowerCase().equals("have")) {count.add("first singular"); count.add("plural");}
             if(regularPresentOrPast("ed", 1, remained)){ // received, agreed
-
                 if(wrongs.contains(text.toLowerCase())){
                     errors.add(new GrammarError.IsntCorrect(line, text));
                     tense.add("wrong");
@@ -91,44 +98,54 @@ public class Verb extends Word {
                 errors.add(new GrammarError.IsntCorrect(line, text));
                 tense.add("wrong");
             }
-            else tense.add("simple present");
+            else{
+                count.add("third singular");
+                tense.add("simple present");
+            }
         }
         else if(regularPresentOrPast("es", 2, text)){
             if(!literalChange() || wrongs.contains(text.toLowerCase())){
                 errors.add(new GrammarError.IsntCorrect(line, text));
                 tense.add("wrong");
             }
-            else tense.add("simple present");
+            else{
+                count.add("third singular");
+                tense.add("simple present");
+            }
         }
         else if(regularPresentOrPast("ed", 1, text)){ // received, agreed
             if(wrongs.contains(text.toLowerCase())){
                 errors.add(new GrammarError.IsntCorrect(line, text));
                 tense.add("wrong");
             }
-            else tense.add("past");
+            else {
+                count.add("first singular"); count.add("third singular"); count.add("plural");
+                tense.add("past");
+            }
         }
     }
 
     public void simpleVerbs(){
-        if(pastExceptions.contains(text.toLowerCase())){
+        if(pastExceptions.contains(text.toLowerCase()) ||pastDataset.contains(text.toLowerCase())){
             tense.add("past");
+            count.add("plural"); count.add("first singular"); count.add("third singular");
         }
         else if(simplePresentExceptions.contains(text.toLowerCase())){
             tense.add("simple present");
+            count.add("first singular"); count.add("plural");
         }
         else if(presentDataset.contains(text.toLowerCase())){     // simple present
             tense.add("simple present");
+            count.add("first singular"); count.add("plural");
             if(pastDataset.contains(text.toLowerCase())){
                 tense.add("past"); // for verbs such as cost, put, cut etc.
+                count.add("third singular");
             }
-        }
-        else if(pastDataset.contains(text.toLowerCase())){   // irregular simple past
-            tense.add("past");
         }
         else addSuffixToMakeTense();
     }
 
-    public void setSense(){
+    public void setTense(){
         int indexOfAuxiliary = text.lastIndexOf(' ');   // Why last index? Because of auxiliaries
                                                             // such as: have been , will be, etc.
         if(indexOfAuxiliary != -1) {

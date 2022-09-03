@@ -34,6 +34,10 @@ public class GrammarError extends Exception{
         public TenseConflict(int line_, String message_){super(line_, "Tenses of " + message_ + " don't correspond.");}
     }
 
+    public static class CountConflict extends GrammarError{
+        public CountConflict(int line_, String message_){super(line_, "Counts of " + message_ + " don't correspond.");}
+    }
+
     public static class IsntCorrect extends GrammarError{
         public IsntCorrect(int line_, String message_){super(line_, message_ + " isn't correct.");}
     }
