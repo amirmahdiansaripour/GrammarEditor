@@ -7,28 +7,35 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class Word extends astNode{
     protected String text;
     protected Boolean capital;
-    public Word(String t, Boolean capital_){
+    public Word(String t, Boolean capital_, int line_){
         text = t;
         capital = capital_;
+        line = line_;
     }
 
-    protected ArrayList<String> makeDataSet(String address, ArrayList<String> dataSet) throws IOException {
-        dataSet = new ArrayList<String>();
-        File file = new File(address);
-        BufferedReader stream = new BufferedReader(new FileReader(file));
-        String line;
-        while ((line = stream.readLine()) != null) {
-            dataSet.add(line);
-//            if(address.equals("src\\dataset\\pastTimeAdverbs.txt"))
+    protected static ArrayList<String> makeDataSet(String address){
+        try {
+            ArrayList<String> dataSet = new ArrayList<String>();
+            File file = new File(address);
+            BufferedReader stream = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = stream.readLine()) != null) {
+                dataSet.add(line);
+//            if(address.equals("src\\dataset\\adverbs\\futureAdverbs.txt"))
 //                System.out.println(line);
+            }
+            stream.close();
+            return dataSet;
         }
-        stream.close();
-        return dataSet;
+        catch(IOException err){
+            System.err.println(address + " not Found!");
+            System.exit(0);
+            return null;
+        }
     }
     @Override
     public String toString(){return text;}
@@ -42,12 +49,6 @@ public class Word extends astNode{
             errors.add(new GrammarError.WordShouldBeCapital(line, text));
         else if(!capital && Character.isUpperCase(text.charAt(0)))
             errors.add(new GrammarError.WordShouldBeLittle(line, text));
-    }
-
-    public void checkValidWord(String word, ArrayList<String> dataSet, String errorPartOfSpeech){
-        if(!dataSet.contains(word.toLowerCase(Locale.ROOT))){
-            errors.add(new GrammarError.WrongWord(line, word + errorPartOfSpeech));
-        }
     }
 
     @Override

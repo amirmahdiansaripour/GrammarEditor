@@ -33,4 +33,24 @@ public class GrammarError extends Exception{
     public static class TenseConflict extends GrammarError{
         public TenseConflict(int line_, String message_){super(line_, "Tenses of " + message_ + " don't correspond.");}
     }
+
+    public static class CountConflict extends GrammarError{
+        public CountConflict(int line_, String message_){super(line_, "Counts of " + message_ + " don't correspond.");}
+    }
+
+    public static class IsntCorrect extends GrammarError{
+        public IsntCorrect(int line_, String message_){super(line_, message_ + " isn't correct.");}
+    }
+    public static class Redundant extends GrammarError{
+        public Redundant(int line_, String message_){super(line_, message_ + " is redundant.");}
+    }
+    public static class BeSingular extends GrammarError{
+        public BeSingular(int line_, String message_){super(line_, message_ + " should be a singular noun.");}
+    }
+    public static class BePlural extends GrammarError{
+        public BePlural(int line_, String message_){super(line_, message_ + " should be a plural noun.");}
+    }
+
+
+
 }

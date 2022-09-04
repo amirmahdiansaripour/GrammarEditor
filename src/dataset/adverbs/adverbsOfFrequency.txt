@@ -1,0 +1,5 @@
+never
+often
+usually
+seldom
+sometimes
