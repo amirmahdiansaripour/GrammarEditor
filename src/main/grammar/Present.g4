@@ -6,11 +6,22 @@ grammar Present;
 }
 import PartOfSpeech, Lexer;
 
-structure [Sentence s]
+completeSentence [Sentence s]
     :
-//        (PREPOSITION SPACE {object += ($PREPOSITION.text + " ");})? (PREPOSITION SPACE {object += ($PREPOSITION.text + " ");})?
-        (
-        subject[$s, $s.isCapital()] SPACE verb[$s]
+        (subject[$s, $s.isCapital()] SPACE verb[$s])
+         rest[$s]
+//        | adverb[$s, true] COMMA SPACE subject[$s, false] SPACE verb[$s] (SPACE object[$s, false])?
+//        (SPACE object[$s, false])? (SPACE adverb[$s, false])?
+    ;
+
+incompleteSentence [Sentence s] returns [Verb ver]
+    :
+    SIMPLEFORM {$ver = new Verb($SIMPLEFORM.text, $s.getLine());}
+    rest[$s]
+    ;
+
+rest[Sentence s]
+    :
         {String object = "";}
         (
         SPACE object[$s, false, null] SPACE PREPOSITION {object += ($PREPOSITION.text + " ");} SPACE
@@ -18,8 +29,5 @@ structure [Sentence s]
         SPACE object[$s, false, null] SPACE object[$s, false, null]  |  // I'll send him a letter
         SPACE object[$s, false, null]    // I'll send a letter
         )?
-         (SPACE adverb[$s, false])*
-//        | adverb[$s, true] COMMA SPACE subject[$s, false] SPACE verb[$s] (SPACE object[$s, false])?
-//        (SPACE object[$s, false])? (SPACE adverb[$s, false])?
-        )
+        (SPACE adverb[$s, false])*
     ;

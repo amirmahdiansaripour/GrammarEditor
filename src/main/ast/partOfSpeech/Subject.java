@@ -23,6 +23,9 @@ public class Subject extends Word {
     }
 
     public void setCountBasedOnPronouns(String sub){
+        if(sub.contains(",") || sub.contains("and")){
+            count = "plural";
+        }
         if(sub.equals("he") || sub.equals("she") || sub.equals("it") || singularExceptions.contains(sub)){
             count = "third singular";
         }

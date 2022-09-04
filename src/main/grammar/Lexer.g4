@@ -23,8 +23,10 @@ ADV:
 CONJUNCTION: 'and' | 'And' | 'but' | 'But' | 'or' | 'Or' | 'because' | 'Because' | 'Although' | 'although' |
 'even though' | 'Even though';
 
+SIMPLEFORM: 'go' | 'want' | 'buy';
+
 TOBE: 'am' | 'is' | 'are' | 'was' | 'were';
-PERFECT: 'have' | 'Have' | 'Has' | 'has' | 'had' | 'Had';
+PERFECT: 'have' | 'Have' | 'Has' | 'has' | 'had' | 'Had' | 'has been' | 'have been';
 MODAL: 'will' | 'would' | 'should' | 'must' | 'may' | 'can' | 'could';
 NUMBER: [0-9]+;
 WORD: [A-Za-z0-9]+;

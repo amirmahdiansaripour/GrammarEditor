@@ -74,7 +74,8 @@ adverb [Sentence s, Boolean capital] returns [Adverb adv]
 
 
 endpoint: DOT | EXCLAMATION | QUESTION;
-conjunction[Sentence s] returns [String t]: COMMA SPACE CONJUNCTION {
+conjunction[Sentence s] returns [String t]:
+COMMA SPACE CONJUNCTION {
     $s.checkPreposition($CONJUNCTION.text, false);
     $t = ", " + $CONJUNCTION.text;
 }
