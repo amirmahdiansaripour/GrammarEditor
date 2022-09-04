@@ -9,8 +9,6 @@ import PartOfSpeech, Lexer;
 structure [Sentence s]
     :
 //        (PREPOSITION SPACE {object += ($PREPOSITION.text + " ");})? (PREPOSITION SPACE {object += ($PREPOSITION.text + " ");})?
-
-
         (
         subject[$s, $s.isCapital()] SPACE verb[$s]
         {String object = "";}

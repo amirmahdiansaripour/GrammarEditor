@@ -25,7 +25,12 @@ subject [Sentence s, Boolean cap] returns [Subject sub]
 
 object [Sentence s, Boolean cap, String objecct] returns [OBject obj]
     :
-    (IDENTIFIER{objecct += ($IDENTIFIER.text + " ");} SPACE)? WORD {objecct += $WORD.text;}
+    ((IDENTIFIER{objecct += ($IDENTIFIER.text + " ");} SPACE)? WORD {objecct += $WORD.text;})
+    (
+    (SPACE CONJUNCTION SPACE {objecct += ( " " + $CONJUNCTION.text + " ");}((IDENTIFIER SPACE{objecct += ($IDENTIFIER.text + " ");})? WORD {objecct += $WORD.text;}))
+    | ((COMMA SPACE {objecct += ("," + " ");} ((IDENTIFIER SPACE{objecct += ($IDENTIFIER.text + " ");})? WORD {objecct += $WORD.text;}))+
+    conjunction[s] SPACE {objecct += ($conjunction.t + " ");} ((IDENTIFIER SPACE{objecct += ($IDENTIFIER.text + " ");})? WORD {objecct += $WORD.text;}))?
+    )
     {
         $obj = new OBject(objecct, cap, $s.getLine());
         $s.addObject($obj);
@@ -63,7 +68,8 @@ adverb [Sentence s, Boolean capital] returns [Adverb adv]
 
 
 endpoint: DOT | EXCLAMATION | QUESTION;
-conjunction[Sentence s]: COMMA SPACE CONJUNCTIONWORD {
-    $s.checkPreposition($CONJUNCTIONWORD.text, false);
+conjunction[Sentence s] returns [String t]: COMMA SPACE CONJUNCTION {
+    $s.checkPreposition($CONJUNCTION.text, false);
+    $t = ", " + $CONJUNCTION.text;
 }
 | SEMICOLON;

@@ -165,7 +165,7 @@ public class Verb extends Word {
         checkCapital();
         if(tense == null){
             tense.add("wrong");
-            errors.add(new GrammarError.WrongWord(line, text + " isn't correct."));
+            errors.add(new GrammarError.IsntCorrect(line, text));
         }
     }
 }
