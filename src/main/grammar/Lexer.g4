@@ -20,6 +20,8 @@ ADV:
 | 'in the ' ('future' | 'past') | 'in future' |
 'just' | 'Recently' | 'recently' | 'lately' | 'Lately' | (('since' | 'Since') SPACE NUMBER);
 
+CONJUNCTIONWORD: 'and' | 'And' | 'but' | 'But' | 'or' | 'Or' | 'because' | 'Because' | 'Although' | 'although' |
+'even though' | 'Even though';
 
 TOBE: 'am' | 'is' | 'are' | 'was' | 'were';
 PERFECT: 'have' | 'Have' | 'Has' | 'has' | 'had' | 'Had';

@@ -44,11 +44,12 @@ public class Word extends astNode{
         return;
     }
 
-    public void checkCapital(){
-        if(capital && Character.isLowerCase(text.charAt(0)))
+    public void checkCapital() {
+        if (capital && Character.isLowerCase(text.charAt(0))) {
             errors.add(new GrammarError.WordShouldBeCapital(line, text));
-        else if(!capital && Character.isUpperCase(text.charAt(0)))
+        } else if (!capital && Character.isUpperCase(text.charAt(0))){
             errors.add(new GrammarError.WordShouldBeLittle(line, text));
+        }
     }
 
     @Override

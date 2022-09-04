@@ -39,15 +39,8 @@ sentence [int line, int index] returns [Sentence s, int indexRet]
         $s = new Sentence($line);
         $s.setIndex($index);
         }
-        (endpoint {$s.capitalize();} | conjunction)
+        (endpoint {$s.capitalize();} | conjunction[$s])
         (NEWLINE {$indexRet = $line + 1;}| SPACE {$indexRet = $line;})+
         {$s.changeLine($indexRet);}
         structure[$s]
-    ;
-
-structure [Sentence s]
-    :
-    (
-    present[$s]
-    )
     ;

@@ -6,13 +6,13 @@ grammar Present;
 }
 import PartOfSpeech, Lexer;
 
-present [Sentence s]
+structure [Sentence s]
     :
 //        (PREPOSITION SPACE {object += ($PREPOSITION.text + " ");})? (PREPOSITION SPACE {object += ($PREPOSITION.text + " ");})?
 
 
         (
-        subject[$s, true] SPACE verb[$s]
+        subject[$s, $s.isCapital()] SPACE verb[$s]
         {String object = "";}
         (
         SPACE object[$s, false, ""] SPACE PREPOSITION {object += ($PREPOSITION.text + " ");} SPACE

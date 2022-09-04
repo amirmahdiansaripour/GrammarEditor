@@ -61,5 +61,9 @@ adverb [Sentence s, Boolean capital] returns [Adverb adv]
     }
     ;
 
-endpoint: (DOT | EXCLAMATION | QUESTION);
-conjunction: (COMMA | SEMICOLON);
+
+endpoint: DOT | EXCLAMATION | QUESTION;
+conjunction[Sentence s]: COMMA SPACE CONJUNCTIONWORD {
+    $s.checkPreposition($CONJUNCTIONWORD.text, false);
+}
+| SEMICOLON;
