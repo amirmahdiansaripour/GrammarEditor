@@ -15,9 +15,9 @@ partOfSpeech [Sentence s, Boolean cap, String role]
 
 subject [Sentence s, Boolean cap] returns [Subject sub]
     :
-    {String subject = "";}
-    (IDENTIFIER{subject += ($IDENTIFIER.text + " ");} SPACE)? WORD {subject += $WORD.text;}
+    word[s]
     {
+        String subject = $word.ret;
         $sub = new Subject(subject, cap, $s.getLine());
         $s.addSubject($sub);
     }
@@ -25,17 +25,23 @@ subject [Sentence s, Boolean cap] returns [Subject sub]
 
 object [Sentence s, Boolean cap, String objecct] returns [OBject obj]
     :
-    ((IDENTIFIER{objecct += ($IDENTIFIER.text + " ");} SPACE)? WORD {objecct += $WORD.text;})
-    (
-    (SPACE CONJUNCTION SPACE {objecct += ( " " + $CONJUNCTION.text + " ");}((IDENTIFIER SPACE{objecct += ($IDENTIFIER.text + " ");})? WORD {objecct += $WORD.text;}))
-    | ((COMMA SPACE {objecct += ("," + " ");} ((IDENTIFIER SPACE{objecct += ($IDENTIFIER.text + " ");})? WORD {objecct += $WORD.text;}))+
-    conjunction[s] SPACE {objecct += ($conjunction.t + " ");} ((IDENTIFIER SPACE{objecct += ($IDENTIFIER.text + " ");})? WORD {objecct += $WORD.text;}))?
-    )
+    word[s]
     {
+        if(objecct != null) objecct += $word.ret;
+        else objecct = $word.ret;
         $obj = new OBject(objecct, cap, $s.getLine());
         $s.addObject($obj);
     }
     ;
+
+word [Sentence s] returns [String ret]:
+    (IDENTIFIER {$ret = ($IDENTIFIER.text + " ");} SPACE)? WORD { if($ret == null) $ret = $WORD.text; else $ret += $WORD.text;}
+    (
+    (SPACE CONJUNCTION SPACE {$ret += ( " " + $CONJUNCTION.text + " ");} (IDENTIFIER SPACE {$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;})
+    |((COMMA SPACE {$ret += ("," + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;})+
+    (conjunction[s] SPACE {$ret += ($conjunction.t + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;}))
+    )?
+;
 
 verb [Sentence s] returns [Verb ver]
     :
