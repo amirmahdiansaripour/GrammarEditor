@@ -20,7 +20,11 @@ text returns [Text textReturn]
         $textReturn = new Text();
         }
         (fs = firstSentence[line, senIndex] {$textReturn.addSentence($fs.s); senIndex++;})
-        (s = sentence[line, senIndex] {$textReturn.addSentence($s.s); senIndex++; line = $s.indexRet;})*
+        (
+        s = sentence[line, senIndex]{line = $s.indexRet; $textReturn.addSentence($s.s); senIndex++;}
+        |
+        c = clause[line, senIndex]{$textReturn.addSentence($c.s); senIndex++;}
+        )*
     ;
 
 firstSentence[int line, int index] returns [Sentence s]
@@ -43,4 +47,14 @@ sentence [int line, int index] returns [Sentence s, int indexRet]
     (NEWLINE {$indexRet = $line + 1;}| SPACE {$indexRet = $line;})+
     {$s.changeLine($indexRet);}
     completeSentence[$s]
+    ;
+
+clause [int line, int index] returns [Sentence s]
+    :
+    {
+    $s = new Sentence($line);
+    $s.setIndex($index);
+    }
+    SPACE
+    incompleteSentence[$s]
     ;

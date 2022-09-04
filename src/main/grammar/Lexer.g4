@@ -23,7 +23,11 @@ ADV:
 CONJUNCTION: 'and' | 'And' | 'but' | 'But' | 'or' | 'Or' | 'because' | 'Because' | 'Although' | 'although' |
 'even though' | 'Even though';
 
-SIMPLEFORM: 'go' | 'want' | 'buy';
+SIMPLEFORM: 'to' SPACE (
+'go' | 'want' | 'buy' |
+'be' (SPACE ('read' | 'bought' | 'sent' | 'gone' | 'written'))?
+| 'write' | 'make' | 'cook' | 'send' | 'read'
+);
 
 TOBE: 'am' | 'is' | 'are' | 'was' | 'were';
 PERFECT: 'have' | 'Have' | 'Has' | 'has' | 'had' | 'Had' | 'has been' | 'have been';
