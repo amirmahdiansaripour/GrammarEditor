@@ -15,9 +15,17 @@ partOfSpeech [Sentence s, Boolean cap, String role]
 
 subject [Sentence s, Boolean cap] returns [Subject sub]
     :
-    word[s]
+//////////////////////
+    {String ret = "";}
+    ((IDENTIFIER {ret = ($IDENTIFIER.text + " ");} SPACE)? WORD { if(ret == null) ret = $WORD.text; else ret += $WORD.text;})
+    (
+    (SPACE CONJUNCTION SPACE {ret += ( " " + $CONJUNCTION.text + " ");} (IDENTIFIER SPACE {ret += ($IDENTIFIER.text + " ");})? WORD {ret += $WORD.text;})
+    |((COMMA SPACE {ret += ("," + " ");} (IDENTIFIER SPACE{ret += ($IDENTIFIER.text + " ");})? WORD {ret += $WORD.text;})+
+    (conjunction[s] SPACE {ret += ($conjunction.t + " ");} (IDENTIFIER SPACE{ret += ($IDENTIFIER.text + " ");})? WORD {ret += $WORD.text;}))
+    )?
+////////////////////
     {
-        String subject = $word.ret;
+        String subject = ret;
         $sub = new Subject(subject, cap, $s.getLine());
         $s.addSubject($sub);
     }
@@ -25,35 +33,34 @@ subject [Sentence s, Boolean cap] returns [Subject sub]
 
 object [Sentence s, Boolean cap, String objecct] returns [OBject obj]
     :
-    word[s]
+//////////////////////
+    {String ret = "";}
+    ((IDENTIFIER {ret = ($IDENTIFIER.text + " ");} SPACE)? WORD { if(ret == null) ret = $WORD.text; else ret += $WORD.text;})
+    (
+    (SPACE CONJUNCTION SPACE {ret += ( " " + $CONJUNCTION.text + " ");} (IDENTIFIER SPACE {ret += ($IDENTIFIER.text + " ");})? WORD {ret += $WORD.text;})
+    |((COMMA SPACE {ret += ("," + " ");} (IDENTIFIER SPACE{ret += ($IDENTIFIER.text + " ");})? WORD {ret += $WORD.text;})+
+    (conjunction[s] SPACE {ret += ($conjunction.t + " ");} (IDENTIFIER SPACE{ret += ($IDENTIFIER.text + " ");})? WORD {ret += $WORD.text;}))
+    )?
+////////////////////
     {
-        if(objecct != null) objecct += $word.ret;
-        else objecct = $word.ret;
+        if(objecct != null) objecct += ret;
+        else objecct = ret;
         $obj = new OBject(objecct, cap, $s.getLine());
         $s.addObject($obj);
     }
     ;
 
-word [Sentence s] returns [String ret]:
-    ((IDENTIFIER {$ret = ($IDENTIFIER.text + " ");} SPACE)? WORD { if($ret == null) $ret = $WORD.text; else $ret += $WORD.text;})
-    (
-    (SPACE CONJUNCTION SPACE {$ret += ( " " + $CONJUNCTION.text + " ");} (IDENTIFIER SPACE {$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;})
-    |((COMMA SPACE {$ret += ("," + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;})+
-    (conjunction[s] SPACE {$ret += ($conjunction.t + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;}))
-    )?
-;
-
 verb [Sentence s] returns [Verb ver]
     :
     {String verbText = "";}
     (
-     tobe SPACE word[s] {verbText = $tobe.ret + " " + $word.ret;}
+     tobe SPACE WORD {verbText = $tobe.ret + " " + $WORD.text;}
      |
-     modal SPACE word[s] {verbText = $modal.ret + " " + $word.ret;}
+     modal SPACE WORD {verbText = $modal.ret + " " + $WORD.text;}
      |
-     perfect (SPACE adverb[s, false])? SPACE word[s] {verbText = $perfect.ret + " " + $word.ret;}
+     perfect (SPACE adverb[s, false])? SPACE WORD {verbText = $perfect.ret + " " + $WORD.text;}
      |
-     word[s] {verbText = $word.ret;}
+     WORD {verbText = $WORD.text;}
     )
     {
         $ver = new Verb(verbText, $s.getLine());
@@ -63,11 +70,18 @@ verb [Sentence s] returns [Verb ver]
 
 adverb [Sentence s, Boolean capital] returns [Adverb adv]
     :
-    {String adverb = "";}
-    (preposition SPACE {adverb += ($preposition.ret + " ");})? (preposition SPACE {adverb += ($preposition.ret + " ");})?
-    (ADV {adverb += $ADV.text;})
+//    (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})? (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})?
+//    (WORD {adverb += $WORD.text;})
+    {String ret = "";}
+    ((IDENTIFIER {ret = ($IDENTIFIER.text + " ");} SPACE)? WORD { if(ret == null) ret = $WORD.text; else ret += $WORD.text;})
+    (
+    (SPACE CONJUNCTION SPACE {ret += ( " " + $CONJUNCTION.text + " ");} (IDENTIFIER SPACE {ret += ($IDENTIFIER.text + " ");})? WORD {ret += $WORD.text;})
+    |((COMMA SPACE {ret += ("," + " ");} (IDENTIFIER SPACE{ret += ($IDENTIFIER.text + " ");})? WORD {ret += $WORD.text;})+
+    (conjunction[s] SPACE {ret += ($conjunction.t + " ");} (IDENTIFIER SPACE{ret += ($IDENTIFIER.text + " ");})? WORD {ret += $WORD.text;}))
+    )?
+/////////////
     {
-        $adv = new Adverb(adverb, capital, $s.getLine());
+        $adv = new Adverb(ret, capital, $s.getLine());
         $s.addAdverb($adv);
     }
     ;
@@ -80,11 +94,6 @@ COMMA SPACE CONJUNCTION {
     $t = ", " + $CONJUNCTION.text;
 }
 | SEMICOLON;
-
-preposition returns [String ret]
-    :
-    PREPOSITION {$ret = $PREPOSITION.text;}
-    ;
 
 tobe returns [String ret]
     :
