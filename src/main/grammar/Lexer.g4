@@ -20,9 +20,17 @@ ADV:
 | 'in the ' ('future' | 'past') | 'in future' |
 'just' | 'Recently' | 'recently' | 'lately' | 'Lately' | (('since' | 'Since') SPACE NUMBER);
 
+CONJUNCTION: 'and' | 'And' | 'but' | 'But' | 'or' | 'Or' | 'because' | 'Because' | 'Although' | 'although' |
+'even though' | 'Even though';
+
+SIMPLEFORM: 'to' SPACE (
+'go' | 'want' | 'buy' |
+'be' (SPACE ('read' | 'bought' | 'sent' | 'gone' | 'written'))?
+| 'write' | 'make' | 'cook' | 'send' | 'read'
+);
 
 TOBE: 'am' | 'is' | 'are' | 'was' | 'were';
-PERFECT: 'have' | 'Have' | 'Has' | 'has' | 'had' | 'Had';
+PERFECT: 'have' | 'Have' | 'Has' | 'has' | 'had' | 'Had' | 'has been' | 'have been';
 MODAL: 'will' | 'would' | 'should' | 'must' | 'may' | 'can' | 'could';
 NUMBER: [0-9]+;
 WORD: [A-Za-z0-9]+;

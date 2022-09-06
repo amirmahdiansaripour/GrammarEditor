@@ -59,6 +59,7 @@ public class Sentence extends astNode {
                 return true;
         return false;
     }
+    public Boolean isCapital(){return capital;}
     public void usingTwoAdverbsOfTime(){
         for(Verb ver : verb){
             if(ver.tense.contains("present perfect") || ver.tense.contains("past perfect")){
@@ -98,6 +99,13 @@ public class Sentence extends astNode {
                 }
             }
         }
+    }
+    public void checkPreposition(String prep, Boolean cap){
+        if(!cap && Character.isUpperCase(prep.charAt(0)))
+            errors.add(new GrammarError.WordShouldBeLittle(line, prep));
+
+        else if(cap && Character.isLowerCase(prep.charAt(0)))
+            errors.add(new GrammarError.WordShouldBeCapital(line, prep));
     }
     @Override
     public String toString(){return "Sentence";}

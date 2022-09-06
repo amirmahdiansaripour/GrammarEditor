@@ -12,12 +12,6 @@ public class GrammarError extends Exception{
     }
     public String getMessage(){return "Line " + line + ": " + message;}
 
-    public static class WrongWord extends GrammarError{
-        public WrongWord(int line_, String message_){
-            super(line_, message_);
-        }
-    }
-
     public static class WordShouldBeCapital extends GrammarError{
         public WordShouldBeCapital(int line_, String message_){
             super(line_, message_ + " should be capital letter.");

@@ -6,6 +6,7 @@ import main.visitor.IVisitor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class Verb extends Word {
     protected static ArrayList<String> presentDataset = makeDataSet("src\\dataset\\verbs\\simplePresentVerbs.txt");
@@ -15,7 +16,7 @@ public class Verb extends Word {
     protected static ArrayList<String> wrongs = makeDataSet("src\\dataset\\verbs\\wrongs.txt");
     protected static ArrayList<String> modals = new ArrayList<>(Arrays.asList("will", "should", "must", "could", "would", "can", "may"));
     protected static ArrayList<String> literalChanges = new ArrayList<>(Arrays.asList("ss", "sh", "ch", "x"));
-    protected static ArrayList<String> presentPerfect = new ArrayList<>(Arrays.asList("has", "have"));
+    protected static ArrayList<String> presentPerfect = new ArrayList<>(Arrays.asList("has", "have", "have been", "has been"));
     private String root, auxiliary;
     public ArrayList<String> tense, count;
     public Verb(String t, int line_) {
@@ -25,15 +26,16 @@ public class Verb extends Word {
         setTense();
     }
     public void nonSimpleVerbs(int index){
-        String aux = text.substring(0, index);
-        String remained = text.substring(index + 1);
+        String aux = text.substring(0, index).toLowerCase();
+        String remained = text.substring(index + 1).toLowerCase();
 //        System.out.println("aux " + aux);
         root = remained;
         if (aux.equals("am") || aux.equals("is") || aux.equals("are")) {
             if(aux.equals("am")) count.add("first singular");
             else if(aux.equals("is")) count.add("third singular");
             else if(aux.equals("are")) count.add("plural");
-            if(wrongs.contains(remained.toLowerCase())){
+
+            if(wrongs.contains(remained)){
                 errors.add(new GrammarError.IsntCorrect(line, remained));
                 tense.add("wrong");
             }
@@ -44,13 +46,13 @@ public class Verb extends Word {
         else if (aux.equals("was") || aux.equals("were")) {
             if(aux.equals("was")) {count.add("first singular"); count.add("third singular");}
             else if(aux.equals("were")) count.add("plural");
-            if(wrongs.contains(remained.toLowerCase())){
+            if(wrongs.contains(remained)){
                 errors.add(new GrammarError.IsntCorrect(line, remained));
                 tense.add("wrong");
             }
             else tense.add("past");
         }
-        else if(modals.contains(aux.toLowerCase())){
+        else if(modals.contains(aux)){
             count.add("first singular"); count.add("third singular"); count.add("plural");
             if(!presentDataset.contains(remained)){
                 errors.add(new GrammarError.IsntCorrect(line, text));
@@ -60,9 +62,9 @@ public class Verb extends Word {
                 tense.add("present"); tense.add("simple present"); tense.add("future");
             }
         }
-        else if(presentPerfect.contains(aux.toLowerCase())){
-            if(aux.toLowerCase().equals("has")) count.add("third singular");
-            else if(aux.toLowerCase().equals("have")) {count.add("first singular"); count.add("plural");}
+        else if(presentPerfect.contains(aux)){
+            if(aux.equals("has") || aux.equals("has been")) count.add("third singular");
+            else if(aux.equals("have") || aux.equals("have been")) {count.add("first singular"); count.add("plural");}
             if(regularPresentOrPast("ed", 1, remained)){ // received, agreed
                 if(wrongs.contains(text.toLowerCase())){
                     errors.add(new GrammarError.IsntCorrect(line, text));
@@ -165,7 +167,7 @@ public class Verb extends Word {
         checkCapital();
         if(tense == null){
             tense.add("wrong");
-            errors.add(new GrammarError.WrongWord(line, text + " isn't correct."));
+            errors.add(new GrammarError.IsntCorrect(line, text));
         }
     }
 }

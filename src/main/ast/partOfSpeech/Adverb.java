@@ -58,7 +58,7 @@ public class Adverb extends Word{
                 tense.add("general");
                 String root = text.substring(spaceIndex + 1).toLowerCase();
                 if (!adverbDataset.contains(root.toLowerCase())) {
-                    errors.add(new GrammarError.WrongWord(line, root + " isn't correct."));
+                    errors.add(new GrammarError.IsntCorrect(line, root));
                 }
             }
             if (perfectAdverbs.contains(prefix.toLowerCase())) {
@@ -85,7 +85,7 @@ public class Adverb extends Word{
 //        if(tense == null){
 //            if(!adverbDataset.contains(text.toLowerCase())){
 ////                checkValidWord(text, adverbDataset, " isn't an adverb.");
-//                errors.add(new GrammarError.WrongWord(line, text + " isn't an adverb."));
+//                errors.add(new GrammarError.IsntCorrect(line, text));
 //            }
 //        }
     }
