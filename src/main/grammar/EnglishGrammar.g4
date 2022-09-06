@@ -34,7 +34,7 @@ firstSentence[int line, int index] returns [Sentence s]
     $s.setIndex($index);
     $s.capitalize();
     }
-    sentenceStructure[$s]
+    completeSentence[$s]
     ;
 
 sentence [int line, int index] returns [Sentence s, int indexRet]
@@ -46,7 +46,7 @@ sentence [int line, int index] returns [Sentence s, int indexRet]
     (endpoint {$s.capitalize();} | conjunction[$s])
     (NEWLINE {$indexRet = $line + 1;}| SPACE {$indexRet = $line;})+
     {$s.changeLine($indexRet);}
-    sentenceStructure[$s]
+    completeSentence[$s]
     ;
 
 clause [int line, int index] returns [Sentence s]
@@ -56,5 +56,5 @@ clause [int line, int index] returns [Sentence s]
     $s.setIndex($index);
     }
     SPACE
-    clauseStructure[$s]
+    incompleteSentence[$s]
     ;
