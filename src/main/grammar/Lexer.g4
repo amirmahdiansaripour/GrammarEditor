@@ -24,7 +24,7 @@ CONJUNCTION: 'and' | 'And' | 'but' | 'But' | 'or' | 'Or' | 'because' | 'Because'
 'even though' | 'Even though';
 
 SIMPLEFORM: 'to' SPACE (
-'go' | 'want' | 'buy' |
+'go' | 'want' | 'buy' | 'wash' |
 'be' (SPACE ('read' | 'bought' | 'sent' | 'gone' | 'written'))?
 | 'write' | 'make' | 'cook' | 'send' | 'read'
 );

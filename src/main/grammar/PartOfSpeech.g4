@@ -47,13 +47,13 @@ verb [Sentence s] returns [Verb ver]
     :
     {String verbText = "";}
     (
-     TOBE SPACE WORD {verbText = $TOBE.text + " " + $WORD.text;}
+     tobe SPACE word[s] {verbText = $tobe.ret + " " + $word.ret;}
      |
-     MODAL SPACE WORD {verbText = $MODAL.text + " " + $WORD.text;}
+     modal SPACE word[s] {verbText = $modal.ret + " " + $word.ret;}
      |
-     PERFECT (SPACE adverb[s, false])? SPACE WORD {verbText = $PERFECT.text + " " + $WORD.text;}
+     perfect (SPACE adverb[s, false])? SPACE word[s] {verbText = $perfect.ret + " " + $word.ret;}
      |
-     WORD {verbText = $WORD.text;}
+     word[s] {verbText = $word.ret;}
     )
     {
         $ver = new Verb(verbText, $s.getLine());
@@ -64,7 +64,7 @@ verb [Sentence s] returns [Verb ver]
 adverb [Sentence s, Boolean capital] returns [Adverb adv]
     :
     {String adverb = "";}
-    (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})? (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})?
+    (preposition SPACE {adverb += ($preposition.ret + " ");})? (preposition SPACE {adverb += ($preposition.ret + " ");})?
     (ADV {adverb += $ADV.text;})
     {
         $adv = new Adverb(adverb, capital, $s.getLine());
@@ -80,3 +80,21 @@ COMMA SPACE CONJUNCTION {
     $t = ", " + $CONJUNCTION.text;
 }
 | SEMICOLON;
+
+preposition returns [String ret]
+    :
+    PREPOSITION {$ret = $PREPOSITION.text;}
+    ;
+
+tobe returns [String ret]
+    :
+    TOBE {$ret = $TOBE.text;}
+    ;
+modal returns [String ret]
+    :
+    MODAL {$ret = $MODAL.text;}
+    ;
+perfect returns [String ret]
+    :
+    PERFECT {$ret = $PERFECT.text;}
+    ;
