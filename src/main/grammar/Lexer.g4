@@ -11,23 +11,8 @@ IDENTIFIER: 'a' | 'the' | 'A' | 'an' | 'An' | 'The' | 'some' | 'Some' | 'Most' |
 
 DAYS: 'Sunday' | 'Saturday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday';
 
-ADV:
-('tomorrow'| 'Tomorrow'  | 'yesterday' | 'Yesterday' | 'very' | 'Very') | 'today' |
-('on' SPACE DAYS) |
-(('every' | 'next' | 'last' | 'Every' | 'Next' | 'Last' | 'each' | 'Each') SPACE ('day' | 'night' |'morning' |
-'evening' | DAYS)) |
-('in the' | 'In the') SPACE ('evening' | 'morning') | 'at' SPACE ('park' | 'university' | 'school')
-| 'in the ' ('future' | 'past') | 'in future' |
-'just' | 'Recently' | 'recently' | 'lately' | 'Lately' | (('since' | 'Since') SPACE NUMBER);
-
 CONJUNCTION: 'and' | 'And' | 'but' | 'But' | 'or' | 'Or' | 'because' | 'Because' | 'Although' | 'although' |
 'even though' | 'Even though';
-
-SIMPLEFORM: 'to' SPACE (
-'go' | 'want' | 'buy' | 'wash' |
-'be' (SPACE ('read' | 'bought' | 'sent' | 'gone' | 'written'))?
-| 'write' | 'make' | 'cook' | 'send' | 'read'
-);
 
 TOBE: 'am' | 'is' | 'are' | 'was' | 'were';
 PERFECT: 'have' | 'Have' | 'Has' | 'has' | 'had' | 'Had' | 'has been' | 'have been';

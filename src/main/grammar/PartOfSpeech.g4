@@ -13,11 +13,20 @@ partOfSpeech [Sentence s, Boolean cap, String role]
     subject[s, cap] | object[s, cap, role] | verb[s] | adverb[s, cap]
     ;
 
+nounPhrase [Sentence s] returns [String ret]:
+    ((IDENTIFIER {$ret = ($IDENTIFIER.text + " ");} SPACE)? WORD { if($ret == null) $ret = $WORD.text; else $ret += $WORD.text;})
+    (
+    (SPACE CONJUNCTION SPACE {$ret += ( " " + $CONJUNCTION.text + " ");} (IDENTIFIER SPACE {$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;})
+    |((COMMA SPACE {$ret += ("," + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;})+
+    (CONJUNCTION SPACE {$ret += ($CONJUNCTION.text + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;}))
+    )?
+;
+
 subject [Sentence s, Boolean cap] returns [Subject sub]
     :
-    word[s]
+    nounPhrase[s]
     {
-        String subject = $word.ret;
+        String subject = $nounPhrase.ret;
         $sub = new Subject(subject, cap, $s.getLine());
         $s.addSubject($sub);
     }
@@ -25,23 +34,14 @@ subject [Sentence s, Boolean cap] returns [Subject sub]
 
 object [Sentence s, Boolean cap, String objecct] returns [OBject obj]
     :
-    word[s]
+    nounPhrase[s]
     {
-        if(objecct != null) objecct += $word.ret;
-        else objecct = $word.ret;
+        if(objecct != null) objecct += $nounPhrase.ret;
+        else objecct = $nounPhrase.ret;
         $obj = new OBject(objecct, cap, $s.getLine());
         $s.addObject($obj);
     }
     ;
-
-word [Sentence s] returns [String ret]:
-    ((IDENTIFIER {$ret = ($IDENTIFIER.text + " ");} SPACE)? WORD { if($ret == null) $ret = $WORD.text; else $ret += $WORD.text;})
-    (
-    (SPACE CONJUNCTION SPACE {$ret += ( " " + $CONJUNCTION.text + " ");} (IDENTIFIER SPACE {$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;})
-    |((COMMA SPACE {$ret += ("," + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;})+
-    (conjunction[s] SPACE {$ret += ($conjunction.t + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;}))
-    )?
-;
 
 verb [Sentence s] returns [Verb ver]
     :
@@ -65,7 +65,7 @@ adverb [Sentence s, Boolean capital] returns [Adverb adv]
     :
     {String adverb = "";}
     (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})? (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})?
-    (ADV {adverb += $ADV.text;})
+    (IDENTIFIER SPACE)? WORD {adverb += $WORD.text;}
     {
         $adv = new Adverb(adverb, capital, $s.getLine());
         $s.addAdverb($adv);
@@ -80,3 +80,13 @@ COMMA SPACE CONJUNCTION {
     $t = ", " + $CONJUNCTION.text;
 }
 | SEMICOLON;
+
+preposition returns [String ret]
+    :
+    PREPOSITION {$ret = $PREPOSITION.text;}
+    ;
+
+//simpleForm returns [String ret]
+//    :
+//    SIMPLEFORM {$ret = $SIMPLEFORM.text;}
+//    ;
