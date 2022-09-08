@@ -16,9 +16,10 @@ partOfSpeech [Sentence s, Boolean cap, String role]
 nounPhrase [Sentence s] returns [String ret]:
     ((IDENTIFIER {$ret = ($IDENTIFIER.text + " ");} SPACE)? WORD { if($ret == null) $ret = $WORD.text; else $ret += $WORD.text;})
     (
-    (SPACE CONJUNCTION SPACE {$ret += ( " " + $CONJUNCTION.text + " ");} (IDENTIFIER SPACE {$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;})
-    |((COMMA SPACE {$ret += ("," + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;})+
-    (CONJUNCTION SPACE {$ret += ($CONJUNCTION.text + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;}))
+    (SPACE conjunction[$s] SPACE {$ret += ( " " + $conjunction.t + " ");} (IDENTIFIER SPACE {$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;})
+    |((COMMA SPACE {$ret += ("," + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})?
+    WORD {$ret += $WORD.text;})+
+    (COMMA SPACE {$ret += ("," + " ");} conjunction[$s] SPACE {$ret += ($conjunction.t + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;}))
     )?
 ;
 
@@ -47,6 +48,10 @@ verb [Sentence s] returns [Verb ver]
     :
     {String verbText = "";}
     (
+     (t = ('There' | 'there') SPACE TOBE {verbText = $t.text + " " + $TOBE.text;})
+     |
+     SIMPLENEG SPACE WORD {verbText = $SIMPLENEG.text + " " + $WORD.text;}
+     |
      TOBE SPACE WORD {verbText = $TOBE.text + " " + $WORD.text;}
      |
      MODAL SPACE WORD {verbText = $MODAL.text + " " + $WORD.text;}
@@ -65,7 +70,7 @@ adverb [Sentence s, Boolean capital] returns [Adverb adv]
     :
     {String adverb = "";}
     (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})? (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})?
-    (IDENTIFIER SPACE)? WORD {adverb += $WORD.text;}
+    (IDENTIFIER SPACE)? ADV {adverb += $ADV.text;}
     {
         $adv = new Adverb(adverb, capital, $s.getLine());
         $s.addAdverb($adv);
@@ -74,8 +79,9 @@ adverb [Sentence s, Boolean capital] returns [Adverb adv]
 
 
 endpoint: DOT | EXCLAMATION | QUESTION;
+
 conjunction[Sentence s] returns [String t]:
-COMMA SPACE CONJUNCTION {
+CONJUNCTION {
     $s.checkPreposition($CONJUNCTION.text, false);
     $t = ", " + $CONJUNCTION.text;
 }
@@ -86,7 +92,7 @@ preposition returns [String ret]
     PREPOSITION {$ret = $PREPOSITION.text;}
     ;
 
-//simpleForm returns [String ret]
-//    :
-//    SIMPLEFORM {$ret = $SIMPLEFORM.text;}
-//    ;
+infinitive returns [String ret]
+    :
+    INFINITIVE {$ret = $INFINITIVE.text;}
+    ;

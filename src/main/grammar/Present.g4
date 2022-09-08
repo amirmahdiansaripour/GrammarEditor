@@ -22,14 +22,14 @@ arbitraryParts[Sentence s]
 
 sentenceStructure [Sentence s]
     :
-        (subject[$s, $s.isCapital()] SPACE verb[$s])
+        ((subject[$s, $s.isCapital()] SPACE verb[$s]) | (verb[$s] SPACE subject[$s, false]))
          arbitraryParts[$s]
 //        | adverb[$s, true] COMMA SPACE subject[$s, false] SPACE verb[$s] (SPACE object[$s, false])?
 //        (SPACE object[$s, false])? (SPACE adverb[$s, false])?
     ;
 
-clauseStructure [Sentence s] returns [Verb ver]
+infinitivePhraseStructure [Sentence s] returns [Verb ver]
     :
-        WORD {$ver = new Verb($WORD.text.substring(3), $s.getLine()); $s.addVerb($ver);}
+        infinitive {$ver = new Verb($infinitive.ret.substring(3), $s.getLine()); $s.addVerb($ver);}
         arbitraryParts[$s]
     ;

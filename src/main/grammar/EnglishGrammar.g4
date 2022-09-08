@@ -23,7 +23,7 @@ text returns [Text textReturn]
         (
         s = sentence[line, senIndex]{line = $s.indexRet; $textReturn.addSentence($s.s); senIndex++;}
         |
-        c = clause[line, senIndex]{$textReturn.addSentence($c.s); senIndex++;}
+        c = infinitivePhrase[line, senIndex]{$textReturn.addSentence($c.s); senIndex++;}
         )*
     ;
 
@@ -43,18 +43,18 @@ sentence [int line, int index] returns [Sentence s, int indexRet]
     $s = new Sentence($line);
     $s.setIndex($index);
     }
-    (endpoint {$s.capitalize();} | conjunction[$s])
+    (endpoint {$s.capitalize();} | COMMA SPACE conjunction[$s])
     (NEWLINE {$indexRet = $line + 1;}| SPACE {$indexRet = $line;})+
     {$s.changeLine($indexRet);}
     sentenceStructure[$s]
     ;
 
-clause [int line, int index] returns [Sentence s]
+infinitivePhrase [int line, int index] returns [Sentence s]
     :
     {
     $s = new Sentence($line);
     $s.setIndex($index);
     }
     SPACE
-    clauseStructure[$s]
+    infinitivePhraseStructure[$s]
     ;
