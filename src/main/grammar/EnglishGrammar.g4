@@ -58,3 +58,13 @@ infinitivePhrase [int line, int index] returns [Sentence s]
     SPACE
     infinitivePhraseStructure[$s]
     ;
+
+
+relativeClause [int line, int index] returns [Sentence s]
+    :
+    {
+    $s = new Sentence($line);
+    $s.setIndex($index);
+    }
+    relativeClauseStructure[$s]
+    ;

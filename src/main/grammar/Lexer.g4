@@ -14,7 +14,7 @@ IDENTIFIER: 'a' | 'the' | 'A' | 'an' | 'An' | 'The' | 'some' | 'Some' | 'Most' |
 DAYS: 'Sunday' | 'Saturday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday';
 
 ADV:
-('tomorrow'| 'Tomorrow'  | 'yesterday' | 'Yesterday' | 'very' | 'Very') | 'today' | 'class' |
+('tomorrow'| 'Tomorrow'  | 'yesterday' | 'Yesterday' | 'very' | 'Very') | 'today' | 'class' | 'farm' |
 ('on' SPACE DAYS) |
 (('every' | 'next' | 'last' | 'Every' | 'Next' | 'Last' | 'each' | 'Each') SPACE ('day' | 'night' |'morning' |
 'evening' | DAYS)) |
@@ -36,6 +36,7 @@ PERFECT: (('have' | 'Have' | 'Has' | 'has' | 'had' | 'Had') (SPACE 'not')?) | 'h
 'has not been' | 'have not been';
 SIMPLENEG: ('did' | 'do' | 'does') (SPACE 'not')?;
 MODAL: ('will' | 'would' | 'should' | 'must' | 'may' | 'can' | 'could')(SPACE 'not')?;
+RELATIVEPRONOUN: ((COMMA)? SPACE ('who' | 'which' | 'that' | 'whose'));
 NUMBER: [0-9]+;
 WORD: [A-Za-z]+;
 DOT: '.';
