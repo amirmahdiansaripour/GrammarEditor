@@ -6,18 +6,22 @@ PREPOSITION: 'in' | 'In' | 'at' | 'At' | 'on' | 'On' | 'next to' | 'Next to'
 | 'to' | 'To' | 'into' | 'Into' | 'by' | 'By' | 'with' | 'With' | 'of' |
 'since' | 'Since';
 
+//THAT: 'that';
+
+RELATIVEPRONOUN: 'whose' | 'who' | 'which' | 'whom' | 'that';
+
 IDENTIFIER: 'a' | 'the' | 'A' | 'an' | 'An' | 'The' | 'some' | 'Some' | 'Most' | 'most' | 'Few' | 'few' | 'A few' | 'a few' |
-'little' | 'Little' | 'A little' | 'a little' | 'More' | 'more' | 'that' | 'That' | 'those' | 'Those' | 'this'
+'little' | 'Little' | 'A little' | 'a little' | 'More' | 'more' | 'That' | 'those' | 'Those' | 'this'
 | 'This' | 'these' | 'These' | 'my' | 'My' | 'your' | 'Your' | 'his' | 'His' | 'Her' | 'her' | 'our' | 'Our'
 | 'Their' | 'their' | 'mine' | 'Mine' | 'Yours' | 'yours' | 'ours' | 'Ours' | 'theirs' | 'Theirs' | 'one' | 'two';
 
 DAYS: 'Sunday' | 'Saturday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday';
 
 ADV:
-('tomorrow'| 'Tomorrow'  | 'yesterday' | 'Yesterday' | 'very' | 'Very') | 'today' | 'class' | 'farm' |
+('tomorrow'| 'Tomorrow'  | 'yesterday' | 'Yesterday' | 'very' | 'Very') | 'today' | 'class' | 'farm' | 'before' |
 ('on' SPACE DAYS) |
 (('every' | 'next' | 'last' | 'Every' | 'Next' | 'Last' | 'each' | 'Each') SPACE ('day' | 'night' |'morning' |
-'evening' | DAYS)) |
+'evening' | 'year' | DAYS)) |
 ('in the' | 'In the') SPACE ('evening' | 'morning') | 'at' SPACE ('park' | 'university' | 'school')
 | 'in the ' ('future' | 'past') | 'in future' |
 'just' | 'Recently' | 'recently' | 'lately' | 'Lately' | (('since' | 'Since') SPACE NUMBER);
@@ -36,7 +40,6 @@ PERFECT: (('have' | 'Have' | 'Has' | 'has' | 'had' | 'Had') (SPACE 'not')?) | 'h
 'has not been' | 'have not been';
 SIMPLENEG: ('did' | 'do' | 'does') (SPACE 'not')?;
 MODAL: ('will' | 'would' | 'should' | 'must' | 'may' | 'can' | 'could')(SPACE 'not')?;
-RELATIVEPRONOUN: ((COMMA)? SPACE ('who' | 'which' | 'that' | 'whose'));
 NUMBER: [0-9]+;
 WORD: [A-Za-z]+;
 DOT: '.';

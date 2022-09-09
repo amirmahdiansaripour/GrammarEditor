@@ -15,20 +15,48 @@ partOfSpeech [Sentence s, Boolean cap, String role]
 
 nounPhrase [Sentence s] returns [String ret]
     :
-        ((IDENTIFIER {$ret = ($IDENTIFIER.text + " ");} SPACE)? WORD { if($ret == null) $ret = $WORD.text; else $ret += $WORD.text;})
+        ((so = IDENTIFIER {$ret = ($so.text + " ");} SPACE)? WORD { if($ret == null) $ret = $WORD.text; else $ret += $WORD.text;})
         (
-        (SPACE conjunction[$s] SPACE {$ret += ( " " + $conjunction.t + " ");} (IDENTIFIER SPACE {$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;})
-        |((COMMA SPACE {$ret += ("," + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})?
-        WORD {$ret += $WORD.text;})+
-        (COMMA SPACE 'etc' {$ret += ", etc";}) | (COMMA SPACE {$ret += ("," + " ");} conjunction[$s] SPACE {$ret += ($conjunction.t + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;}))
+            (SPACE conjunction[$s] SPACE {$ret += ( " " + $conjunction.t + " ");} (IDENTIFIER SPACE {$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;})
+            |
+            ((COMMA SPACE {$ret += ("," + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})?
+            WORD {$ret += $WORD.text;})+
+            (COMMA SPACE 'etc' {$ret += ", etc";}) | (COMMA SPACE {$ret += ("," + " ");} conjunction[$s] SPACE {$ret += ($conjunction.t + " ");} (IDENTIFIER SPACE{$ret += ($IDENTIFIER.text + " ");})? WORD {$ret += $WORD.text;}))
         )?
+    ;
+
+arbitraryParts[Sentence s]
+    :
+        {String object = "";}
+        (
+            (SPACE object[$s, false, null] SPACE preposition SPACE {object += ($preposition.ret + " ");}
+            (preposition {object += ($preposition.ret + " ");} SPACE)? object[$s, false, object]) // I'll send a letter to him
+            |
+            (SPACE object[$s, false, null] SPACE object[$s, false, null])
+            |  // I'll send him a letter
+            (SPACE object[$s, false, null])    // I'll send a letter
+        )?
+        (SPACE adverb[$s, false])*
+    ;
+
+relativeClauseStructure [Sentence s]
+    :
+        (SPACE RELATIVEPRONOUN SPACE subject[$s, false] SPACE verb[$s] arbitraryParts[$s])
+        |
+        ((COMMA)? SPACE RELATIVEPRONOUN SPACE subject[$s, false] SPACE verb[$s] arbitraryParts[$s] (COMMA)?)
+        |
+        (SPACE RELATIVEPRONOUN SPACE verb[$s] arbitraryParts[$s])
+        |
+        ((COMMA)? SPACE RELATIVEPRONOUN SPACE verb[$s] arbitraryParts[$s] (COMMA)?)
     ;
 
 subject [Sentence s, Boolean cap] returns [Subject sub]
     :
-        nounPhrase[s]
+        (sp = 'I' | 'he' | 'she' | 'it' | 'they' | nounPhrase[s])
         {
-            String subject = $nounPhrase.ret;
+            String subject;
+            if($sp.text == null) subject = $nounPhrase.ret;
+            else        subject = $sp.text;
             $sub = new Subject(subject, cap, $s.getLine());
             $s.addSubject($sub);
         }

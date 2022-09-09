@@ -74,7 +74,9 @@ public class Verb extends Word {
             }
         }
     }
+
     public Boolean regularPresentOrPast(String suffix, int offset, String check){
+//        System.out.println("check : " + check);
 //        System.out.println(check + ";;" + check.substring(check.length() - suffix.length()));
 //        System.out.println(check + ";;" + check.substring(0, check.length() - suffix.length()));
         if(check.substring(check.length() - suffix.length()).equals(suffix) &&
