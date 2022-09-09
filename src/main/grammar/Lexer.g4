@@ -6,12 +6,8 @@ PREPOSITION: 'in' | 'In' | 'at' | 'At' | 'on' | 'On' | 'next to' | 'Next to'
 | 'to' | 'To' | 'into' | 'Into' | 'by' | 'By' | 'with' | 'With' | 'of' |
 'since' | 'Since';
 
-//THAT: 'that';
-
-RELATIVEPRONOUN: 'whose' | 'who' | 'which' | 'whom' | 'that';
-
 IDENTIFIER: 'a' | 'the' | 'A' | 'an' | 'An' | 'The' | 'some' | 'Some' | 'Most' | 'most' | 'Few' | 'few' | 'A few' | 'a few' |
-'little' | 'Little' | 'A little' | 'a little' | 'More' | 'more' | 'That' | 'those' | 'Those' | 'this'
+'little' | 'Little' | 'A little' | 'a little' | 'More' | 'more' | 'That' | 'that' | 'those' | 'Those' | 'this'
 | 'This' | 'these' | 'These' | 'my' | 'My' | 'your' | 'Your' | 'his' | 'His' | 'Her' | 'her' | 'our' | 'Our'
 | 'Their' | 'their' | 'mine' | 'Mine' | 'Yours' | 'yours' | 'ours' | 'Ours' | 'theirs' | 'Theirs' | 'one' | 'two';
 
