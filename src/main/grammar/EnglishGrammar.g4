@@ -19,42 +19,55 @@ text returns [Text textReturn]
         int senIndex = 1;
         $textReturn = new Text();
         }
-        (fs = firstSentence[line, senIndex] {$textReturn.addSentence($fs.s); senIndex++;})
+        (firstSentence[line, senIndex] {$textReturn.addSentence($firstSentence.ret); senIndex++;})
         (
-        s = sentence[line, senIndex]{line = $s.indexRet; $textReturn.addSentence($s.s); senIndex++;}
-        |
-        c = clause[line, senIndex]{$textReturn.addSentence($c.s); senIndex++;}
+            sentence[line, senIndex]{line = $sentence.indexRet; $textReturn.addSentence($sentence.ret); senIndex++;}
+            |
+//            question[line, senIndex]{line = $question.indexRet; $textReturn.addSentence($question.}
+//            |
+            infinitivePhrase[line, senIndex]{$textReturn.addSentence($infinitivePhrase.ret); senIndex++;}
         )*
     ;
 
-firstSentence[int line, int index] returns [Sentence s]
+
+firstSentence[int line, int index] returns [Sentence ret]
     :
     {
-    $s = new Sentence($line);
-    $s.setIndex($index);
-    $s.capitalize();
+        $ret = new Sentence($line);
+        $ret.setIndex($index);
+        $ret.capitalize();
     }
-    completeSentence[$s]
+    sentenceStructure[$ret]
     ;
 
-sentence [int line, int index] returns [Sentence s, int indexRet]
+sentence [int line, int index] returns [Sentence ret, int indexRet]
     :
     {
-    $s = new Sentence($line);
-    $s.setIndex($index);
+        $ret = new Sentence($line);
+        $ret.setIndex($index);
     }
-    (endpoint {$s.capitalize();} | conjunction[$s])
+    (endpoint {$ret.capitalize();} | COMMA SPACE conjunction[$ret])
     (NEWLINE {$indexRet = $line + 1;}| SPACE {$indexRet = $line;})+
-    {$s.changeLine($indexRet);}
-    completeSentence[$s]
+    {$ret.changeLine($indexRet);}
+    sentenceStructure[$ret]
     ;
 
-clause [int line, int index] returns [Sentence s]
+infinitivePhrase [int line, int index] returns [Sentence ret]
     :
     {
-    $s = new Sentence($line);
-    $s.setIndex($index);
+        $ret = new Sentence($line);
+        $ret.setIndex($index);
     }
     SPACE
-    incompleteSentence[$s]
+    infinitivePhraseStructure[$ret]
+    ;
+
+
+relativeClause [int line, int index] returns [Sentence ret]
+    :
+    {
+        $ret = new Sentence($line);
+        $ret.setIndex($index);
+    }
+    relativeClauseStructure[$ret]
     ;

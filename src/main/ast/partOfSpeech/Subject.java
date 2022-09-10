@@ -61,9 +61,9 @@ public class Subject extends Word {
     }
 
     public void setCountBasedOnPrev(String sub){
-        int firstSpaceIndex = text.indexOf(' ');
-        int secondSpaceIndex = text.indexOf(' ', firstSpaceIndex + 1);
-        int lastSpaceIndex = text.lastIndexOf(' ');
+        int firstSpaceIndex = sub.indexOf(' ');
+        int secondSpaceIndex = sub.indexOf(' ', firstSpaceIndex + 1);
+        int lastSpaceIndex = sub.lastIndexOf(' ');
         if(firstSpaceIndex != -1) {
             String firstPart = sub.substring(0, firstSpaceIndex);
             if(firstPart.equals("most") || firstPart.equals("more") || firstPart.equals("some") ||
@@ -102,6 +102,9 @@ public class Subject extends Word {
         }
         if(count == null){
             setCountBasedOnPrefix(sub);
+        }
+        if(count == null){
+            count = "third singular";
         }
     }
     @Override
