@@ -46,7 +46,7 @@ verb [Sentence s] returns [Verb ver]
          |
          TOBE SPACE WORD {verbText = $TOBE.text + " " + $WORD.text;}
          |
-         MODAL SPACE WORD {verbText = $MODAL.text + " " + $WORD.text;}
+         MODAL SPACE {verbText = $MODAL.text + " "; } (ADV SPACE {verbText += $ADV.text + " " ;})? WORD {verbText += $WORD.text;}
          |
          PERFECT (SPACE adverb[s, false])? SPACE WORD {verbText = $PERFECT.text + " " + $WORD.text;}
          |

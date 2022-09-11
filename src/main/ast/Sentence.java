@@ -25,15 +25,21 @@ public class Sentence extends astNode {
     public int getIndex(){return this.index;}
     public void setSubject(Subject subject){
         words.add(new ArrayList<String>(){{add("Subject: "); add(subject.toString());}});
-        this.subject = subject;
+        if(this.subject == null){
+            this.subject = subject;
+        }
     }
     public void setObject(OBject object){
         words.add(new ArrayList<String>(){{add("Object: "); add(object.toString());}});
-        this.object = object;
+        if(this.object == null){
+            this.object = object;
+        }
     }
     public void setVerb(Verb ver){
         words.add(new ArrayList<String>(){{add("Verb: "); add(ver.toString());}});
-        this.verb = ver;
+        if(this.verb == null){
+            this.verb = ver;
+        }
     }
     public void addAdverb(Adverb adverb){
         words.add(new ArrayList<String>(){{add("Adverb: "); add(adverb.toString());}});
@@ -87,7 +93,7 @@ public class Sentence extends astNode {
 //        System.out.println(subject.toString() + ";;count;;" + subject.count);
         if(subject.count == null || subject.count.equals("wrong")) return;
         if(!checkCorrespondence(new ArrayList<>(Arrays.asList(subject.count)), verb.count)){
-            errors.add(new GrammarError.CountConflict(line, subject.toString() + " and " + verb.toString()));
+            errors.add(new GrammarError.CountConflict(line, "[" + subject.toString() + "] and [" + verb.toString() + "]"));
         }
     }
     public void checkPreposition(String prep, Boolean cap){

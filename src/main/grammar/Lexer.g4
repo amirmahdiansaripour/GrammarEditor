@@ -30,7 +30,7 @@ ADV: 'tomorrow'| 'Tomorrow'  | 'yesterday' | 'Yesterday' | 'very' | 'Very' | 'to
 'lastly' | 'Lastly' | ('in the' | 'In the') SPACE ('evening' | 'morning' | 'ceremony') | ('at' | 'to') SPACE (IDENTIFIER SPACE)? ('park' | 'university' | 'school')
 | 'in the ' ('future' | 'past') | 'in future' | 'particularly' | 'simply' | 'clearly' | 'instead' | 'certainly' | 'obviously' |
 'just' | 'Recently' | 'recently' | 'lately' | 'Lately' | (('since' | 'Since') SPACE NUMBER) | 'easily' | 'immediately'
-| 'never' | 'often' | 'usually' | 'seldom' | 'sometimes' | 'again'
+| 'never' | 'often' | 'usually' | 'seldom' | 'sometimes' | 'again' | 'hours' | 'tonight' | 'away'
 ;
 
 MONTH:

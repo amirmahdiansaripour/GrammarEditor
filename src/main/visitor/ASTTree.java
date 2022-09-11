@@ -15,9 +15,9 @@ public class ASTTree extends Visitor<Void>{
     public Void visit(Sentence sentence){
         if (sentence.hasError())
             return null;
-        if(sentence.getSubject().hasError())
+        if(sentence.getSubject() != null && sentence.getSubject().hasError())
             return null;
-        if(sentence.getObject().hasError())
+        if(sentence.getObject() != null && sentence.getObject().hasError())
             return null;
         if(sentence.getVerb().hasError())
             return null;

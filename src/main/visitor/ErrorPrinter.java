@@ -20,8 +20,8 @@ public class ErrorPrinter extends Visitor<Void>{
     }
     @Override
     public Void visit(Sentence s){
-        s.getSubject().accept(this);
-        s.getObject().accept(this);
+        if(s.getSubject() != null) s.getSubject().accept(this);
+        if(s.getObject() != null) s.getObject().accept(this);
         s.getVerb().accept(this);
         for(Word adv: s.getAdverb())
             adv.accept(this);

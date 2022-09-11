@@ -12,17 +12,20 @@ infinitivePhraseStructure [Sentence s] returns [Verb ver]
         arbitraryParts[$s]
     ;
 
-relativePronoun: 'whose' | 'who' | 'which' | 'whom' | 'that' | 'where';
+relativePronoun returns [String ret]
+    :
+     s = ('whose' | 'who' | 'which' | 'whom' | 'that' | 'where') {$ret = $s.text;}
+     ;
 
 relativeClauseStructure [Sentence s]
     :
-        (SPACE relativePronoun SPACE subject[$s, false] SPACE verb[$s] arbitraryParts[$s])
+        (SPACE relativePronoun SPACE {$s.setObject(new OBject($relativePronoun.ret, false, $s.getLine()));} subject[$s, false] SPACE verb[$s] arbitraryParts[$s])
         |
-        ((COMMA)? SPACE relativePronoun SPACE subject[$s, false] SPACE verb[$s] arbitraryParts[$s] (COMMA)?)
+        ((COMMA)? SPACE relativePronoun SPACE {$s.setObject(new OBject($relativePronoun.ret, false, $s.getLine()));} subject[$s, false] SPACE verb[$s] arbitraryParts[$s] (COMMA)?)
         |
-        (SPACE relativePronoun SPACE verb[$s] arbitraryParts[$s])
+        (SPACE relativePronoun SPACE {$s.setSubject(new Subject($relativePronoun.ret, false, $s.getLine()));} verb[$s] arbitraryParts[$s])
         |
-        ((COMMA)? SPACE relativePronoun SPACE verb[$s] arbitraryParts[$s] (COMMA)?)
+        ((COMMA)? SPACE relativePronoun SPACE {$s.setSubject(new Subject($relativePronoun.ret, false, $s.getLine()));} verb[$s] arbitraryParts[$s] (COMMA)?)
     ;
 
 nounPhrase [Sentence s] returns [String ret]
