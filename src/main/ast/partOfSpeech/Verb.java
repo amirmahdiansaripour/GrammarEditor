@@ -70,6 +70,10 @@ public class Verb extends Word {
             if(aux.equals("has") || aux.equals("has been")) count.add("third singular");
             else if(aux.equals("have") || aux.equals("have been")) {count.add("first singular"); count.add("plural");}
             if(pastParticiples.contains(remained)) tense.add("present perfect");
+            else if(!pastParticiples.contains(remained)){
+                errors.add(new GrammarError.IsntCorrect(line, text));
+                tense.add("wrong");
+            }
             else if(regularPresentOrPast("ed", 1, remained)){ // received, agreed
                 if(wrongs.contains(text.toLowerCase())){
                     errors.add(new GrammarError.IsntCorrect(line, text));

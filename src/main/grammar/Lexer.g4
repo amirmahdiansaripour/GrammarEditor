@@ -27,7 +27,8 @@ ADV: 'tomorrow'| 'Tomorrow'  | 'yesterday' | 'Yesterday' | 'very' | 'Very' | 'to
 ('on' SPACE (DAYS | 'the weekend')) | ('in' SPACE NUMBER) | ('in' SPACE MONTH) | 'probably' | 'actually' | 'indeed' | 'perhaps' |
 (('every' | 'next' | 'last' | 'Every' | 'Next' | 'Last' | 'each' | 'Each') SPACE ('day' | 'night' |'morning' | MONTH |
 'evening' | 'year' | 'month' | DAYS)) | 'daily' | 'monthly' | 'yearly' | 'interestingly' | 'Interestingly' | 'finally' | 'Finally' |
-'lastly' | 'Lastly' | ('in the' | 'In the') SPACE ('evening' | 'morning' | 'ceremony') | ('at' | 'to') SPACE (IDENTIFIER SPACE)? ('park' | 'university' | 'school')
+'lastly' | 'Lastly' | ('in the' | 'In the') SPACE ('evening' | 'morning' | 'ceremony' | 'glass') |
+('at' | 'to' | 'in') SPACE (IDENTIFIER SPACE)? ('park' | 'university' | 'school' | 'coffee')
 | 'in the ' ('future' | 'past') | 'in future' | 'particularly' | 'simply' | 'clearly' | 'instead' | 'certainly' | 'obviously' |
 'just' | 'Recently' | 'recently' | 'lately' | 'Lately' | (('since' | 'Since') SPACE NUMBER) | 'easily' | 'immediately'
 | 'never' | 'often' | 'usually' | 'seldom' | 'sometimes' | 'again' | 'hours' | 'tonight' | 'away'
