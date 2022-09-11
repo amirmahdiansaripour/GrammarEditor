@@ -17,15 +17,10 @@ public class Analyzer extends Visitor<Void>{
 
     @Override
     public Void visit(Sentence s){
-        for(Word sub : s.getSubject()){
-            sub.accept(this);
-        }
-        for(Word obj : s.getObject()){
-            obj.accept(this);
-        }
-        for(Word ver : s.getVerb()){
-            ver.accept(this);
-        }
+        s.getSubject().accept(this);
+        s.getObject().accept(this);
+        s.getVerb().accept(this);
+
         for(Word adv : s.getAdverb()){
             adv.accept(this);
         }

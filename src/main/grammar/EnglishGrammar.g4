@@ -23,7 +23,7 @@ text returns [Text textReturn]
         (
             sentence[line, senIndex]{line = $sentence.indexRet; $textReturn.addSentence($sentence.ret); senIndex++;}
             |
-//            question[line, senIndex]{line = $question.indexRet; $textReturn.addSentence($question.}
+//            question[line, senIndex]{line = $question.indexRet; $textReturn.addSentence($question.ret); senIndex++;}
 //            |
             infinitivePhrase[line, senIndex]{$textReturn.addSentence($infinitivePhrase.ret); senIndex++;}
         )*
@@ -51,6 +51,18 @@ sentence [int line, int index] returns [Sentence ret, int indexRet]
     {$ret.changeLine($indexRet);}
     sentenceStructure[$ret]
     ;
+
+//question [int line, int index] returns [Sentence ret, int indexRet]
+//    :
+//    {
+//        $ret = new Sentence($line);
+//        $ret.setIndex($index);
+//    }
+//    (endpoint {$ret.capitalize();})
+//    (NEWLINE {$indexRet = $line + 1;}| SPACE {$indexRet = $line;})+
+//    {$ret.changeLine($indexRet);}
+//    questionStructure[$ret]
+//    ;
 
 infinitivePhrase [int line, int index] returns [Sentence ret]
     :

@@ -15,15 +15,12 @@ public class ASTTree extends Visitor<Void>{
     public Void visit(Sentence sentence){
         if (sentence.hasError())
             return null;
-        for(Subject sub : sentence.getSubject())
-            if(sub.hasError())
-                return null;
-        for(OBject obj : sentence.getObject())
-            if(obj.hasError())
-                return null;
-        for(Verb ver : sentence.getVerb())
-            if(ver.hasError())
-                return null;
+        if(sentence.getSubject().hasError())
+            return null;
+        if(sentence.getObject().hasError())
+            return null;
+        if(sentence.getVerb().hasError())
+            return null;
         for(Adverb adv : sentence.getAdverb())
             if(adv.hasError())
                 return null;
