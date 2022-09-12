@@ -23,7 +23,7 @@ INFINITIVE: 'to' SPACE (
 'limit' | 'trim' | 'pop' | 'peek' | 'send' | 'unlock' | 'throw' | 'push' | 'fine'
 );
 
-ADV: 'tomorrow'| 'Tomorrow'  | 'yesterday' | 'Yesterday' | 'very' | 'Very' | 'today' | 'class' | 'farm' | 'before' |
+ADVERB: 'tomorrow'| 'Tomorrow'  | 'yesterday' | 'Yesterday' | 'very' | 'Very' | 'today' | 'class' | 'farm' | 'before' |
 ('on' SPACE (DAYS | 'the weekend')) | ('in' SPACE NUMBER) | ('in' SPACE MONTH) | 'probably' | 'actually' | 'indeed' | 'perhaps' |
 (('every' | 'next' | 'last' | 'Every' | 'Next' | 'Last' | 'each' | 'Each') SPACE ('day' | 'night' |'morning' | MONTH |
 'evening' | 'year' | 'month' | DAYS)) | 'daily' | 'monthly' | 'yearly' | 'interestingly' | 'Interestingly' | 'finally' | 'Finally' |
@@ -41,6 +41,7 @@ MONTH:
 SEASON:
 'spring' | 'summer' | 'fall' | 'winter'
 ;
+WORD: [A-Za-z]+;
 
 TOBE:
 (('am' | 'is' | 'are' | 'was' | 'were') (SPACE 'not')?) |
@@ -52,7 +53,6 @@ PERFECT: (('have' | 'Have' | 'Has' | 'has' | 'had' | 'Had') (SPACE 'not')?) | 'h
 SIMPLENEG: ('did' | 'do' | 'does') (SPACE 'not')?;
 MODAL: ('will' | 'would' | 'should' | 'must' | 'may' | 'can' | 'could')(SPACE 'not')?;
 NUMBER: [0-9]+;
-WORD: [A-Za-z]+;
 DOT: '.';
 COMMA: ',';
 SEMICOLON: ';';
