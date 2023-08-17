@@ -67,5 +67,5 @@ arbitraryParts[Sentence s]
             |  // I'll send him a letter
             (SPACE object[$s, false, null])    // I'll send a letter
         )?
-        (SPACE adverb[$s, false])*
+        (SPACE (PREPOSITOIN SPACE)? adverb[$s, false])*
     ;

@@ -13,22 +13,22 @@ IDENTIFIER: 'a' | 'the' | 'A' | 'an' | 'An' | 'The' | 'some' | 'Some' | 'Most' |
 
 DAYS: 'Sunday' | 'Saturday' | 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday';
 
-INFINITIVE: 'to' SPACE (
-'append' | 'add' | 'put' | 'decode' | 'write' | 'get' | 'access' | 'create' | 'read' | 'value' | 'size' | 'remove'|
+INFINITIVE: ('not' SPACE)? 'to' SPACE (
+'append' | 'add' | 'put' | 'decode' | 'write' | 'get' | 'access' | 'create' | 'read' | 'value' | 'size' | 'remove'| 'do' |
 'fill' | 'check' | 'draw' | 'do' | 'char' | 'print' | 'close' | 'paint' | 'start' | 'parse' | 'clone' | 'trace' |
-'equal' | 'update' | 'index' | 'contain' | 'position' | 'debug' | 'handle' | 'reset' | 'type' | 'report' | 'end'|
+'equal' | 'update' | 'index' | 'contain' | 'position' | 'debug' | 'handle' | 'reset' | 'type' | 'report' | 'end'| 'drive' |
 'find' | 'clear' | 'load' | 'line' | 'log' | 'format' | 'make' | 'class' | 'encode' | 'fire' | 'insert' | 'visit' |
 'dispose' | 'translate' | 'compare' | 'process' | 'copy' | 'send' | 'tell' | 'set' | 'intern' | 'register' | 'match' | 'default' |
 'install' | 'invoke' | 'flush' | 'ensure' | 'wash' | 'replace' | 'skip' | 'repaint' | 'last' | 'notify' | 'convert' |
-'limit' | 'trim' | 'pop' | 'peek' | 'send' | 'unlock' | 'throw' | 'push' | 'fine'
+'limit' | 'trim' | 'pop' | 'peek' | 'send' | 'unlock' | 'throw' | 'push' | 'fine' | 'become'
 );
 
-ADVERB: 'tomorrow'| 'Tomorrow'  | 'yesterday' | 'Yesterday' | 'very' | 'Very' | 'today' | 'class' | 'farm' | 'before' |
-('on' SPACE (DAYS | 'the weekend')) | ('in' SPACE NUMBER) | ('in' SPACE MONTH) | 'probably' | 'actually' | 'indeed' | 'perhaps' |
+ADVERB: 'tomorrow'| 'Tomorrow'  | 'yesterday' | 'Yesterday' | 'very' | 'Very' | 'today' | 'class' | 'farm' | 'before' | 'fast' |
+(DAYS | 'the weekend') | (NUMBER) | (MONTH) | 'probably' | 'actually' | 'indeed' | 'perhaps' | 'a lot' | 'anymore' |
 (('every' | 'next' | 'last' | 'Every' | 'Next' | 'Last' | 'each' | 'Each') SPACE ('day' | 'night' |'morning' | MONTH |
 'evening' | 'year' | 'month' | DAYS)) | 'daily' | 'monthly' | 'yearly' | 'interestingly' | 'Interestingly' | 'finally' | 'Finally' |
-'lastly' | 'Lastly' | ('in the' | 'In the') SPACE ('evening' | 'morning' | 'ceremony' | 'glass') |
-('at' | 'to' | 'in') SPACE (IDENTIFIER SPACE)? ('park' | 'university' | 'school' | 'coffee')
+'lastly' | 'Lastly' | (IDENTIFIER SPACE)? ('evening' | 'classroom' | 'morning' | 'ceremony' | 'glass') |
+(IDENTIFIER SPACE)? ('park' | 'university' | 'school' | 'coffee')
 | 'in the ' ('future' | 'past') | 'in future' | 'particularly' | 'simply' | 'clearly' | 'instead' | 'certainly' | 'obviously' |
 'just' | 'Recently' | 'recently' | 'lately' | 'Lately' | (('since' | 'Since') SPACE NUMBER) | 'easily' | 'immediately'
 | 'never' | 'often' | 'usually' | 'seldom' | 'sometimes' | 'again' | 'hours' | 'tonight' | 'away'
