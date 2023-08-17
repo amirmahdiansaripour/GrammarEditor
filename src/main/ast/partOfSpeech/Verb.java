@@ -17,6 +17,7 @@ public class Verb extends Word {
     protected static ArrayList<String> modals = new ArrayList<>(Arrays.asList("will", "should", "must", "could", "would", "can", "may"));
     protected static ArrayList<String> literalChanges = new ArrayList<>(Arrays.asList("ss", "sh", "ch", "x"));
     protected static ArrayList<String> presentPerfect = new ArrayList<>(Arrays.asList("has", "have", "have been", "has been"));
+    protected static ArrayList<String> pastParticiples = makeDataSet("src\\dataset\\verbs\\pastParticiples.txt");
     private String root, auxiliary;
     public ArrayList<String> tense, count;
     public Verb(String t, int line_) {
@@ -52,6 +53,9 @@ public class Verb extends Word {
             }
             else tense.add("past");
         }
+        else if(aux.equals("to")){
+            tense.add("wrong");
+        }
         else if(modals.contains(aux)){
             count.add("first singular"); count.add("third singular"); count.add("plural");
             if(!presentDataset.contains(remained)){
@@ -65,7 +69,12 @@ public class Verb extends Word {
         else if(presentPerfect.contains(aux)){
             if(aux.equals("has") || aux.equals("has been")) count.add("third singular");
             else if(aux.equals("have") || aux.equals("have been")) {count.add("first singular"); count.add("plural");}
-            if(regularPresentOrPast("ed", 1, remained)){ // received, agreed
+            if(pastParticiples.contains(remained)) tense.add("present perfect");
+            else if(!pastParticiples.contains(remained)){
+                errors.add(new GrammarError.IsntCorrect(line, text));
+                tense.add("wrong");
+            }
+            else if(regularPresentOrPast("ed", 1, remained)){ // received, agreed
                 if(wrongs.contains(text.toLowerCase())){
                     errors.add(new GrammarError.IsntCorrect(line, text));
                     tense.add("wrong");

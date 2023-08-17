@@ -19,7 +19,6 @@ public class GrammarCompiler {
         text.accept(errorPrinter);
         ASTTree astTreePrinter = new ASTTree();
         text.accept(astTreePrinter);
-        return;
     }
 
 }

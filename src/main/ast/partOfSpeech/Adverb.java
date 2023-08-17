@@ -17,6 +17,7 @@ public class Adverb extends Word{
         super(t, capital_, line_);
         tense = new ArrayList<String>();
         setTense();
+//        System.out.println(text + " : " + tense);
     }
 
     public void setTenseBasedOnDataSet(){

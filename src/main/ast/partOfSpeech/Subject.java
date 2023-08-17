@@ -13,12 +13,13 @@ public class Subject extends Word {
     protected static ArrayList<String> pluralExceptions = new ArrayList<String>(Arrays.asList("the police",
             "people", "the blind", "the poor", "the rich"));
     protected static ArrayList<String> singularExceptions = new ArrayList<String>(Arrays.asList("mumps",
-            "measles", "physics", "mathematics", "news", "information", "evidence", "equipment"));
+            "measles", "physics", "mathematics", "news", "information", "evidence", "equipment", "attention"));
 
     public String count;
     public Subject(String t, Boolean cap, int line_){
         super(t, cap, line_);
         setCount(text);
+        if(t.equals("I")) capital = true;
 //        System.out.println(text + ";;count;;" + count);
     }
 
@@ -82,12 +83,13 @@ public class Subject extends Word {
             }
             else if(firstPart.equals("few") || (secondSpaceIndex != -1 && (sub.substring(0, secondSpaceIndex).equals("a few")
             || sub.substring(0, secondSpaceIndex).equals("a little")))){
+//                System.out.println("Entered a few");
                 setCount(sub.substring(lastSpaceIndex + 1));
                 if(!count.equals("plural") && !count.equals("wrong")){
                     errors.add(new GrammarError.BePlural(line, sub.substring(lastSpaceIndex + 1)));
                 }
             }
-            if (firstPart.equals("a") || firstPart.equals("an")) {
+            else if (firstPart.equals("a") || firstPart.equals("an")) {
                 count = "third singular";
             }
         }
@@ -106,6 +108,7 @@ public class Subject extends Word {
         if(count == null){
             count = "third singular";
         }
+//        System.out.println(text + " : " + count);
     }
     @Override
     public <T> T accept(IVisitor<T> visitor) {

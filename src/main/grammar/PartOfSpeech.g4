@@ -13,15 +13,13 @@ partOfSpeech [Sentence s, Boolean cap, String role]
         subject[s, cap] | object[s, cap, role] | verb[s] | adverb[s, cap]
     ;
 
+
 subject [Sentence s, Boolean cap] returns [Subject sub]
     :
-        (sp = 'I' | 'he' | 'she' | 'it' | 'they' | nounPhrase[s])
+        nounPhrase[s]
         {
-            String subject;
-            if($sp.text == null) subject = $nounPhrase.ret;
-            else        subject = $sp.text;
-            $sub = new Subject(subject, cap, $s.getLine());
-            $s.addSubject($sub);
+            $sub = new Subject($nounPhrase.ret, cap, $s.getLine());
+            $s.setSubject($sub);
         }
         (relativeClauseStructure[s])?
     ;
@@ -33,7 +31,7 @@ object [Sentence s, Boolean cap, String objecct] returns [OBject obj]
             if(objecct != null) objecct += $nounPhrase.ret;
             else objecct = $nounPhrase.ret;
             $obj = new OBject(objecct, cap, $s.getLine());
-            $s.addObject($obj);
+            $s.setObject($obj);
         }
         (relativeClauseStructure[s])?
     ;
@@ -48,7 +46,7 @@ verb [Sentence s] returns [Verb ver]
          |
          TOBE SPACE WORD {verbText = $TOBE.text + " " + $WORD.text;}
          |
-         MODAL SPACE WORD {verbText = $MODAL.text + " " + $WORD.text;}
+         MODAL SPACE {verbText = $MODAL.text + " "; } (ADVERB SPACE {verbText += $ADVERB.text + " " ;})? WORD {verbText += $WORD.text;}
          |
          PERFECT (SPACE adverb[s, false])? SPACE WORD {verbText = $PERFECT.text + " " + $WORD.text;}
          |
@@ -56,7 +54,7 @@ verb [Sentence s] returns [Verb ver]
         )
         {
             $ver = new Verb(verbText, $s.getLine());
-            $s.addVerb($ver);
+            $s.setVerb($ver);
         }
     ;
 
@@ -64,7 +62,7 @@ adverb [Sentence s, Boolean capital] returns [Adverb adv]
     :
         {String adverb = "";}
         (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})? (PREPOSITION SPACE {adverb += ($PREPOSITION.text + " ");})?
-        (IDENTIFIER SPACE)? ADV {adverb += $ADV.text;}
+        (IDENTIFIER SPACE)? ADVERB {adverb += $ADVERB.text;}
         {
             $adv = new Adverb(adverb, capital, $s.getLine());
             $s.addAdverb($adv);

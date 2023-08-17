@@ -33,16 +33,16 @@ public class GrammarError extends Exception{
     }
 
     public static class IsntCorrect extends GrammarError{
-        public IsntCorrect(int line_, String message_){super(line_, message_ + " isn't correct.");}
+        public IsntCorrect(int line_, String message_){super(line_, "[" + message_ + "] isn't correct.");}
     }
     public static class Redundant extends GrammarError{
         public Redundant(int line_, String message_){super(line_, message_ + " is redundant.");}
     }
     public static class BeSingular extends GrammarError{
-        public BeSingular(int line_, String message_){super(line_, message_ + " should be a singular noun.");}
+        public BeSingular(int line_, String message_){super(line_, "[" + message_ + "] should be a singular noun.");}
     }
     public static class BePlural extends GrammarError{
-        public BePlural(int line_, String message_){super(line_, message_ + " should be a plural noun.");}
+        public BePlural(int line_, String message_){super(line_, "[" + message_ + "] should be a plural noun.");}
     }
 
 
