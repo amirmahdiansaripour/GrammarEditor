@@ -1,5 +1,4 @@
 # GrammarEditor
-
 Detection of part of speech and some grammatical mistakes in English sentences through using parsing rules.
 
 How to run: 
