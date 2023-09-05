@@ -21,6 +21,7 @@ subject + verb + adverb + adverb + conjunction + subject + verb
 
 (Pay attention that the main sentence itself is made up of two simple sentences connected by ', but' which is a conjunction). The output of GrammarEditor is:
 
-![31](https://github.com/amirmahdiansaripour/SRAM/assets/92050925/e3b98b0c-2c66-4cdd-b4f4-3eb90bd50ec4)
+![img0](./installation/31.JPG)
+
 
 GrammarEditor can also detect some grammatical mistakes when the parts of speech of all words in a sentence are determined. Please read the report included in the repository for more details about how GrammarEditor works.
