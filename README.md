@@ -7,7 +7,7 @@ You should download the ANTLR tool for running the project. Please read $\textbf
 
 ### Explanation:
 
-This project is mainly about how some sentence structures in English can be detected using parsing rules and trees, which I have been taught in the Theory of Computation and Compiler Design courses. When a sentence (more generally, a string) is matched with a pursing rule, the words in that string will receive their parts of speech. Consider the following compound sentence as an example:
+This project is mainly about how some sentence structures in English can be detected using parsing (production) rules, which I have been taught in the Theory of Computation and Compiler Design courses. When a sentence (more generally, a string) is matched with a pursing rule, the words in that string will receive their parts of speech. Consider the following compound sentence as an example:
 
 `
 I went to the park yesterday, but my brother did not come.
