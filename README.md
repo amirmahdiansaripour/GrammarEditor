@@ -3,7 +3,7 @@ Detection of part of speech and some grammatical mistakes in English sentences t
 
 ### How to run: 
 
-You should download the ANTLR tool for running the project. Please read $\textbf{'Guidance for How to Run GrammarEditor.pdf'}$ and install $\textbf{ANTLR.jar}$ file included in the installation folder.
+You should download the ANTLR tool for running the project. Please read $\textbf{Guidance for How to Run GrammarEditor.pdf}$ and install $\textbf{ANTLR.jar}$ file included in the installation folder.
 
 ### Explanation:
 
