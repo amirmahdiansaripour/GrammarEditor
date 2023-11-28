@@ -26,4 +26,4 @@ subject + verb + adverb + adverb + conjunction + subject + verb
 
 GrammarEditor can also detect some grammatical mistakes when the parts of speech of all words in a sentence are determined. 
 
-$\textbf{Please read the report included in the repository for more details about how GrammarEditor works.}$
+$\textbf{Please read the report for more details about how GrammarEditor works.}$
