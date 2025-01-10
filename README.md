@@ -23,9 +23,27 @@ subject + verb + adverb + adverb + conjunction + subject + verb
 
 ![img0](./installation/31.JPG)
 
+Another example with a more complex structure:
+
 ![img1](./installation/7th_sample.JPG)
 
 
-GrammarEditor can also detect some grammatical mistakes when the parts of speech of all words in a sentence are determined. 
+GrammarEditor can also detect some grammatical mistakes, including count and tense agreement between sentence components. This is done by defining semantic actions (in Java) between the nodes of the parsing tree. For example, in this sentence:
+
+`
+I have seen him last night.
+`
+
+The 'last night' adverb does not correspond with a present perfect verb. 
+
+![img2](./installation/grammar_err1.JPG)
+
+`
+That boys is playing football a lot.
+`
+
+The counts of 'boys', 'That', and 'is' do not correspond. So the parser shows two errors.
+
+![img3](./installation/grammar_err2.JPG)
 
 $\textbf{Please read the report for more details about how GrammarEditor works.}$
