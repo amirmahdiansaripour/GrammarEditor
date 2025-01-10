@@ -22,6 +22,7 @@ subject + verb + adverb + adverb + conjunction + subject + verb
 (Pay attention that the main sentence itself is made up of two simple sentences connected by ', but' which is a conjunction). The output parsing tree is:
 
 ![img0](./installation/31.JPG)
+![img1](./installation/7th_sample.JPG)
 
 
 GrammarEditor can also detect some grammatical mistakes when the parts of speech of all words in a sentence are determined. 
